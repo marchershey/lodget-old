@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
  * Auth Routes
  */
 Route::name('auth.')->prefix('/auth')->group(function () {
-    // Login
+    Route::get('/register', [App\Http\Controllers\Auth\RegistrationController::class, 'view'])->name('register');
+    Route::post('/register/submit', [App\Http\Controllers\Auth\RegistrationController::class, 'submit'])->name('register.submit');
+    // Route::view('/login', 'pages.auth.login')->name('login');
     // Register
     // Reset Password
 });
@@ -43,6 +45,4 @@ Route::name('host.')->prefix('/host')->group(function () {
 
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'auth/login');
