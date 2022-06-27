@@ -1,9 +1,11 @@
 <x-layouts.minimal>
-    <div class="flex flex-col max-w-lg p-8 mt-10 space-y-10">
+    <div class="flex flex-col max-w-lg p-8 space-y-10 bg-white">
 
         {{-- Logo --}}
-        <div class="flex justify-center">
-            <x-logo />
+        <div class="flex justify-center mt-10">
+            <a href="{{ route('frontend.index') }}">
+                <x-logo />
+            </a>
         </div>
 
         {{-- Title and description --}}
@@ -63,10 +65,13 @@
                 {{-- Sumbit button --}}
                 <div>
                     <button type="submit" class="button">Register</button>
+                    <div class="mt-5 text-center">
+                        <span class="block text-sm text-muted">Already have an account? <a href="{{ route('auth.login') }}" class="link">Sign in</a></span>
+                    </div>
                 </div>
                 {{-- Terms --}}
                 <div>
-                    <span class="input-desc">By clicking Register, you agree that you have read and accepted our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></span>
+                    <span class="block text-xs text-muted">By clicking Register, you agree that you have read and accepted our <a href="#" class="link">Terms of Use</a> and <a href="#" class="link">Privacy Policy</a></span>
                 </div>
             </div>
         </form>

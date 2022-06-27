@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,8 @@
     <script src="{{ asset('js/app.js') }}?{{ rand() }}" defer></script>
 </head>
 
-<body class="h-full tracking-wide">
-    <div>
+<body class="">
+    <div class="">
         {{ $slot }}
     </div>
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 class RegistrationController extends Controller
@@ -48,52 +49,10 @@ class RegistrationController extends Controller
         // authenticate user
         $user = Auth::loginUsingId($user->id);
 
+        // send welcome email
+        Mail::to($user->email)->queue(new \App\Mail\WelcomeUserMail($user->first_name));
+
         // redirect
-        return redirect()->route($user->type . '.dashboard');
+        return redirect()->route('dashboard');
     }
-
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
 }

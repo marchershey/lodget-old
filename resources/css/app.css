@@ -11,9 +11,23 @@
 }
 
 @layer components {
-    a[href] {
+    .link {
         @apply text-primary;
     }
+    .panel {
+        @apply flex flex-col max-w-4xl p-4 mx-auto mb-5 space-y-5 bg-white border border-gray-200 sm:p-4 sm:rounded-lg;
+    }
+    .panel-heading {
+        @apply flex items-center pb-2 space-x-2 text-lg font-medium border-b;
+    }
+    .panel-heading svg {
+        @apply w-6 h-6 stroke-[1.5] text-primary sm:stroke-2;
+    }
+    .panel-spacing {
+        @apply flex flex-col pb-5 space-y-5;
+    }
+
+    /* Forms */
     .input {
         @apply block w-full border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
     }
@@ -24,10 +38,10 @@
         @apply block mt-1 text-xs text-muted;
     }
     .checkbox {
-        @apply w-5 h-5 border-gray-300 rounded text-primary focus:ring-indigo-500;
+        @apply w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary;
     }
     .button {
-        @apply flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+        @apply flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm sm:w-auto bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
     }
 
     /* Validation */
