@@ -1,5 +1,5 @@
 <x-layouts.minimal>
-    <div class="flex flex-col max-w-lg p-8 space-y-10 bg-white">
+    <div class="flex flex-col max-w-lg p-8 space-y-10">
 
         {{-- Logo --}}
         <div class="flex justify-center mt-10">

@@ -2,11 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
 @layer base {
     html {
-        font-family: Inter, system-ui, sans-serif;
+        font-family: "Montserrat", system-ui, sans-serif;
+    }
+
+    .frontend-container {
+        @apply w-full px-6 py-6 mx-auto max-w-7xl sm:px-6 md:justify-start md:space-x-10 lg:px-8;
+    }
+    .frontend-section {
+        @apply py-16;
+    }
+    .frontend-section-heading {
+        @apply mb-12 text-center;
+    }
+    .frontend-section-heading h1 {
+        @apply mb-2 text-4xl font-bold text-gray-800;
+    }
+    .frontend-section-heading span {
+        @apply text-lg text-muted;
     }
 }
 
@@ -15,7 +31,7 @@
         @apply text-primary;
     }
     .panel {
-        @apply flex flex-col max-w-4xl p-4 mx-auto mb-5 space-y-5 bg-white border border-gray-200 sm:p-4 sm:rounded-lg;
+        @apply flex flex-col p-4 mx-auto mb-5 space-y-5 bg-white border border-gray-200 sm:p-4 sm:rounded-lg;
     }
     .panel-heading {
         @apply flex items-center pb-2 space-x-2 text-lg font-medium border-b;
@@ -29,7 +45,7 @@
 
     /* Forms */
     .input {
-        @apply block w-full border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
+        @apply block w-full px-4 py-2 border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
     }
     .input-label {
         @apply block text-sm font-medium text-gray-700;
@@ -60,5 +76,9 @@
     .h-view {
         height: 100vh;
         height: calc(var(--vh, 1vh) * 100);
+    }
+    .h-view-minus-navbar {
+        height: calc(100vh - 74px);
+        height: calc((var(--vh, 1vh) * 100) - 74px);
     }
 }

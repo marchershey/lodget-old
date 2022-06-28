@@ -10,7 +10,7 @@
     <script src="{{ asset('js/app.js') }}?{{ rand() }}" defer></script>
 </head>
 
-<body class="">
+<body class="bg-gray-50">
     <div class="">
         {{ $slot }}
     </div>
