@@ -2710,6 +2710,11 @@ select {
     padding-bottom: 4rem;
   }
 
+  .lg\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .lg\:pl-8 {
     padding-left: 2rem;
   }
@@ -2737,6 +2742,10 @@ select {
     margin-top: 0px;
   }
 
+  .xl\:block {
+    display: block;
+  }
+
   .xl\:inline {
     display: inline;
   }
@@ -2747,6 +2756,10 @@ select {
 
   .xl\:grid {
     display: grid;
+  }
+
+  .xl\:hidden {
+    display: none;
   }
 
   .xl\:w-64 {

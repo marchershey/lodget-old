@@ -9,9 +9,14 @@
                 <div class="relative flex items-center justify-between h-16">
                     <!-- Logo section -->
                     <div class="flex items-center px-2 lg:px-0 xl:w-64">
-                        <div class="flex-shrink-0">
+                        <div class="flex-shrink-0 xl:hidden">
                             <a href="{{ route('host.dashboard') }}">
                                 <x-logo :showText="false" iconTextColor="primary" iconBgColor="white" iconSize="w-5 h-5" />
+                            </a>
+                        </div>
+                        <div class="flex-shrink-0 hidden xl:block">
+                            <a href="{{ route('host.dashboard') }}">
+                                <x-logo theme="dark" iconTextColor="primary" iconBgColor="white" iconSize="w-5 h-5" />
                             </a>
                         </div>
                     </div>
@@ -51,18 +56,18 @@
                                 <a href="#" class="px-3 py-2 text-sm font-medium text-indigo-200 rounded-md hover:text-white">Support</a>
                             </div>
                             <!-- Profile dropdown -->
-                            <div class="relative flex-shrink-0 ml-4">
+                            <div class="relative flex-shrink-0 ml-4" x-data="{ profileMenu: false }">
                                 <div>
-                                    <button type="button" class="flex text-sm text-white bg-indigo-700 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <button type="button" class="flex text-sm text-white bg-indigo-700 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true" x-on:click="profileMenu = !profileMenu">
                                         <span class="sr-only">Open user menu</span>
                                         <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80" alt="">
                                     </button>
                                 </div>
-                                <div class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <div class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" x-show="profileMenu" x-cloak x-on:click.away="profileMenu = false">
                                     <!-- Active: "bg-gray-100", Not Active: "" -->
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">View Profile</a>
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-red-500" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -103,9 +108,11 @@
                 <div class="bg-white lg:min-w-0 lg:flex-1">
                     <div class="h-full px-4 py-6 sm:px-6 lg:px-8">
                         <!-- Start main area-->
-                        <div class="relative h-full" style="min-height: 36rem">
+                        {{-- <div class="relative h-full" style="min-height: 36rem">
                             <div class="absolute inset-0 border-2 border-gray-200 border-dashed rounded-lg"></div>
-                        </div>
+                        </div> --}}
+
+                        <p>hello</p>
                         <!-- End main area -->
                     </div>
                 </div>
