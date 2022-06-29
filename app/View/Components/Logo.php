@@ -8,20 +8,25 @@ class Logo extends Component
 {
     public $theme;
     public $showText;
-    public $iconSize;
     public $textSize;
+    public $iconSize;
+    public $iconTextColor;
+    public $iconBgColor;
+
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($theme = "light", $showText = true, $iconSize = "w-8 h-8", $textSize = "2xl")
+    public function __construct($theme = "light", $showText = true, $iconSize = "w-8 h-8", $textSize = "2xl", $iconBgColor = "primary", $iconTextColor = "white")
     {
         $this->theme = $theme;
         $this->showText = $showText;
-        $this->iconSize = $iconSize;
         $this->textSize = $textSize;
+        $this->iconSize = $iconSize;
+        $this->iconTextColor = $iconTextColor;
+        $this->iconBgColor = $iconBgColor;
     }
 
     /**
