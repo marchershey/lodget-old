@@ -50,6 +50,7 @@ Route::name('guest.')->prefix('/guest')->group(function () {
  */
 Route::name('host.')->prefix('/host')->group(function () {
     // Dashboard
+    Route::view('/dashboard', 'pages.host.dashboard')->name('dashboard');
     // Properties
     // Reservations
     // Guests
