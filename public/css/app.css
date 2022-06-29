@@ -1215,6 +1215,9 @@ select {
 .h-0 {
   height: 0px;
 }
+.h-4 {
+  height: 1rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1250,6 +1253,9 @@ select {
 }
 .w-56 {
   width: 14rem;
+}
+.w-4 {
+  width: 1rem;
 }
 .min-w-0 {
   min-width: 0px;
