@@ -39,14 +39,29 @@
                         </button>
                     </div>
                     <div class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                        <a href="#" class="flex items-center space-x-2 text-sm font-medium text-gray-900 hover:underline">
-                            <span>
-                                Ohana Burnside
-                            </span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </a>
+                        <!-- This example requires Tailwind CSS v2.0+ -->
+                        <div class="relative inline-block text-left" x-data="{ open: false }">
+                            <div>
+                                <button type="button" class="flex items-center py-2 space-x-2 hover:underline text-muted" id="menu-button" aria-expanded="true" aria-haspopup="true" x-on:click="open = !open">
+                                    <span class="text-sm font-medium">
+                                        Ohana Burnside
+                                    </span>
+                                    <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" x-show="open" x-cloak x-on:click.away="open = false">
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Ohana Burnside</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Ohana Burnside</a>
+                                    <hr>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Add New Property...</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <a href="#" class="flex-shrink-0 p-1 ml-5 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                             <span class="sr-only">View notifications</span>
                             <!-- Heroicon name: outline/bell -->
@@ -73,7 +88,7 @@
                             </div>
                         </div>
 
-                        <a href="#" class="inline-flex items-center px-4 py-2 ml-6 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"> New Post </a>
+                        <a href="#" class="inline-flex items-center px-4 py-2 ml-6 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"> Quick Add </a>
                     </div>
                 </div>
             </div>
@@ -134,10 +149,17 @@
                             <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-600 hover:bg-gray-50" -->
                             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-gray-200 rounded-md group" aria-current="page">
                                 <!-- Heroicon name: outline/home -->
-                                <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                {{-- <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg> --}}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 4h6v8h-6z"></path>
+                                    <path d="M4 16h6v4h-6z"></path>
+                                    <path d="M14 12h6v8h-6z"></path>
+                                    <path d="M14 4h6v4h-6z"></path>
                                 </svg>
-                                <span class="truncate"> Home </span>
+                                <span class="truncate"> Dashboard </span>
                             </a>
 
                             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
@@ -208,28 +230,28 @@
                         <div class="sm:hidden">
                             <label for="question-tabs" class="sr-only">Select a tab</label>
                             <select id="question-tabs" class="block w-full text-base font-medium text-gray-900 border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
-                                <option selected>Recent</option>
+                                <option selected>Active</option>
 
-                                <option>Most Liked</option>
+                                <option>Upcoming</option>
 
-                                <option>Most Answers</option>
+                                <option>Completed</option>
                             </select>
                         </div>
                         <div class="hidden sm:block">
                             <nav class="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
                                 <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
                                 <a href="#" aria-current="page" class="relative flex-1 min-w-0 px-6 py-4 overflow-hidden text-sm font-medium text-center text-gray-900 bg-white rounded-l-lg group hover:bg-gray-50 focus:z-10">
-                                    <span>Recent</span>
+                                    <span>Active</span>
                                     <span aria-hidden="true" class="bg-primary absolute inset-x-0 bottom-0 h-0.5"></span>
                                 </a>
 
                                 <a href="#" class="relative flex-1 min-w-0 px-6 py-4 overflow-hidden text-sm font-medium text-center text-gray-500 bg-white hover:text-gray-700 group hover:bg-gray-50 focus:z-10">
-                                    <span>Most Liked</span>
+                                    <span>Upcoming</span>
                                     <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
                                 </a>
 
                                 <a href="#" class="relative flex-1 min-w-0 px-6 py-4 overflow-hidden text-sm font-medium text-center text-gray-500 bg-white rounded-r-lg hover:text-gray-700 group hover:bg-gray-50 focus:z-10">
-                                    <span>Most Answers</span>
+                                    <span>Completed</span>
                                     <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
                                 </a>
                             </nav>
@@ -370,7 +392,7 @@
                         <section aria-labelledby="who-to-follow-heading">
                             <div class="bg-white rounded-lg shadow">
                                 <div class="p-6">
-                                    <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">Who to follow</h2>
+                                    <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">Recent Notifications</h2>
                                     <div class="flow-root mt-6">
                                         <ul role="list" class="-my-4 divide-y divide-gray-200">
                                             <li class="flex items-center py-4 space-x-3">
@@ -397,41 +419,6 @@
                                             </li>
 
                                             <!-- More people... -->
-                                        </ul>
-                                    </div>
-                                    <div class="mt-6">
-                                        <a href="#" class="block w-full px-4 py-2 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"> View all </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section aria-labelledby="trending-heading">
-                            <div class="bg-white rounded-lg shadow">
-                                <div class="p-6">
-                                    <h2 id="trending-heading" class="text-base font-medium text-gray-900">Trending</h2>
-                                    <div class="flow-root mt-6">
-                                        <ul role="list" class="-my-4 divide-y divide-gray-200">
-                                            <li class="flex py-4 space-x-3">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Floyd Miles">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm text-gray-800">What books do you have on your bookshelf just to look smarter than you actually are?</p>
-                                                    <div class="flex mt-2">
-                                                        <span class="inline-flex items-center text-sm">
-                                                            <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                                                                <!-- Heroicon name: solid/chat-alt -->
-                                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                    <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
-                                                                </svg>
-                                                                <span class="font-medium text-gray-900">291</span>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <!-- More posts... -->
                                         </ul>
                                     </div>
                                     <div class="mt-6">
