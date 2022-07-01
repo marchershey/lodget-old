@@ -98,11 +98,8 @@
                 <div class="max-w-3xl px-2 pt-2 pb-3 mx-auto space-y-1 sm:px-4">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
                     <a href="#" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Home</a>
-
                     <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Popular</a>
-
                     <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Communities</a>
-
                     <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Trending</a>
                 </div>
                 <div class="pt-4 border-t border-gray-200">
@@ -226,11 +223,46 @@
                     </nav>
                 </div>
                 <main class="lg:col-span-9 xl:col-span-6">
+                    <div id="calendar"></div>
+                    <script>
+                        window.addEventListener('load', function() {
+
+                            let calendarEl = document.getElementById('calendar')
+                            let calendar = new Calendar(calendarEl, {
+                                plugins: [dayGridPlugin],
+                                initialView: 'dayGridMonth',
+                                nextDayThreshold: '00:00:00',
+                                headerToolbar: {
+                                    left: '',
+                                    center: '',
+                                    right: ''
+                                },
+                                events: [{ // this object will be "parsed" into an Event Object
+                                        title: 'The Title', // a property!
+                                        start: '2022-06-01', // a property!
+                                        end: '2022-06-04' // a property! ** see important note below about 'end' **
+                                    },
+                                    { // this object will be "parsed" into an Event Object
+                                        title: 'The Title', // a property!
+                                        start: '2022-06-04', // a property!
+                                        end: '2022-06-06' // a property! ** see important note below about 'end' **
+                                    },
+                                ]
+                            });
+
+                            calendar.render();
+                        });
+                    </script>
+
+
+
+
+
                     <div class="px-4 sm:px-0">
                         <div class="sm:hidden">
                             <label for="question-tabs" class="sr-only">Select a tab</label>
                             <select id="question-tabs" class="block w-full text-base font-medium text-gray-900 border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
-                                <option selected>Active</option>
+                                <option selected>Pending</option>
 
                                 <option>Upcoming</option>
 
@@ -260,6 +292,18 @@
                     <div class="mt-4">
                         <h1 class="sr-only">Recent questions</h1>
                         <ul role="list" class="space-y-4">
+                            <li>
+                                <!-- This example requires Tailwind CSS v2.0+ -->
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                        <div class="w-full border-t border-gray-300"></div>
+                                    </div>
+                                    <div class="relative flex justify-center">
+                                        <span class="px-3 mb-1 font-medium text-muted bg-gray-50"> June 6th, 2022 </span>
+                                    </div>
+                                </div>
+
+                            </li>
                             <li class="px-4 py-6 bg-white shadow sm:p-6 sm:rounded-lg">
                                 <article aria-labelledby="question-title-81614">
                                     <div>
@@ -273,7 +317,7 @@
                                                 </p>
                                                 <p class="text-sm text-gray-500">
                                                     <a href="#" class="hover:underline">
-                                                        <time datetime="2020-12-09T11:43:00">December 9 at 11:43 AM</time>
+                                                        <time datetime="2020-12-09T11:43:00">June 4th -> June 9th</time>
                                                     </a>
                                                 </p>
                                             </div>
@@ -288,17 +332,6 @@
                                                             </svg>
                                                         </button>
                                                     </div>
-
-                                                    <!--
-                            Dropdown menu, show/hide based on menu state.
-  
-                            Entering: "transition ease-out duration-100"
-                              From: "transform opacity-0 scale-95"
-                              To: "transform opacity-100 scale-100"
-                            Leaving: "transition ease-in duration-75"
-                              From: "transform opacity-100 scale-100"
-                              To: "transform opacity-0 scale-95"
-                          -->
                                                     <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-0-button" tabindex="-1">
                                                         <div class="py-1" role="none">
                                                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -394,32 +427,130 @@
                                 <div class="p-6">
                                     <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">Recent Notifications</h2>
                                     <div class="flow-root mt-6">
-                                        <ul role="list" class="-my-4 divide-y divide-gray-200">
-                                            <li class="flex items-center py-4 space-x-3">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900">
-                                                        <a href="#">Leonard Krasner</a>
-                                                    </p>
-                                                    <p class="text-sm text-gray-500">
-                                                        <a href="#">@leonardkrasner</a>
-                                                    </p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <button type="button" class="inline-flex items-center px-3 py-0.5 rounded-full bg-blue-50 text-sm font-medium text-primary-dark hover:bg-primary-muted">
-                                                        <!-- Heroicon name: solid/plus-sm -->
-                                                        <svg class="-ml-1 mr-0.5 h-5 w-5 text-primary-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <span> Follow </span>
-                                                    </button>
-                                                </div>
-                                            </li>
+                                        <!-- This example requires Tailwind CSS v2.0+ -->
+                                        <div class="flow-root">
+                                            <ul role="list" class="-mb-8">
+                                                <li>
+                                                    <div class="relative pb-8">
+                                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                                        <div class="relative flex space-x-3">
+                                                            <div>
+                                                                <span class="flex items-center justify-center w-8 h-8 bg-gray-400 rounded-full ring-8 ring-white">
+                                                                    <!-- Heroicon name: solid/user -->
+                                                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                                                <div>
+                                                                    <p class="text-sm text-gray-500">Applied to <a href="#" class="font-medium text-gray-900">Front End Developer</a></p>
+                                                                </div>
+                                                                <div class="text-sm text-right text-gray-500 whitespace-nowrap">
+                                                                    <time datetime="2020-09-20">Sep 20</time>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
 
-                                            <!-- More people... -->
-                                        </ul>
+                                                <li>
+                                                    <div class="relative pb-8">
+                                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                                        <div class="relative flex space-x-3">
+                                                            <div>
+                                                                <span class="flex items-center justify-center w-8 h-8 bg-blue-500 rounded-full ring-8 ring-white">
+                                                                    <!-- Heroicon name: solid/thumb-up -->
+                                                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                                                <div>
+                                                                    <p class="text-sm text-gray-500">Advanced to phone screening by <a href="#" class="font-medium text-gray-900">Bethany Blake</a></p>
+                                                                </div>
+                                                                <div class="text-sm text-right text-gray-500 whitespace-nowrap">
+                                                                    <time datetime="2020-09-22">Sep 22</time>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="relative pb-8">
+                                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                                        <div class="relative flex space-x-3">
+                                                            <div>
+                                                                <span class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full ring-8 ring-white">
+                                                                    <!-- Heroicon name: solid/check -->
+                                                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                                                <div>
+                                                                    <p class="text-sm text-gray-500">Completed phone screening with <a href="#" class="font-medium text-gray-900">Martha Gardner</a></p>
+                                                                </div>
+                                                                <div class="text-sm text-right text-gray-500 whitespace-nowrap">
+                                                                    <time datetime="2020-09-28">Sep 28</time>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="relative pb-8">
+                                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                                                        <div class="relative flex space-x-3">
+                                                            <div>
+                                                                <span class="flex items-center justify-center w-8 h-8 bg-blue-500 rounded-full ring-8 ring-white">
+                                                                    <!-- Heroicon name: solid/thumb-up -->
+                                                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                                                <div>
+                                                                    <p class="text-sm text-gray-500">Advanced to interview by <a href="#" class="font-medium text-gray-900">Bethany Blake</a></p>
+                                                                </div>
+                                                                <div class="text-sm text-right text-gray-500 whitespace-nowrap">
+                                                                    <time datetime="2020-09-30">Sep 30</time>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="relative pb-8">
+                                                        <div class="relative flex space-x-3">
+                                                            <div>
+                                                                <span class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full ring-8 ring-white">
+                                                                    <!-- Heroicon name: solid/check -->
+                                                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                                                <div>
+                                                                    <p class="text-sm text-gray-500">Completed interview with <a href="#" class="font-medium text-gray-900">Katherine Snyder</a></p>
+                                                                </div>
+                                                                <div class="text-sm text-right text-gray-500 whitespace-nowrap">
+                                                                    <time datetime="2020-10-04">Oct 4</time>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
                                     <div class="mt-6">
                                         <a href="#" class="block w-full px-4 py-2 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"> View all </a>

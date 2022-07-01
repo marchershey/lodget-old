@@ -14,3 +14,9 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
 Alpine.start();
+
+// Full calendar
+import { Calendar } from "@fullcalendar/core";
+import dayGridPlugin from "@fullcalendar/daygrid";
+window.Calendar = Calendar;
+window.dayGridPlugin = dayGridPlugin;
