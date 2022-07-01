@@ -56,6 +56,34 @@
                                                     <label for="" class="input-label">Street Address</label>
                                                     <input type="text" name="" id="" class="input">
                                                 </div>
+                                                <div>
+                                                    <label for="" class="input-label">City</label>
+                                                    <input type="text" name="" id="" class="input">
+                                                </div>
+                                                <div class="grid grid-cols-2 gap-5">
+                                                    <div>
+                                                        <label for="" class="input-label">State</label>
+                                                        <select id="type" name="type" class="input">
+                                                            <option value=""></option>
+                                                            <option>Full house</option>
+                                                            <option>Apartment</option>
+                                                            <option>Cabin</option>
+                                                            <option>Villa</option>
+                                                            <option>Townhouse</option>
+                                                            <option>Cottage</option>
+                                                            <option>Bungalow</option>
+                                                            <option>Houseboat</option>
+                                                            <option>Hut</option>
+                                                            <option>Farm</option>
+                                                            <option>Dome</option>
+                                                            <option>Chalet</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label for="" class="input-label">Zip</label>
+                                                        <input type="text" name="" id="" class="input">
+                                                    </div>
+                                                </div>
 
 
                                                 <h3 class="panel-heading">Property Details</h3>
@@ -198,7 +226,15 @@
                                                             </div>
                                                         </label>
                                                     </div>
-
+                                                </div>
+                                                <div class="space-y-2">
+                                                    <label for="" class="input-label">Amenities</label>
+                                                    <select name="" id="" class="input" multiple>
+                                                        <option value="">one</option>
+                                                        <option value="">one</option>
+                                                        <option value="">one</option>
+                                                    </select>
+                                                    <div class="text-xs label-desc text-muted">Hold <span class="font-semibold">Crtl</span> to select multiple amenities</div>
                                                 </div>
 
                                                 <h3 class="panel-heading">Property Details</h3>
@@ -218,7 +254,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex justify-end flex-shrink-0 px-4 py-4">
+                                <div class="flex justify-end flex-shrink-0 px-4 py-4 bg-gray-50">
                                     <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" x-on:click="addProperty = false">Cancel</button>
                                     <button type="submit" class="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">Save</button>
                                 </div>
