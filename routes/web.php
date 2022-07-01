@@ -49,9 +49,8 @@ Route::name('guest.')->prefix('/guest')->group(function () {
  * Host Routes
  */
 Route::name('host.')->prefix('/host')->group(function () {
-    // Dashboard
     Route::view('/dashboard', 'pages.host.dashboard')->name('dashboard');
-    // Properties
+    Route::view('/properties', 'pages.host.properties')->name('properties');
     // Reservations
     // Guests
     // Settings

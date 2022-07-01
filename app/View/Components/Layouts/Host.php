@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class Host extends Component
 {
+    public $asideTop;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($asideTop = false)
     {
-        //
+        $this->asideTop = $asideTop;
     }
 
     /**

@@ -45,7 +45,7 @@
 
     /* Forms */
     .input {
-        @apply block w-full px-4 py-2 border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
+        @apply block w-full px-4 py-2 mt-2 border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
     }
     .input-label {
         @apply block text-sm font-medium text-gray-700;
@@ -55,6 +55,20 @@
     }
     .checkbox {
         @apply w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary;
+    }
+    .range-slider {
+        @apply w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+    }
+    .range-slider::-webkit-slider-thumb {
+        @apply w-5 h-5 bg-white border border-black rounded-full appearance-none drop-shadow;
+    }
+
+    .range-slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #04aa6d;
+        cursor: pointer;
     }
     .button {
         @apply flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm sm:w-auto bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;

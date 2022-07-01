@@ -1,6 +1,6 @@
 <x-layouts.base>
     <div class="min-h-full">
-        <header class="bg-white shadow-sm lg:static lg:overflow-y-visible">
+        <header class="bg-white shadow-sm lg:static lg:overflow-y-visible" x-data="{ mobileMenu: false }">
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                     <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
@@ -10,7 +10,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="flex-1 min-w-0 md:px-8 lg:px-0 xl:col-span-6">
+                    <div class="flex-1 min-w-0 md:px-8 lg:px-0 xl:col-span-7">
                         <div class="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
                             <div class="w-full">
                                 <label for="search" class="sr-only">Search</label>
@@ -30,17 +30,18 @@
                         <!-- Mobile menu button -->
                         <button type="button" class="inline-flex items-center justify-center p-2 -mx-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-expanded="false">
                             <span class="sr-only">Open menu</span>
-                            <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" x-show="!mobileMenu" x-on:click="mobileMenu = true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
-                            <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" x-show="mobileMenu" x-cloak x-on:click="mobileMenu = false">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
-                    <div class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                        <!-- This example requires Tailwind CSS v2.0+ -->
-                        <div class="relative inline-block text-left" x-data="{ open: false }">
+                    <div class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-3">
+
+                        {{-- Property Selector --}}
+                        {{-- <div class="relative inline-block text-left" x-data="{ open: false }">
                             <div>
                                 <button type="button" class="flex items-center py-2 space-x-2 hover:underline text-muted" id="menu-button" aria-expanded="true" aria-haspopup="true" x-on:click="open = !open">
                                     <span class="text-sm font-medium">
@@ -60,8 +61,9 @@
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-2">Add New Property...</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
+                        {{-- Notifications --}}
                         <a href="#" class="flex-shrink-0 p-1 ml-5 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                             <span class="sr-only">View notifications</span>
                             <!-- Heroicon name: outline/bell -->
@@ -75,15 +77,12 @@
                             <div>
                                 <button type="button" class="flex bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="user-menu-button" aria-expanded="false" aria-haspopup="true" x-on:click="profileMenu = !profileMenu">
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                    <img class="w-8 h-8 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->first_name }}+{{ auth()->user()->last_name }}&background=2563eb&color=ffffff&bold=false&format=svg" alt="">
                                 </button>
                             </div>
                             <div class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" x-show="profileMenu" x-cloak x-on:click.away="profileMenu = false">
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-
                                 <a href="{{ route('auth.logout') }}" class="block px-4 py-2 text-sm text-red-500" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                             </div>
                         </div>
@@ -94,7 +93,7 @@
             </div>
 
             <!-- Mobile menu, show/hide based on menu state. -->
-            <nav class="lg:hidden" aria-label="Global">
+            <nav class="lg:hidden" aria-label="Global" x-show="mobileMenu" x-cloak x-on:click.away="mobileMenu = false">
                 <div class="max-w-3xl px-2 pt-2 pb-3 mx-auto space-y-1 sm:px-4">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
                     <a href="#" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Home</a>
@@ -105,11 +104,11 @@
                 <div class="pt-4 border-t border-gray-200">
                     <div class="flex items-center max-w-3xl px-4 mx-auto sm:px-6">
                         <div class="flex-shrink-0">
-                            <img class="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <img class="w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->first_name }}+{{ auth()->user()->last_name }}&background=2563eb&color=ffffff&bold=false&format=svg" alt="">
                         </div>
                         <div class="ml-3">
-                            <div class="text-base font-medium text-gray-800">Chelsea Hagon</div>
-                            <div class="text-sm font-medium text-gray-500">chelsea.hagon@example.com</div>
+                            <div class="text-base font-medium text-white capitalize">{{ auth()->user()->fullName() }}</div>
+                            <div class="text-sm font-medium text-gray-400">{{ auth()->user()->email }}</div>
                         </div>
                         <button type="button" class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                             <span class="sr-only">View notifications</span>
@@ -121,9 +120,7 @@
                     </div>
                     <div class="max-w-3xl px-2 mx-auto mt-3 space-y-1 sm:px-4">
                         <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Your Profile</a>
-
                         <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Settings</a>
-
                         <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Sign out</a>
                     </div>
                 </div>
@@ -139,17 +136,15 @@
         </header>
 
         <div class="py-10">
-            <div class="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
+            <div class="grid max-w-3xl grid-cols-1 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid-cols-12 lg:gap-8" {{ $attributes }}>
+
+                {{-- Navigation (left sidebar) --}}
                 <div class="hidden lg:block lg:col-span-3 xl:col-span-2">
                     <nav aria-label="Sidebar" class="sticky divide-y divide-gray-300 top-4">
                         <div class="pb-8 space-y-1">
                             <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-600 hover:bg-gray-50" -->
-                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-gray-200 rounded-md group" aria-current="page">
-                                <!-- Heroicon name: outline/home -->
-                                {{-- <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                </svg> --}}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-900 rounded-md group" aria-current="page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M4 4h6v8h-6z"></path>
                                     <path d="M4 16h6v4h-6z"></path>
@@ -160,112 +155,62 @@
                             </a>
 
                             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
-                                <!-- Heroicon name: outline/fire -->
-                                <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+                                    <rect x="9" y="3" width="6" height="4" rx="2"></rect>
+                                    <line x1="9" y1="12" x2="9.01" y2="12"></line>
+                                    <line x1="13" y1="12" x2="15" y2="12"></line>
+                                    <line x1="9" y1="16" x2="9.01" y2="16"></line>
+                                    <line x1="13" y1="16" x2="15" y2="16"></line>
                                 </svg>
-                                <span class="truncate"> Popular </span>
+                                <span class="truncate"> Reservations </span>
                             </a>
 
                             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
-                                <!-- Heroicon name: outline/user-group -->
-                                <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="3" y1="21" x2="21" y2="21"></line>
+                                    <path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"></path>
+                                    <circle cx="12" cy="9" r="2"></circle>
+                                    <path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"></path>
                                 </svg>
-                                <span class="truncate"> Communities </span>
+                                <span class="truncate"> Properties </span>
                             </a>
 
                             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
                                 <!-- Heroicon name: outline/trending-up -->
-                                <svg class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
-                                <span class="truncate"> Trending </span>
+                                <span class="truncate"> Settings </span>
                             </a>
-                        </div>
-                        <div class="pt-10">
-                            <p class="px-3 text-xs font-semibold tracking-wider text-gray-500 uppercase" id="communities-headline">My communities</p>
-                            <div class="mt-3 space-y-2" aria-labelledby="communities-headline">
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Movies </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Food </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Sports </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Animals </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Science </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Dinosaurs </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Talents </span>
-                                </a>
-
-                                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md group hover:text-gray-900 hover:bg-gray-50">
-                                    <span class="truncate"> Gaming </span>
-                                </a>
-                            </div>
                         </div>
                     </nav>
                 </div>
-                <main class="lg:col-span-9 xl:col-span-6">
-                    <div id="calendar"></div>
-                    <script>
-                        window.addEventListener('load', function() {
 
-                            let calendarEl = document.getElementById('calendar')
-                            let calendar = new Calendar(calendarEl, {
-                                plugins: [dayGridPlugin],
-                                initialView: 'dayGridMonth',
-                                nextDayThreshold: '00:00:00',
-                                headerToolbar: {
-                                    left: '',
-                                    center: '',
-                                    right: ''
-                                },
-                                events: [{ // this object will be "parsed" into an Event Object
-                                        title: 'The Title', // a property!
-                                        start: '2022-06-01', // a property!
-                                        end: '2022-06-04' // a property! ** see important note below about 'end' **
-                                    },
-                                    { // this object will be "parsed" into an Event Object
-                                        title: 'The Title', // a property!
-                                        start: '2022-06-04', // a property!
-                                        end: '2022-06-06' // a property! ** see important note below about 'end' **
-                                    },
-                                ]
-                            });
+                <main class="md:col-span-6 xl:col-span-7">
+                    {{ $slot }}
+                </main>
 
-                            calendar.render();
-                        });
-                    </script>
+                @if (isset($aside))
+                    <aside class="md:col-span-3 xl:col-span-3 @if ($asideTop) order-first lg:order-last @endif">
+                        {{-- lg -> split this into two columns --}}
+                        {{ $aside }}
+                    </aside>
+                @endif
 
-
-
-
-
+                {{-- Content --}}
+                {{-- <main class="lg:col-span-9 xl:col-span-6">
                     <div class="px-4 sm:px-0">
                         <div class="sm:hidden">
                             <label for="question-tabs" class="sr-only">Select a tab</label>
                             <select id="question-tabs" class="block w-full text-base font-medium text-gray-900 border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
                                 <option selected>Pending</option>
-
+                                <option>Active</option>
                                 <option>Upcoming</option>
-
                                 <option>Completed</option>
                             </select>
                         </div>
@@ -276,12 +221,10 @@
                                     <span>Active</span>
                                     <span aria-hidden="true" class="bg-primary absolute inset-x-0 bottom-0 h-0.5"></span>
                                 </a>
-
                                 <a href="#" class="relative flex-1 min-w-0 px-6 py-4 overflow-hidden text-sm font-medium text-center text-gray-500 bg-white hover:text-gray-700 group hover:bg-gray-50 focus:z-10">
                                     <span>Upcoming</span>
                                     <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
                                 </a>
-
                                 <a href="#" class="relative flex-1 min-w-0 px-6 py-4 overflow-hidden text-sm font-medium text-center text-gray-500 bg-white rounded-r-lg hover:text-gray-700 group hover:bg-gray-50 focus:z-10">
                                     <span>Completed</span>
                                     <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
@@ -290,7 +233,141 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h1 class="sr-only">Recent questions</h1>
+
+                        <!-- This example requires Tailwind CSS v2.0+ -->
+                        <div class="overflow-hidden bg-white shadow sm:rounded-md">
+                            <ul role="list" class="divide-y divide-gray-200">
+                                <li>
+                                    <a href="#" class="block hover:bg-gray-50">
+                                        <div class="flex items-center px-4 py-4 sm:px-6">
+                                            <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
+                                                <div class="truncate">
+                                                    <div class="flex text-sm">
+                                                        <p class="font-medium text-indigo-600 truncate">Back End Developer</p>
+                                                        <p class="flex-shrink-0 ml-1 font-normal text-gray-500">in Engineering</p>
+                                                    </div>
+                                                    <div class="flex mt-2">
+                                                        <div class="flex items-center text-sm text-gray-500">
+                                                            <!-- Heroicon name: solid/calendar -->
+                                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <p>
+                                                                Closing on
+                                                                <time datetime="2020-01-07">January 7, 2020</time>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
+                                                    <div class="flex -space-x-1 overflow-hidden">
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Dries Vincent">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Courtney Henry">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Tom Cook">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ml-5">
+                                                <!-- Heroicon name: solid/chevron-right -->
+                                                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="block hover:bg-gray-50">
+                                        <div class="flex items-center px-4 py-4 sm:px-6">
+                                            <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
+                                                <div class="truncate">
+                                                    <div class="flex text-sm">
+                                                        <p class="font-medium text-indigo-600 truncate">Front End Developer</p>
+                                                        <p class="flex-shrink-0 ml-1 font-normal text-gray-500">in Engineering</p>
+                                                    </div>
+                                                    <div class="flex mt-2">
+                                                        <div class="flex items-center text-sm text-gray-500">
+                                                            <!-- Heroicon name: solid/calendar -->
+                                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <p>
+                                                                Closing on
+                                                                <time datetime="2020-01-07">January 7, 2020</time>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
+                                                    <div class="flex -space-x-1 overflow-hidden">
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Whitney Francis">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Leonard Krasner">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Floyd Miles">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ml-5">
+                                                <!-- Heroicon name: solid/chevron-right -->
+                                                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="block hover:bg-gray-50">
+                                        <div class="flex items-center px-4 py-4 sm:px-6">
+                                            <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
+                                                <div class="truncate">
+                                                    <div class="flex text-sm">
+                                                        <p class="font-medium text-indigo-600 truncate">User Interface Designer</p>
+                                                        <p class="flex-shrink-0 ml-1 font-normal text-gray-500">in Design</p>
+                                                    </div>
+                                                    <div class="flex mt-2">
+                                                        <div class="flex items-center text-sm text-gray-500">
+                                                            <!-- Heroicon name: solid/calendar -->
+                                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <p>
+                                                                Closing on
+                                                                <time datetime="2020-01-14">January 14, 2020</time>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-shrink-0 mt-4 sm:mt-0 sm:ml-5">
+                                                    <div class="flex -space-x-1 overflow-hidden">
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Emily Selman">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Kristin Watson">
+
+                                                        <img class="inline-block w-6 h-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Emma Dorsey">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ml-5">
+                                                <!-- Heroicon name: solid/chevron-right -->
+                                                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+
                         <ul role="list" class="space-y-4">
                             <li>
                                 <!-- This example requires Tailwind CSS v2.0+ -->
@@ -419,8 +496,10 @@
                             <!-- More questions... -->
                         </ul>
                     </div>
-                </main>
-                <aside class="hidden xl:block xl:col-span-4">
+                </main> --}}
+
+                {{-- Right sidebar --}}
+                {{-- <aside class="xl:block xl:col-span-4">
                     <div class="sticky space-y-4 top-4">
                         <section aria-labelledby="who-to-follow-heading">
                             <div class="bg-white rounded-lg shadow">
@@ -559,7 +638,7 @@
                             </div>
                         </section>
                     </div>
-                </aside>
+                </aside> --}}
             </div>
         </div>
     </div>
