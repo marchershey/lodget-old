@@ -14,16 +14,6 @@
             <div class="fixed inset-0 overflow-hidden">
                 <div class="absolute inset-0 overflow-hidden">
                     <div class="fixed inset-y-0 right-0 flex max-w-full pointer-events-none sm:pl-16">
-                        <!--
-                Slide-over panel, show/hide based on slide-over state.
-      
-                Entering: "transform transition ease-in-out duration-500 sm:duration-700"
-                  From: "translate-x-full"
-                  To: "translate-x-0"
-                Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
-                  From: "translate-x-0"
-                  To: "translate-x-full"
-              -->
                         <div class="w-screen max-w-xl pointer-events-auto">
                             <form class="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl">
                                 <div class="flex-1 h-0 overflow-y-auto">
@@ -48,25 +38,6 @@
                                         <div class="px-4 divide-y divide-gray-200 sm:px-6">
                                             <div class="pt-6 pb-5 space-y-6">
                                                 <h3 class="panel-heading">Property Information</h3>
-
-
-                                                <div class="flex gap-5">
-                                                    <label for="amen1">
-                                                        <input id="amen1" type="checkbox" value="red" class="sr-only peer">
-                                                        <div class="bg-gray-100 text-muted button peer-checked:bg-red-500">
-                                                            Pool
-                                                        </div>
-                                                    </label>
-                                                    <label for="amen1">
-                                                        <input id="amen1" type="checkbox" value="red" class="sr-only peer">
-                                                        <div class="bg-gray-100 text-muted button peer-checked:bg-red-500">
-                                                            Pool
-                                                        </div>
-                                                    </label>
-                                                </div>
-
-
-
                                                 <div>
                                                     <label for="" class="input-label">Property Name</label>
                                                     <input type="text" name="" id="" class="input">
@@ -285,42 +256,36 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="space-y-2">
+                                                {{-- <div class="space-y-2">
                                                     <span for="" class="input-label">Amenities</span>
-                                                    <div class="flex gap-5">
-
-
-
-                                                        <div>
-
-
-
-                                                            <label for="amen1">
-                                                                <input id="amen1" type="checkbox" value="red" class="sr-only peer">
-                                                                <span class="peer-checked:font-bold">amen1</span>
-                                                            </label>
-                                                            <input type="checkbox" value="orange">
-                                                            <input type="checkbox" value="yellow">
-                                                        </div>
-
-
-
-
+                                                    <div class="flex gap-3">
+                                                        <label for="amen1">
+                                                            <input id="amen1" type="checkbox" value="red" class="sr-only peer">
+                                                            <div class="text-gray-800 bg-gray-100 cursor-pointer hover:bg-gray-200 button peer-checked:bg-primary peer-checked:text-white peer-checked:hover:bg-primary-light">
+                                                                Pool
+                                                            </div>
+                                                        </label>
+                                                        <label for="amen1">
+                                                            <input id="amen1" type="checkbox" value="red" class="sr-only peer">
+                                                            <div class="text-gray-800 bg-gray-100 cursor-pointer hover:bg-gray-200 button peer-checked:bg-primary peer-checked:text-white peer-checked:hover:bg-primary-light">
+                                                                Pool
+                                                            </div>
+                                                        </label>
                                                     </div>
 
-                                                </div>
+                                                </div> --}}
 
-                                                <h3 class="panel-heading">Property Details</h3>
+                                                <h3 class="pt-8 panel-heading">Property Listing</h3>
                                                 <div>
-                                                    <label for="project-name" class="block text-sm font-medium text-gray-900"> Project name </label>
-                                                    <div class="mt-1">
-                                                        <input type="text" name="project-name" id="project-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                                    <div>
+                                                        <label for="" class="input-label">Headline</label>
+                                                        <input type="text" name="" id="" class="input">
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <label for="description" class="block text-sm font-medium text-gray-900"> Description </label>
                                                     <div class="mt-1">
-                                                        <textarea id="description" name="description" rows="4" class="block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                                        <textarea id="description" name="description" rows="4" class="input"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
