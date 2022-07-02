@@ -16454,8 +16454,10 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
+/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts */ "./vendor/usernotnull/tall-toasts/dist/js/tall-toasts.js");
+/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
  // Windows Size Utility
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 // Then we set the value in the --vh custom property to the root of the document
@@ -16465,16 +16467,18 @@ document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
 /**
  * Plugins and Packages
  */
-// Alpinejs
+// Alpinejs & Tall Toasts
 
 
+
+alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].data("ToastComponent", (_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_2___default()));
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start(); // Full calendar
 
 
 
-window.Calendar = _fullcalendar_core__WEBPACK_IMPORTED_MODULE_2__.Calendar;
-window.dayGridPlugin = _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__["default"];
+window.Calendar = _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__.Calendar;
+window.dayGridPlugin = _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__["default"];
 
 /***/ }),
 
@@ -16515,6 +16519,125 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./vendor/usernotnull/tall-toasts/dist/js/tall-toasts.js":
+/*!***************************************************************!*\
+  !*** ./vendor/usernotnull/tall-toasts/dist/js/tall-toasts.js ***!
+  \***************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function (factory) {
+   true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+		__WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : 0;
+}(function () {
+  "use strict";
+
+  document.addEventListener("alpine:initializing", function () {
+    window.Alpine.data("ToastComponent", function ($wire) {
+      return {
+        duration: $wire.duration,
+        wireToasts: $wire.entangle("toasts"),
+        prod: $wire.entangle("prod"),
+        wireToastsIndex: 0,
+        toasts: [],
+        pendingToasts: [],
+        pendingRemovals: [],
+        count: 0,
+        loaded: !1,
+        init: function init() {
+          var _this = this;
+
+          window.Toast = {
+            component: this,
+            make: function make(message, title, type) {
+              return {
+                title: title,
+                message: message,
+                type: type
+              };
+            },
+            debug: function debug(message) {
+              var title = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "";
+              this.component.add(this.make(message, title, "debug"));
+            },
+            info: function info(message) {
+              var title = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "";
+              this.component.add(this.make(message, title, "info"));
+            },
+            success: function success(message) {
+              var title = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "";
+              this.component.add(this.make(message, title, "success"));
+            },
+            warning: function warning(message) {
+              var title = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "";
+              this.component.add(this.make(message, title, "warning"));
+            },
+            danger: function danger(message) {
+              var title = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "";
+              this.component.add(this.make(message, title, "danger"));
+            }
+          }, addEventListener("toast", function (event) {
+            _this.add(event.detail);
+          }), this.fetchWireToasts(), this.$watch("wireToasts", function () {
+            _this.fetchWireToasts();
+          }), setTimeout(function () {
+            _this.loaded = !0, _this.pendingToasts.forEach(function (toast) {
+              _this.add(toast);
+            }), _this.pendingToasts = null;
+          }, $wire.loadDelay);
+        },
+        fetchWireToasts: function fetchWireToasts() {
+          var _this2 = this;
+
+          this.wireToasts.forEach(function (toast, i) {
+            i < _this2.wireToastsIndex || (_this2.add(window.Alpine.raw(toast)), _this2.wireToastsIndex++);
+          });
+        },
+        add: function add(toast) {
+          var _toast$type;
+
+          if (!0 === this.loaded) {
+            if ("debug" === toast.type) {
+              if (this.prod) return;
+              console.log(toast.title, toast.message);
+            }
+
+            null !== (_toast$type = toast.type) && void 0 !== _toast$type || (toast.type = "info"), toast.show = 0, toast.index = this.count, this.toasts[this.count] = toast, this.scheduleRemoval(this.count), this.count++;
+          } else this.pendingToasts.push(toast);
+        },
+        scheduleRemoval: function scheduleRemoval(toastIndex) {
+          var _this3 = this;
+
+          Object.keys(this.pendingRemovals).includes(toastIndex.toString()) || (this.pendingRemovals[toastIndex] = setTimeout(function () {
+            _this3.remove(toastIndex);
+          }, this.duration));
+        },
+        scheduleRemovalWithOlder: function scheduleRemovalWithOlder() {
+          for (var toastIndex = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : this.count, i = 0; i <= toastIndex; i++) {
+            this.scheduleRemoval(i);
+          }
+        },
+        cancelRemovalWithNewer: function cancelRemovalWithNewer(toastIndex) {
+          for (var i = this.count - 1; i >= toastIndex; i--) {
+            clearTimeout(this.pendingRemovals[i]), delete this.pendingRemovals[i];
+          }
+        },
+        remove: function remove(index) {
+          var _this4 = this;
+
+          this.toasts[index] && (this.toasts[index].show = 0), setTimeout(function () {
+            _this4.toasts[index] = "", delete _this4.pendingRemovals[index];
+          }, 500);
+        }
+      };
+    });
+  });
+});
 
 /***/ }),
 

@@ -3,11 +3,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-    content: [
-        "./resources/**/*.blade.php",
-        // "./vendor/usernotnull/tall-toasts/config/**/*.php",
-        // "./vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php",
-    ],
+    content: ["./resources/**/*.blade.php"],
     theme: {
         extend: {
             colors: {

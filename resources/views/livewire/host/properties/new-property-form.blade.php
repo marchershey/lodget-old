@@ -1,3 +1,5 @@
-<div>
-    {{-- Do your work, then step back. --}}
+<div x-show="newPropertySlideover">
+    <div wire:init>
+        asdf
+    </div>
 </div>

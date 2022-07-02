@@ -197,7 +197,6 @@
 
                 @if (isset($aside))
                     <aside class="md:col-span-3 xl:col-span-3 @if ($asideTop) order-first lg:order-last @endif">
-                        {{-- lg -> split this into two columns --}}
                         {{ $aside }}
                     </aside>
                 @endif
