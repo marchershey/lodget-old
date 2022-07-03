@@ -26,7 +26,9 @@ return new class extends Migration
             $table->string('bedrooms');
             $table->string('bathrooms');
             $table->string('headline')->nullable();
-            $table->text('headline')->nullable();
+            $table->text('description')->nullable();
+
+            $table->boolean('visible')->default(false);
             $table->timestamps();
         });
     }

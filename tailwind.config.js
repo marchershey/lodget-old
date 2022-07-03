@@ -15,7 +15,9 @@ module.exports = {
                 },
                 muted: {
                     DEFAULT: colors.gray[500],
-                    light: colors.gray[100],
+                    light: colors.gray[300],
+                    lighter: colors.gray[200],
+                    lightest: colors.gray[100],
                 },
                 gray: colors.slate,
             },

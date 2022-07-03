@@ -48,9 +48,10 @@ Route::name('guest.')->prefix('/guest')->group(function () {
 /**
  * Host Routes
  */
-Route::name('host.')->prefix('/host')->group(function () {
+Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
     Route::view('/dashboard', 'pages.host.dashboard')->name('dashboard');
-    Route::view('/properties', 'pages.host.properties')->name('properties');
+    Route::get('/properties', [App\Http\Controllers\Pages\Host\Properties::class, 'view'])->name('properties');
+    Route::get('/properties/edit/{id}', [App\Http\Controllers\Pages\Host\Properties::class, 'edit'])->name('properties.edit');
     // Reservations
     // Guests
     // Settings

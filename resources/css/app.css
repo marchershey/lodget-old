@@ -45,7 +45,7 @@
 
     /* Forms */
     .input {
-        @apply block w-full px-4 py-2 mt-2 border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-light;
+        @apply block w-full px-4 py-2 mt-2 border-gray-300 rounded focus:bg-white focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-muted-lightest;
     }
     .input-label {
         @apply block text-sm font-medium text-gray-700;
