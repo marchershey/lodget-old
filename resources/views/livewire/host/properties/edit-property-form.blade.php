@@ -85,6 +85,7 @@
         </div>
     </div>
 
+    {{-- Property details --}}
     <div class="w-full panel">
         <div class="flex flex-col space-y-3">
 
@@ -232,46 +233,111 @@
         </div>
     </div>
 
+    {{-- Photos --}}
     <div class="w-full panel">
         <div class="flex flex-col space-y-3">
             <h3 class="panel-heading">Photos</h3>
             <div class="flex items-center whitespace-nowrap">
                 <label x-show="!isUploading" for="file-upload">
                     <input wire:model="stagedPhotos" id="photo-upload" type="file" accept="image/png, image/jpeg" class="sr-only" multiple>
-                    <button type="button" onclick="document.getElementById('photo-upload').click()" class="button button-gray">
+                    <button type="button" onclick="document.getElementById('photo-upload').click()" class="button">
                         <span>Select Photos</span>
                     </button>
                 </label>
-
-                <div x-show="isUploading" x-cloak class="flex items-center w-full space-x-5">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-3 -ml-1 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="text-gray-200" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="text-primary/80" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <div class="text-sm font-medium text-gray-700">Uploading...</div>
-                    </div>
-                    <!-- Progress Bar -->
-                    <div x-show="isUploading" x-cloak class="relative w-full h-5 overflow-hidden bg-gray-200 rounded-full">
-                        <div class="absolute h-full p-1 overflow-hidden text-xs font-medium leading-none text-center text-white bg-blue-600 rounded-l-full whitespace-nowrap" :style="{ 'width': progress + '%' }"><span x-text="progress" class=""></span>%</div>
-                    </div>
-                </div>
             </div>
 
             @if ($stagedPhotos)
-                <div class="p-5 space-y-5 bg-gray-100 rounded-lg">
-                    <div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-4">
+                <div class="p-5 space-y-5 bg-gray-100 border border-gray-200 rounded-lg">
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($stagedPhotos as $key => $photo)
-                            <div wire:click="removeStagedPhoto({{ $key }})" class="block w-full overflow-hidden bg-gray-100 rounded-lg cursor-pointer group aspect-w-10 aspect-h-7 draggable--handle">
+                            <div wire:key="staged-photo-{{ $key }}" wire:click="deleteStagedPhoto({{ $key }})" class="block w-full overflow-hidden bg-gray-100 rounded-lg cursor-pointer group aspect-w-10 aspect-h-7">
                                 <img src="{{ $photo->temporaryUrl() }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
                             </div>
                         @endforeach
                     </div>
-                    <div class="text-xs text-muted">
-                        <strong>Note:</strong> Click/Tap a photo to delete it. Also, you need to save these photos before you can reorder them.
-                    </div>
+                </div>
+            @endif
+
+            @if ($uploadedPhotos)
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 focus-visible:outline-none">
+                    @foreach ($uploadedPhotos as $key => $photo)
+                        <div wire:key="uploaded-photo-{{ $key }}" class="relative bg-gray-100 border border-gray-200 rounded-lg focus-visible:outline-none" data-photo-id="{{ $photo['id'] }}">
+                            <div class="block w-full overflow-hidden bg-gray-100 rounded-t-lg group aspect-w-10 aspect-h-7">
+                                <img src="/storage/{{ $photo['path'] }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
+                            </div>
+                            <div x-data="{ open: false }" class="flex items-center justify-between p-2">
+                                <div class="font-medium truncate pointer-events-none">
+                                    <p class="block text-sm truncate">{{ $photo['name'] }}</p>
+                                    <p class="block text-xs text-muted">{{ number_format($photo['size'] / 1e6, 2) }}MB</p>
+                                </div>
+                                <div class="relative inline-block text-left">
+                                    <div x-on:click="open = !open">
+                                        <button type="button" class="flex items-center text-muted-light hover:text-red-500 focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                            <span class="sr-only">Open options</span>
+                                            <!-- Heroicon name: solid/dots-vertical -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div x-show="open" x-cloak x-on:click="open = false" x-on:click.away="open = false" class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                        <div wire:click="deleteUploadedPhoto({{ $key }}, {{ $photo['id'] }})" class="flex items-center px-4 py-2 space-x-2 text-sm text-red-500 cursor-pointer select-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                            </svg>
+                                            <span>Delete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="text-xs text-muted">
+                    <strong>Note:</strong> To reorder the photos, simply drag the photo to a new position.
                 </div>
             @endif
         </div>
+    </div>
+
+    {{-- Amenities --}}
+    <div class="w-full panel">
+        <div class="flex flex-col space-y-3">
+            <h3 class="panel-heading">Amenities</h3>
+
+            <form wire:submit.prevent="addAmenity" class="flex items-center gap-5">
+                <div class="w-full">
+                    <input wire:model="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
+                </div>
+                <button type="submit" class="w-auto button whitespace-nowrap button-light">Add Amenities</button>
+
+            </form>
+
+            <div class="grid grid-cols-2 gap-x-5">
+                @if ($amenities)
+                    @foreach ($amenities as $amenity)
+                        <span class="block">{{ $amenity }}</span>
+                    @endforeach
+                @endif
+            </div>
+
+            <div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full">
+        <button class="button" wire:click="submit">Update Property</button>
     </div>
 </div>

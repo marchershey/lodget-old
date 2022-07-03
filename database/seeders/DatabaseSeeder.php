@@ -24,5 +24,21 @@ class DatabaseSeeder extends Seeder
             'active' => '1',
             'type' => 'host',
         ]);
+
+        \App\Models\Property::create([
+            'name' => 'Ohana Burnside',
+            'street' => '123 Address Ave',
+            'city' => 'Lexington',
+            'state' => 'KY',
+            'zip' => '40004',
+            'type' => 'House',
+            'guests' => '1',
+            'beds' => '2',
+            'bedrooms' => '3',
+            'bathrooms' => '3.5',
+            'headline' => '',
+            'description' => '',
+            'visible' => 1,
+        ]);
     }
 }

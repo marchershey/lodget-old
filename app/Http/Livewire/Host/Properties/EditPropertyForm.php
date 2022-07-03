@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Host\Properties;
 
+use App\Models\PropertyAmenity;
+use App\Models\PropertyPhoto;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 use Livewire\WithFileUploads;
@@ -11,7 +13,6 @@ class EditPropertyForm extends Component
     use WithFileUploads, WireToast;
 
     public $property;
-    public $stagedPhotos;
 
     public $name;
     public $street;
@@ -25,6 +26,10 @@ class EditPropertyForm extends Component
     public $bathrooms = 0;
     public $headline;
     public $description;
+    public $stagedPhotos;
+    public $uploadedPhotos;
+    public $amenity;
+    public $amenities = [];
 
     protected $rules = [
         'name' => 'required|string|max:250',
@@ -58,5 +63,95 @@ class EditPropertyForm extends Component
         $this->bathrooms = $this->property->bathrooms;
         $this->headline = $this->property->headline;
         $this->description = $this->property->description;
+
+        // load photos
+        if ($photos = $this->property->photos()->get(['id', 'name', 'size', 'path'])->toArray()) {
+            $this->uploadedPhotos = $photos;
+        }
+
+        // load amenities
+        if ($amenities = $this->property->amenities()->get(['id', 'text'])->toArray()) {
+            foreach ($amenities as $amenity) {
+                $this->amenities[$amenity['id']] = $amenity['text'];
+            }
+        }
+    }
+
+    public function deleteStagedPhoto($key)
+    {
+        unset($this->stagedPhotos[$key]);
+    }
+
+    public function deleteUploadedPhoto($key, $id)
+    {
+        unset($this->uploadedPhotos[$key]);
+        $photo = PropertyPhoto::find($id);
+        $photo->delete();
+        toast()->success('Photo deleted succeesfully!')->push();
+    }
+
+    public function addAmenity()
+    {
+        if ($this->amenity != null) {
+            if (!in_array($this->amenity, $this->amenities)) {
+                $this->amenities[] = $this->amenity;
+                $this->amenity = "";
+            } else {
+                $this->amenity = "";
+            }
+        }
+    }
+    public function removeAmenity($id)
+    {
+        unset($this->amenities[$id]);
+    }
+
+    public function submit()
+    {
+        // Photos
+        if ($this->stagedPhotos) {
+
+            // get sort/order number from last photo
+            $lastOrder = PropertyPhoto::where('property_id', $this->property->id)->get('order')->last()->order ?? 0;
+
+            foreach ($this->stagedPhotos as $stagedPhoto) {
+                // increase last order
+                $lastOrder++;
+
+                // upload photo
+                $path = $stagedPhoto->store('photos', 'public');
+
+                // store photo in database
+                $photo = new PropertyPhoto();
+                $photo->property_id = $this->property->id;
+                $photo->user_id = 1;
+                $photo->name = $stagedPhoto->getClientOriginalName();
+                $photo->size = $stagedPhoto->getSize();
+                $photo->mime = $stagedPhoto->getMimeType();
+                $photo->path = $path;
+                $photo->order = $lastOrder;
+                $photo->save();
+            }
+        }
+
+        // Amenities
+        // delete all amenities
+        foreach ($this->property->amenities as $amenity) {
+            $amenity->delete();
+        }
+        // re-add current amenities
+        if ($this->amenities) {
+            foreach ($this->amenities as $text) {
+                $amenity = new PropertyAmenity();
+                $amenity->text = $text;
+                $amenity->property_id = $this->property->id;
+                $amenity->user_id = 1;
+                $amenity->save();
+            }
+        }
+
+        toast()->success($this->name . ' was updated successfully!')->push();
+        // toast()->success($this->name . ' was updated successfully!')->pushOnNextPage();
+        // return redirect()->route('host.properties.edit', ['id' => $this->property->id]);
     }
 }

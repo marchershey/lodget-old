@@ -13,7 +13,6 @@
                         Go back
                     </span>
                 </a>
-                <button class="button" x-on:click="newPropertySlideover = true">Update Property</button>
             </div>
         </x-slot:aside>
 
