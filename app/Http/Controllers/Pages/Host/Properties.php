@@ -25,10 +25,10 @@ class Properties extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit()
+    public function edit($id)
     {
-        $properties = Property::all();
+        $property = Property::findOrFail($id);
 
-        return view('pages.host.properties', ['properties' => $properties]);
+        return view('pages.host.properties-edit', ['property' => $property]);
     }
 }

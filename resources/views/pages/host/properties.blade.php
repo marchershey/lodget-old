@@ -2,9 +2,8 @@
 
     <div>
         <x-slot:aside>
-            <div x-data="{ newPropertySlideover: false }">
-                <button class="w-full button" x-on:click="newPropertySlideover = true">Add New Property</button>
-                <button class="w-full mt-5 button" x-on:click="Toast.success('Next, click on the property to add more details, such as photos and aminities!', 'Ohana Burnside was successfully added!')">Test button</button>
+            <div class="px-5 sm:px-0" x-data="{ newPropertySlideover: false }">
+                <button class="button" x-on:click="newPropertySlideover = true">Add New Property</button>
 
                 @livewire('host.properties.new-property-form')
             </div>
@@ -34,10 +33,10 @@
                                 <tbody class="overflow-x-auto divide-y divide-gray-200">
                                     @foreach ($properties as $property)
                                         <tr class="cursor-pointer hover:bg-gray-50 group" onclick="window.location='{{ route('host.properties.edit', ['id' => $property->id]) }}';">
-                                            <td class="px-4 py-2 whitespace-nowrap">{{ $property->name }}</td>
-                                            <td class="px-4 py-2 whitespace-nowrap">{{ $property->city }}, {{ $property->state }}</td>
-                                            <td class="px-4 py-2 whitespace-nowrap">Visible</td>
-                                            <td class="px-4 py-2 text-right whitespace-nowrap">
+                                            <td class="px-4 py-4 whitespace-nowrap">{{ $property->name }}</td>
+                                            <td class="px-4 py-4 whitespace-nowrap">{{ $property->city }}, {{ $property->state }}</td>
+                                            <td class="px-4 py-4 font-semibold text-green-600 whitespace-nowrap">Visible</td>
+                                            <td class="px-4 py-4 text-right whitespace-nowrap">
                                                 <a href="#" class="link">Edit</a>
                                             </td>
                                         </tr>

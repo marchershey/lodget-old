@@ -71,7 +71,10 @@
         cursor: pointer;
     }
     .button {
-        @apply flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm sm:w-auto bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+        @apply inline-flex items-center justify-center w-auto px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm sm:w-full bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+    }
+    .button-light {
+        @apply text-gray-800 bg-white border border-gray-300 hover:bg-gray-200 focus:ring-gray-300;
     }
 
     /* Validation */

@@ -196,7 +196,7 @@
                 </main>
 
                 @if (isset($aside))
-                    <aside class="md:col-span-3 xl:col-span-3 @if ($asideTop) order-first lg:order-last @endif">
+                    <aside class="md:col-span-3 xl:col-span-3 mb-10 @if ($asideTop) order-first lg:order-last @endif">
                         {{ $aside }}
                     </aside>
                 @endif
