@@ -35,7 +35,7 @@
                                         <tr class="cursor-pointer hover:bg-gray-50 group" onclick="window.location='{{ route('host.properties.edit', ['id' => $property->id]) }}';">
                                             <td class="px-4 py-4 whitespace-nowrap">{{ $property->name }}</td>
                                             <td class="px-4 py-4 whitespace-nowrap">{{ $property->city }}, {{ $property->state }}</td>
-                                            <td class="px-4 py-4 font-semibold text-green-600 whitespace-nowrap">Visible</td>
+                                            <td class="px-4 py-4 font-semibold whitespace-nowrap">{!! $property->visible ? '<span class="text-green-600">Visible</span>' : '<span class="text-red-600">Hidden</span>' !!}</td>
                                             <td class="px-4 py-4 text-right whitespace-nowrap">
                                                 <a href="#" class="link">Edit</a>
                                             </td>

@@ -110,7 +110,7 @@
             </div>
             <div class="grid grid-cols-2 gap-5 xl:grid-cols-4">
                 <div x-data="{
-                    value: $wire.entangle('guests'),
+                    value: @entangle('guests'),
                     step: 1,
                     min: 0,
                     max: 99,
@@ -121,14 +121,14 @@
                 }">
                     <label for="guests">
                         <span class="text-sm font-medium text-gray-700 @error('guests') text-red-500 @enderror">Guests</span>
-                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('guests') border-red-500 @enderror">
+                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden group rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('guests') border-red-500 @enderror">
                             <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="guests" class="w-full border-none px-3 py-1.5 text-center focus:outline-none focus:ring-0 @error('guests') bg-red-50 @enderror" tabindex="-1" readonly />
+                            <input x-model.value="value" type="text" id="guests" class="w-full border-none px-3 py-1.5 text-center focus:outline-none bg-gray-50 group-focus-within:bg-white focus:ring-0 @error('guests') bg-red-50 @enderror" tabindex="-1" readonly />
                             <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -151,14 +151,14 @@
                 }">
                     <label for="beds">
                         <span class="text-sm font-medium text-gray-700 @error('beds') text-red-500 @enderror">Beds</span>
-                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('beds') border-red-500 @enderror">
+                        <div class="focus-within:ring-primary group focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('beds') border-red-500 @enderror">
                             <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="beds" class="w-full border-none px-3 py-1.5 text-center focus:outline-none focus:ring-0" tabindex="-1" readonly />
+                            <input x-model.value="value" type="text" id="beds" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
                             <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -181,14 +181,14 @@
                 }">
                     <label for="bedrooms">
                         <span class="text-sm font-medium text-gray-700 @error('bedrooms') text-red-500 @enderror">Bedrooms</span>
-                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bedrooms') border-red-500 @enderror">
+                        <div class="focus-within:ring-primary focus-within:border-primary group mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bedrooms') border-red-500 @enderror">
                             <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="bedrooms" class="w-full border-none px-3 py-1.5 text-center focus:outline-none focus:ring-0" tabindex="-1" readonly />
+                            <input x-model.value="value" type="text" id="bedrooms" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
                             <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -211,14 +211,14 @@
                 }">
                     <label for="bathrooms">
                         <span class="text-sm font-medium text-gray-700 @error('bathrooms') text-red-500 @enderror">Bathrooms</span>
-                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bathrooms') border-red-500 @enderror">
+                        <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex group w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bathrooms') border-red-500 @enderror">
                             <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="bathrooms" class="w-full border-none px-3 py-1.5 text-center focus:outline-none focus:ring-0" tabindex="-1" readonly />
+                            <input x-model.value="value" type="text" id="bathrooms" class="w-full border-none bg-gray-50 group-focus-within:bg-white px-3 py-1.5 text-center focus:outline-none focus:ring-0" tabindex="-1" readonly />
                             <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -324,15 +324,121 @@
 
             </form>
 
-            <div class="grid grid-cols-2 gap-x-5">
+            <div class="flex flex-wrap gap-x-2 gap-y-3">
                 @if ($amenities)
-                    @foreach ($amenities as $amenity)
-                        <span class="block">{{ $amenity }}</span>
+                    @foreach ($amenities as $key => $amenity)
+                        <div>
+                            <span wire:click="removeAmenity({{ $key }})" class="inline px-2 py-1 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-red-50 hover:border-red-200">
+                                {{ $amenity }}
+                            </span>
+                        </div>
                     @endforeach
                 @endif
             </div>
 
             <div>
+                <span class="text-sm text-muted">Click an amenity to remove it.</span>
+            </div>
+        </div>
+    </div>
+
+    {{-- Rates & fees --}}
+    <div class="w-full panel">
+        <div class="flex flex-col space-y-5">
+            <h3 class="panel-heading">Rates & Fees</h3>
+
+            <div class="grid grid-cols-4 gap-5">
+                <div>
+                    <label for="rate" class="input-label">Base Rate</label>
+                    <div class="relative mt-1">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm"> $ </span>
+                        </div>
+                        <input type="text" name="rate" id="rate" class="pl-6 input" placeholder="0.00" aria-describedby="rate-icon">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm" id="rate-icon"> USD </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="tax" class="input-label">Tax Percentage</label>
+                    <div class="relative mt-1">
+                        <input type="text" name="tax" id="tax" class="pr-6 input" placeholder="0" aria-describedby="tax-icon">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 mt-7">
+                    <button class="button button-light" wire:click="addFee">Add additional fees</button>
+                </div>
+            </div>
+
+            @if (count($fees) > 0)
+                <div class="flex flex-col space-y-3">
+                    <hr>
+                    @foreach ($fees as $key => $fee)
+                        <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
+                            <div>
+                                <label for="fees-{{ $key }}-name" class="input-label">Name</label>
+                                <input wire:model="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input">
+                            </div>
+                            <div>
+                                <label for="fees-{{ $key }}-amount" class="input-label">Amount</label>
+                                <div class="relative mt-1">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <span class="text-gray-500 sm:text-sm"> $ </span>
+                                    </div>
+                                    <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 sm:text-sm"> USD </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="fees-{{ $key }}-type" class="input-label">Type</label>
+                                <div class="flex mt-4 space-x-4">
+                                    <div class="flex items-center">
+                                        <input wire:model="fees.{{ $key }}.type" value="fixed" id="fees-{{ $key }}-type-fixed" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
+                                        <label for="fees-{{ $key }}-type-fixed" class="block ml-3 text-sm font-medium text-gray-700"> Fixed </label>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <input wire:model="fees.{{ $key }}.type" value="percentage" id="fees-{{ $key }}-type-percentage" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
+                                        <label for="fees-{{ $key }}-type-percentage" class="block ml-3 text-sm font-medium text-gray-700"> Percentage </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end mt-7">
+                                <button wire:click="removeFee({{ $key }})">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+        </div>
+    </div>
+
+    {{-- Options --}}
+    <div class="w-full panel">
+        <div class="flex flex-col space-y-3">
+            <h3 class="panel-heading">Options</h3>
+            <div class="">
+                <!-- This example requires Tailwind CSS v2.0+ -->
+                <div class="flex items-center justify-between" x-data="{ visible: @entangle('visible') }">
+                    <span class="flex flex-col flex-grow">
+                        <span class="text-sm font-medium text-gray-900" id="availability-label">Visibility</span>
+                        <span class="text-sm text-gray-500" id="availability-description">Choose whether this property is visible to guests or not.</span>
+                    </span>
+                    <button x-on:click="visible = !visible" :class="visible ? 'bg-primary' : 'bg-gray-200'" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description">
+                        <span :class="visible ? 'translate-x-5' : 'translate-x-0'" aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

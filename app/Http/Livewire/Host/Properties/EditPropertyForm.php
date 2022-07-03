@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Host\Properties;
 
+use App\Models\Property;
 use App\Models\PropertyAmenity;
 use App\Models\PropertyPhoto;
+use Illuminate\Validation\Validator;
 use Livewire\Component;
-use Usernotnull\Toast\Concerns\WireToast;
 use Livewire\WithFileUploads;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class EditPropertyForm extends Component
 {
@@ -30,6 +32,14 @@ class EditPropertyForm extends Component
     public $uploadedPhotos;
     public $amenity;
     public $amenities = [];
+
+    // rates & fees
+    public $rate;
+    public $tax;
+    public $fees = [];
+
+    // Options
+    public $visible;
 
     protected $rules = [
         'name' => 'required|string|max:250',
@@ -57,12 +67,15 @@ class EditPropertyForm extends Component
         $this->state = $this->property->state;
         $this->zip = $this->property->zip;
         $this->type = $this->property->type;
-        $this->guests = $this->property->guests;
-        $this->beds = $this->property->beds;
-        $this->bedrooms = $this->property->bedrooms;
-        $this->bathrooms = $this->property->bathrooms;
+        $this->guests = (int) $this->property->guests;
+        $this->beds = (int) $this->property->beds;
+        $this->bedrooms = (int) $this->property->bedrooms;
+        $this->bathrooms = (float) $this->property->bathrooms;
         $this->headline = $this->property->headline;
         $this->description = $this->property->description;
+
+        // Options
+        $this->visible = (bool) $this->property->visible;
 
         // load photos
         if ($photos = $this->property->photos()->get(['id', 'name', 'size', 'path'])->toArray()) {
@@ -101,13 +114,32 @@ class EditPropertyForm extends Component
             }
         }
     }
-    public function removeAmenity($id)
+    public function removeAmenity($key)
     {
-        unset($this->amenities[$id]);
+        unset($this->amenities[$key]);
+    }
+
+    public function addFee()
+    {
+        $this->fees[] = [];
+    }
+    public function removeFee($key)
+    {
+        unset($this->fees[$key]);
     }
 
     public function submit()
     {
+
+        $this->withValidator(function (Validator $validator) {
+            $validator->after(function ($validator) {
+                if (count($validator->errors()) > 0) {
+                    $error = $validator->errors()->first();
+                    toast()->danger($error, 'Error')->push();
+                }
+            });
+        })->validate();
+
         // Photos
         if ($this->stagedPhotos) {
 
@@ -150,8 +182,26 @@ class EditPropertyForm extends Component
             }
         }
 
-        toast()->success($this->name . ' was updated successfully!')->push();
-        // toast()->success($this->name . ' was updated successfully!')->pushOnNextPage();
-        // return redirect()->route('host.properties.edit', ['id' => $this->property->id]);
+        $property = Property::findOrFail($this->property->id);
+        $property->name = (string) ucwords($this->name);
+        $property->street = (string) ucwords($this->street);
+        $property->city = (string) ucwords($this->city);
+        $property->state = (string) strtoupper($this->state);
+        $property->zip = (int) $this->zip;
+        $property->type = (string) ucwords($this->type);
+        $property->guests = (int) $this->guests;
+        $property->beds = (int) $this->beds;
+        $property->bedrooms = (int) $this->bedrooms;
+        $property->bathrooms = (string) $this->bathrooms;
+
+        // options
+        $property->visible = $this->visible;
+
+        if ($property->save()) {
+            toast()->success(ucwords($this->name) . ' was successfully updated!')->pushOnNextPage();
+            return redirect()->route('host.properties');
+        } else {
+            toast()->danger('Oops, something went wrong on our end. Refresh the page and try again.', 'Server Error')->push();
+        }
     }
 }

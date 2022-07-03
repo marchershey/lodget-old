@@ -25,7 +25,7 @@ Route::name('auth.')->prefix('/auth')->group(function () {
  * Frontend Routes
  */
 Route::name('frontend.')->prefix('/')->group(function () {
-    Route::view('/', 'pages.frontend.index')->name('index');
+    Route::get('/', [App\Http\Controllers\Pages\Frontend\Index::class, 'view'])->name('index');
     // Properties
     // Reservations
 });

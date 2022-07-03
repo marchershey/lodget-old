@@ -169,7 +169,25 @@
                     <span class="text-lg text-muted">Check out some of our properties</span>
                 </div>
 
-                <div class="grid grid-cols-1">
+                <div class="w-full lg:mx-auto lg:max-w-7xl lg:px-8">
+                    <ul role="list" class="grid w-full grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 ">
+                        @if ($properties)
+                            @foreach ($properties as $property)
+                                @if (isset($property->photos()->first()->path))
+                                    <li class="relative cursor-pointer group">
+                                        <div class="block w-full overflow-hidden bg-gray-100 rounded-lg aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500">
+                                            <img src="/storage/{{ $property->photos()->first()->path }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
+                                            <button type="button" class="absolute inset-0 focus:outline-none">
+                                                <span class="sr-only">View details for IMG_4985.HEIC</span>
+                                            </button>
+                                        </div>
+                                        <p class="block mt-2 text-xl font-semibold">{{ $property->name }}</p>
+                                        <p class="block font-medium text-gray-500 pointer-events-none">$399 per night</p>
+                                    </li>
+                                @endif
+                            @endforeach
+                        @endif
+                    </ul>
 
                 </div>
             </section>
