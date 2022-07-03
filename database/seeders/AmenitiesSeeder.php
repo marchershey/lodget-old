@@ -14,7 +14,7 @@ class AmenitiesSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Amenity::create(
+        \App\Models\PropertyAmenity::create(
             [
                 'category' => 'bathroom',
                 'text' => 'bathtub',
