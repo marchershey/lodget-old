@@ -26,6 +26,7 @@ Route::name('auth.')->prefix('/auth')->group(function () {
  */
 Route::name('frontend.')->prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\Pages\Frontend\Index::class, 'view'])->name('index');
+    Route::get('/property/{property:slug}', [App\Http\Controllers\Pages\Frontend\PropertyController::class, 'view'])->name('property');
     // Properties
     // Reservations
 });
@@ -51,7 +52,7 @@ Route::name('guest.')->prefix('/guest')->group(function () {
 Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
     Route::view('/dashboard', 'pages.host.dashboard')->name('dashboard');
     Route::get('/properties', [App\Http\Controllers\Pages\Host\Properties::class, 'view'])->name('properties');
-    Route::get('/properties/edit/{id}', [App\Http\Controllers\Pages\Host\Properties::class, 'edit'])->name('properties.edit');
+    Route::get('/properties/{property:slug}', [App\Http\Controllers\Pages\Host\Properties::class, 'edit'])->name('properties.edit');
     // Reservations
     // Guests
     // Settings
@@ -81,6 +82,7 @@ Route::get('/email', function () {
 });
 
 Route::get('/test', function () {
-    // return view('mail.auth.new-registration');
-    Illuminate\Support\Facades\Mail::to('marclewishershey@gmail.com')->queue(new \App\Mail\WelcomeUserMail());
+    $property = App\Models\Property::find(1)->first();
+
+    return count($property->photos()->get());
 });

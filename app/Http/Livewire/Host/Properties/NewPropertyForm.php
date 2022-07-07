@@ -82,6 +82,8 @@ class NewPropertyForm extends Component
         $property->bedrooms = (int) $this->bedrooms;
         $property->bathrooms = (string) $this->bathrooms;
 
+        // $property->slug = \App\Helpers\PropertySlugHelper::generate($property->name);
+
         if ($property->save()) {
             toast()->success('Next, click on the property to add more details, such as photos and aminities!', ucwords($this->name) . ' was successfully added!')->pushOnNextPage();
             return redirect()->route('host.properties');

@@ -24,6 +24,9 @@
     .frontend-section-heading span {
         @apply text-lg text-muted;
     }
+    .frontend-spacing {
+        @apply w-full p-5 lg:mx-auto lg:max-w-7xl lg:px-8;
+    }
 }
 
 @layer components {

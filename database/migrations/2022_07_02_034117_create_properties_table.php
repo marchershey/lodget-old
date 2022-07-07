@@ -15,20 +15,35 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+
+            // information
             $table->string('name');
             $table->string('street');
             $table->string('city');
             $table->string('state');
             $table->string('zip');
+
+            // details
             $table->string('type');
             $table->string('guests');
             $table->string('beds');
             $table->string('bedrooms');
             $table->string('bathrooms');
+
+            // rates
+            $table->string('default_rate')->nullable();
+            $table->string('default_tax')->nullable();
+
+            // options
+            $table->boolean('active')->default(false);
+            $table->string('slug');
+
+            /// -----
+
+            // listing
             $table->string('headline')->nullable();
             $table->text('description')->nullable();
 
-            $table->boolean('visible')->default(false);
             $table->timestamps();
         });
     }

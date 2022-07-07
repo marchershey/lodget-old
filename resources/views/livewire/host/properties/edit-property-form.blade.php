@@ -1,6 +1,12 @@
 <div class="flex flex-col space-y-5" wire:init="loadProperty()">
 
-    {{-- Property information --}}
+    @if ($noPhotoWarning)
+        <div class="p-5 text-yellow-800 border border-yellow-200 rounded-lg bg-yellow-50">
+            <span class="font-semibold">Warning!</span> Your property is hidden because you have not added any photos.
+        </div>
+    @endif
+
+    {{-- Property Information --}}
     <div class="w-full panel">
         <div class="flex flex-col w-full space-y-3">
             <h3 class="panel-heading">Property Information</h3>
@@ -313,19 +319,31 @@
 
     {{-- Amenities --}}
     <div class="w-full panel">
-        <div class="flex flex-col space-y-3">
+        <div class="flex flex-col space-y-5">
             <h3 class="panel-heading">Amenities</h3>
 
-            <form wire:submit.prevent="addAmenity" class="flex items-center gap-5">
+            <form wire:submit.prevent="addAmenity" class="grid grid-cols-2 gap-5">
                 <div class="w-full">
                     <input wire:model="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
                 </div>
                 <button type="submit" class="w-auto button whitespace-nowrap button-light">Add Amenities</button>
-
             </form>
 
-            <div class="flex flex-wrap gap-x-2 gap-y-3">
-                @if ($amenities)
+            @if ($amenities)
+                <div class="flex flex-col space-y-3">
+                    <div class="flex items-center space-x-3">
+                        @foreach ($amenities as $key => $amenity)
+                            <div wire:click="removeAmenity({{ $key }})" class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-red-50 hover:border-red-200">
+                                <span class="mt-px">{{ $amenity }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <span class="text-sm text-muted"><span class="font-medium">Note:</span> Click on an amenity to remove it.</span>
+                </div>
+            @endif
+
+            {{-- @if ($amenities)
+                <div class="flex flex-wrap gap-x-2 gap-y-3">
                     @foreach ($amenities as $key => $amenity)
                         <div>
                             <span wire:click="removeAmenity({{ $key }})" class="inline px-2 py-1 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-red-50 hover:border-red-200">
@@ -333,12 +351,12 @@
                             </span>
                         </div>
                     @endforeach
-                @endif
-            </div>
-
-            <div>
-                <span class="text-sm text-muted">Click an amenity to remove it.</span>
-            </div>
+                @else
+                    <div class="w-full px-5 py-2 border border-gray-200 bg-gray-50">
+                        No amenities found.
+                    </div>
+                </div>
+            @endif --}}
         </div>
     </div>
 
@@ -349,21 +367,21 @@
 
             <div class="grid grid-cols-4 gap-5">
                 <div>
-                    <label for="rate" class="input-label">Base Rate</label>
+                    <label for="rate" class="input-label">Default Base Rate</label>
                     <div class="relative mt-1">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <span class="text-gray-500 sm:text-sm"> $ </span>
                         </div>
-                        <input type="text" name="rate" id="rate" class="pl-6 input" placeholder="0.00" aria-describedby="rate-icon">
+                        <input wire:model="default_rate" type="text" name="rate" id="rate" class="pl-6 input" placeholder="0.00">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm" id="rate-icon"> USD </span>
+                            <span class="text-gray-500 sm:text-sm"> USD </span>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <label for="tax" class="input-label">Tax Percentage</label>
+                    <label for="tax" class="input-label">Default Tax %</label>
                     <div class="relative mt-1">
-                        <input type="text" name="tax" id="tax" class="pr-6 input" placeholder="0" aria-describedby="tax-icon">
+                        <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 input" placeholder="0">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
                         </div>
@@ -381,18 +399,27 @@
                         <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
                             <div>
                                 <label for="fees-{{ $key }}-name" class="input-label">Name</label>
-                                <input wire:model="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input">
+                                <input wire:model="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input" placeholder="Fee name">
                             </div>
                             <div>
                                 <label for="fees-{{ $key }}-amount" class="input-label">Amount</label>
                                 <div class="relative mt-1">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm"> $ </span>
-                                    </div>
-                                    <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <span class="text-gray-500 sm:text-sm"> USD </span>
-                                    </div>
+                                    @if ($fees[$key]['type'] == 'fixed')
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm"> $ </span>
+                                        </div>
+                                        <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm"> USD </span>
+                                        </div>
+                                    @else
+                                        <div class="relative mt-1">
+                                            <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pr-6 input" placeholder="0">
+                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                <span class="text-gray-500 sm:text-sm"> % </span>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div>
@@ -428,17 +455,22 @@
     <div class="w-full panel">
         <div class="flex flex-col space-y-3">
             <h3 class="panel-heading">Options</h3>
-            <div class="">
-                <!-- This example requires Tailwind CSS v2.0+ -->
-                <div class="flex items-center justify-between" x-data="{ visible: @entangle('visible') }">
-                    <span class="flex flex-col flex-grow">
-                        <span class="text-sm font-medium text-gray-900" id="availability-label">Visibility</span>
-                        <span class="text-sm text-gray-500" id="availability-description">Choose whether this property is visible to guests or not.</span>
-                    </span>
-                    <button x-on:click="visible = !visible" :class="visible ? 'bg-primary' : 'bg-gray-200'" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description">
-                        <span :class="visible ? 'translate-x-5' : 'translate-x-0'" aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"></span>
-                    </button>
-                </div>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Active</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Choose whether this property is visible to guests or not.</span>
+                </span>
+                <button x-on:click="active = !active" :class="active ? 'bg-primary' : 'bg-gray-200'" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description">
+                    <span :class="active ? 'translate-x-5' : 'translate-x-0'" aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"></span>
+                </button>
+            </div>
+            <hr>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Property Slug</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Change the property's URL slug</span>
+                </span>
+                <input wire:model="slug" type="text" class="input">
             </div>
         </div>
     </div>

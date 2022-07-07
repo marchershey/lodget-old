@@ -16,30 +16,38 @@ class EditPropertyForm extends Component
 
     public $property;
 
+    // information
     public $name;
     public $street;
     public $city;
     public $state;
     public $zip;
+
+    // details
     public $type;
     public $guests = 1;
     public $beds = 0;
     public $bedrooms = 0;
     public $bathrooms = 0;
-    public $headline;
-    public $description;
-    public $stagedPhotos;
-    public $uploadedPhotos;
+
+    // photos
+    public $stagedPhotos = null;
+    public $uploadedPhotos = [];
+    public $noPhotoWarning;
+
+    // amenities
     public $amenity;
     public $amenities = [];
 
     // rates & fees
-    public $rate;
-    public $tax;
+    public $default_date;
+    public $default_tax;
     public $fees = [];
 
-    // Options
-    public $visible;
+    // options
+    public $active;
+    public $slug;
+
 
     protected $rules = [
         'name' => 'required|string|max:250',
@@ -61,40 +69,56 @@ class EditPropertyForm extends Component
 
     public function loadProperty()
     {
+        // property information
         $this->name = $this->property->name;
         $this->street = $this->property->street;
         $this->city = $this->property->city;
         $this->state = $this->property->state;
         $this->zip = $this->property->zip;
+
+        // property details
         $this->type = $this->property->type;
         $this->guests = (int) $this->property->guests;
         $this->beds = (int) $this->property->beds;
         $this->bedrooms = (int) $this->property->bedrooms;
         $this->bathrooms = (float) $this->property->bathrooms;
+
+        // photos
+        $this->uploadedPhotos = $this->property->photos()->get(['id', 'name', 'size', 'path'])->toArray();
+        $this->showNoPhotoWarning();
+
+        // amenities
+        foreach ($this->property->amenities()->get(['id', 'text'])->toArray() as $amenity) {
+            $this->amenities[$amenity['id']] = $amenity['text'];
+        }
+
+        // rates & fees
+        $this->default_rate = $this->property->default_rate;
+        $this->default_tax = $this->property->default_tax;
+
+        // listing
         $this->headline = $this->property->headline;
         $this->description = $this->property->description;
 
         // Options
-        $this->visible = (bool) $this->property->visible;
-
-        // load photos
-        if ($photos = $this->property->photos()->get(['id', 'name', 'size', 'path'])->toArray()) {
-            $this->uploadedPhotos = $photos;
-        }
-
-        // load amenities
-        if ($amenities = $this->property->amenities()->get(['id', 'text'])->toArray()) {
-            foreach ($amenities as $amenity) {
-                $this->amenities[$amenity['id']] = $amenity['text'];
-            }
-        }
+        $this->active = (bool) $this->property->active;
+        $this->slug = $this->property->slug;
     }
 
+    /**
+     * Photos
+     */
+    public function showNoPhotoWarning()
+    {
+        if (count($this->uploadedPhotos) == 0) {
+            $this->noPhotoWarning = true;
+        }
+        # code...
+    }
     public function deleteStagedPhoto($key)
     {
         unset($this->stagedPhotos[$key]);
     }
-
     public function deleteUploadedPhoto($key, $id)
     {
         unset($this->uploadedPhotos[$key]);
@@ -102,6 +126,10 @@ class EditPropertyForm extends Component
         $photo->delete();
         toast()->success('Photo deleted succeesfully!')->push();
     }
+
+    /**
+     * Amenities
+     */
 
     public function addAmenity()
     {
@@ -119,14 +147,25 @@ class EditPropertyForm extends Component
         unset($this->amenities[$key]);
     }
 
+    /**
+     * Rates and Fees
+     */
     public function addFee()
     {
-        $this->fees[] = [];
+        $this->fees[] = [
+            'name' => '',
+            'amount' => '',
+            'type' => 'fixed',
+        ];
     }
     public function removeFee($key)
     {
         unset($this->fees[$key]);
     }
+
+    /**
+     * Submit
+     */
 
     public function submit()
     {
@@ -140,19 +179,31 @@ class EditPropertyForm extends Component
             });
         })->validate();
 
-        // Photos
-        if ($this->stagedPhotos) {
 
+        // information
+        $property = Property::findOrFail($this->property->id);
+        $property->name = (string) ucwords($this->name);
+        $property->street = (string) ucwords($this->street);
+        $property->city = (string) ucwords($this->city);
+        $property->state = (string) strtoupper($this->state);
+        $property->zip = (int) $this->zip;
+
+        // details
+        $property->type = (string) ucwords($this->type);
+        $property->guests = (int) $this->guests;
+        $property->beds = (int) $this->beds;
+        $property->bedrooms = (int) $this->bedrooms;
+        $property->bathrooms = (string) $this->bathrooms;
+
+        // photos
+        if ($this->stagedPhotos) {
             // get sort/order number from last photo
             $lastOrder = PropertyPhoto::where('property_id', $this->property->id)->get('order')->last()->order ?? 0;
-
             foreach ($this->stagedPhotos as $stagedPhoto) {
                 // increase last order
                 $lastOrder++;
-
                 // upload photo
                 $path = $stagedPhoto->store('photos', 'public');
-
                 // store photo in database
                 $photo = new PropertyPhoto();
                 $photo->property_id = $this->property->id;
@@ -166,8 +217,7 @@ class EditPropertyForm extends Component
             }
         }
 
-        // Amenities
-        // delete all amenities
+        // amenities
         foreach ($this->property->amenities as $amenity) {
             $amenity->delete();
         }
@@ -182,20 +232,14 @@ class EditPropertyForm extends Component
             }
         }
 
-        $property = Property::findOrFail($this->property->id);
-        $property->name = (string) ucwords($this->name);
-        $property->street = (string) ucwords($this->street);
-        $property->city = (string) ucwords($this->city);
-        $property->state = (string) strtoupper($this->state);
-        $property->zip = (int) $this->zip;
-        $property->type = (string) ucwords($this->type);
-        $property->guests = (int) $this->guests;
-        $property->beds = (int) $this->beds;
-        $property->bedrooms = (int) $this->bedrooms;
-        $property->bathrooms = (string) $this->bathrooms;
+        // rates & fees
 
         // options
-        $property->visible = $this->visible;
+        $property->active = $this->active;
+        $property->slug = $this->slug;
+
+
+        //-----------------------------------
 
         if ($property->save()) {
             toast()->success(ucwords($this->name) . ' was successfully updated!')->pushOnNextPage();

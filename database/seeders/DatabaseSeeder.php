@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'bathrooms' => '3.5',
             'headline' => '',
             'description' => '',
-            'visible' => 1,
+            'active' => 1,
         ]);
     }
 }
