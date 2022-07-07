@@ -44,6 +44,10 @@ class EditPropertyForm extends Component
     public $default_tax;
     public $fees = [];
 
+    // Listing Details
+    public $headline;
+    public $description;
+
     // options
     public $active;
     public $slug;
@@ -60,6 +64,8 @@ class EditPropertyForm extends Component
         'beds' => 'required|integer|min:0',
         'bedrooms' => 'required|integer|min:0',
         'bathrooms' => 'required|min:0',
+        'headline' => 'required|string|max:100',
+        'description' => 'required|string|max:65500',
     ];
 
     public function render()
@@ -237,6 +243,10 @@ class EditPropertyForm extends Component
         // options
         $property->active = $this->active;
         $property->slug = $this->slug;
+
+        // listing details
+        $property->headline = $this->headline;
+        $property->description = $this->description;
 
 
         //-----------------------------------

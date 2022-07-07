@@ -451,6 +451,21 @@
         </div>
     </div>
 
+    {{-- Listing --}}
+    <div class="w-full panel">
+        <div class="flex flex-col w-full space-y-3">
+            <h3 class="panel-heading">Property Information</h3>
+            <div>
+                <label for="headline" class="input-label @error('headline') text-red-500 @enderror">Headline</label>
+                <input type="text" id="headline" class="input @error('headline') bg-red-50 border-red-500 @enderror" wire:model.lazy="headline">
+            </div>
+            <div>
+                <label for="description" class="input-label @error('description') text-red-500 @enderror">Description</label>
+                <textarea rows="6" id="description" class="input @error('description') bg-red-50 border-red-500 @enderror" wire:model.lazy="description"></textarea>
+            </div>
+        </div>
+    </div>
+
     {{-- Options --}}
     <div class="w-full panel">
         <div class="flex flex-col space-y-3">

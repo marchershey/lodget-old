@@ -96,10 +96,10 @@
             <nav class="lg:hidden" aria-label="Global" x-show="mobileMenu" x-cloak x-on:click.away="mobileMenu = false">
                 <div class="max-w-3xl px-2 pt-2 pb-3 mx-auto space-y-1 sm:px-4">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
-                    <a href="#" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Home</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Popular</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Communities</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Trending</a>
+                    <a href="{{ route('host.dashboard') }}" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Dashboard</a>
+                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Reservations</a>
+                    <a href="{{ route('host.properties') }}" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Properties</a>
+                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Settings</a>
                 </div>
                 <div class="pt-4 border-t border-gray-200">
                     <div class="flex items-center max-w-3xl px-4 mx-auto sm:px-6">
@@ -107,7 +107,7 @@
                             <img class="w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->first_name }}+{{ auth()->user()->last_name }}&background=2563eb&color=ffffff&bold=false&format=svg" alt="">
                         </div>
                         <div class="ml-3">
-                            <div class="text-base font-medium text-white capitalize">{{ auth()->user()->fullName() }}</div>
+                            <div class="text-base font-medium capitalize">{{ auth()->user()->fullName() }}</div>
                             <div class="text-sm font-medium text-gray-400">{{ auth()->user()->email }}</div>
                         </div>
                         <button type="button" class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
@@ -120,16 +120,7 @@
                     </div>
                     <div class="max-w-3xl px-2 mx-auto mt-3 space-y-1 sm:px-4">
                         <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Your Profile</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Settings</a>
                         <a href="#" class="block px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:bg-gray-50 hover:text-gray-900">Sign out</a>
-                    </div>
-                </div>
-
-                <div class="max-w-3xl px-4 mx-auto mt-6 sm:px-6">
-                    <a href="#" class="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark"> New Post </a>
-
-                    <div class="flex justify-center mt-6">
-                        <a href="#" class="text-base font-medium text-gray-900 hover:underline"> Go Premium </a>
                     </div>
                 </div>
             </nav>

@@ -10,6 +10,13 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
  * Plugins and Packages
  */
 
+// Fetcha (requirement for hotel datepicker)
+import fecha from "fecha";
+window.fecha = fecha;
+
+// Hotel datepicker
+import "./hotel-datepicker";
+
 // Alpinejs & Tall Toasts
 import Alpine from "alpinejs";
 import ToastComponent from "../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts";
@@ -22,3 +29,8 @@ import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 window.Calendar = Calendar;
 window.dayGridPlugin = dayGridPlugin;
+
+// Splidejs
+import Splide from "@splidejs/splide";
+import splideCss from "@splidejs/splide/dist/css/themes/splide-default.min.css";
+window.Splide = Splide;
