@@ -12,9 +12,9 @@
     <script src="{{ asset('js/app.js') }}?{{ rand() }}" defer></script>
 </head>
 
-<body class="bg-gray-50">
+<body class="relative h-full bg-gray-50">
 
-    <div class="">
+    <div class="h-full">
         {{ $slot }}
     </div>
 
@@ -23,6 +23,9 @@
         <script src="{{ config('app.url') }}:3000/browser-sync/browser-sync-client.js"></script>
     @endif
     <livewire:toasts />
+
+    @stack('modals')
+    @stack('scripts')
 </body>
 
 </html>

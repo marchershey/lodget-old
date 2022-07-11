@@ -20275,16 +20275,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-/*! hotel-datepicker 4.0.3 - Copyright 2021 Benito Lopez (http://lopezb.com) - https://github.com/benitolopez/hotel-datepicker - MIT */
+/*! hotel-datepicker 4.1.0 - Copyright 2022 Benito Lopez (http://lopezb.com) - https://github.com/benitolopez/hotel-datepicker - MIT */
 window.HotelDatepicker = function () {
   "use strict";
 
   function s(e, t) {
-    this._boundedEventHandlers = {}, this.id = s.getNewId(), t = t || {}, this.format = t.format || "YYYY-MM-DD", this.infoFormat = t.infoFormat || this.format, this.separator = t.separator || " - ", this.startOfWeek = t.startOfWeek || "sunday", this.startDate = t.startDate || new Date(), this.endDate = t.endDate || !1, this.minNights = t.minNights || 1, this.maxNights = t.maxNights || 0, this.selectForward = t.selectForward || !1, this.disabledDates = t.disabledDates || [], this.noCheckInDates = t.noCheckInDates || [], this.noCheckOutDates = t.noCheckOutDates || [], this.disabledDaysOfWeek = t.disabledDaysOfWeek || [], this.enableCheckout = t.enableCheckout || !1, this.preventContainerClose = t.preventContainerClose || !1, this.container = t.container || "", this.animationSpeed = t.animationSpeed || ".5s", this.hoveringTooltip = t.hoveringTooltip || !0, this.autoClose = void 0 === t.autoClose || t.autoClose, this.showTopbar = void 0 === t.showTopbar || t.showTopbar, this.moveBothMonths = t.moveBothMonths || !1, this.i18n = t.i18n || {
+    this._boundedEventHandlers = {}, this.id = s.getNewId(), t = t || {}, this.format = t.format || "YYYY-MM-DD", this.infoFormat = t.infoFormat || this.format, this.separator = t.separator || " - ", this.startOfWeek = t.startOfWeek || "sunday", this.startDate = t.startDate || new Date(), this.endDate = t.endDate || !1, this.minNights = t.minNights || 1, this.maxNights = t.maxNights || 0, this.selectForward = t.selectForward || !1, this.disabledDates = t.disabledDates || [], this.noCheckInDates = t.noCheckInDates || [], this.noCheckOutDates = t.noCheckOutDates || [], this.disabledDaysOfWeek = t.disabledDaysOfWeek || [], this.enableCheckout = t.enableCheckout || !1, this.preventContainerClose = t.preventContainerClose || !1, this.container = t.container || "", this.animationSpeed = t.animationSpeed || ".5s", this.hoveringTooltip = t.hoveringTooltip || !0, this.autoClose = void 0 === t.autoClose || t.autoClose, this.showTopbar = void 0 === t.showTopbar || t.showTopbar, this.moveBothMonths = t.moveBothMonths || !1, this.inline = t.inline || !1, this.clearButton = Boolean(this.inline && t.clearButton), this.i18n = t.i18n || {
       selected: "Your stay:",
       night: "Night",
       nights: "Nights",
       button: "Close",
+      clearButton: "Clear",
       "checkin-disabled": "Check-in disabled",
       "checkout-disabled": "Check-out disabled",
       "day-names-short": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -20307,15 +20308,15 @@ window.HotelDatepicker = function () {
   }
 
   var t = 0;
-  return s.prototype.addBoundedListener = function (t, e, s, a) {
+  return s.prototype.addBoundedListener = function (t, e, s, i) {
     t in this._boundedEventHandlers || (this._boundedEventHandlers[t] = {}), e in this._boundedEventHandlers[t] || (this._boundedEventHandlers[t][e] = []);
     s = s.bind(this);
-    this._boundedEventHandlers[t][e].push([s, a]), t.addEventListener(e, s, a);
+    this._boundedEventHandlers[t][e].push([s, i]), t.addEventListener(e, s, i);
   }, s.prototype.removeAllBoundedListeners = function (t, e) {
     if (t in this._boundedEventHandlers) {
       var s = this._boundedEventHandlers[t];
-      if (e in s) for (var a = s[e], i = a.length; i--;) {
-        var n = a[i];
+      if (e in s) for (var i = s[e], a = i.length; a--;) {
+        var n = i[a];
         t.removeEventListener(e, n[0], n[1]);
       }
     }
@@ -20330,19 +20331,11 @@ window.HotelDatepicker = function () {
     });
   }, s.prototype.getWeekDayNames = function () {
     var t = "";
-
-    if ("monday" === this.startOfWeek) {
-      for (var e = 0; e < 7; e++) {
-        t += '<th class="datepicker__week-name">' + this.lang("day-names-short")[(1 + e) % 7] + "</th>";
-      }
-
-      return t;
-    }
-
-    for (var s = 0; s < 7; s++) {
+    if ("monday" === this.startOfWeek) for (var e = 0; e < 7; e++) {
+      t += '<th class="datepicker__week-name">' + this.lang("day-names-short")[(1 + e) % 7] + "</th>";
+    } else for (var s = 0; s < 7; s++) {
       t += '<th class="datepicker__week-name">' + this.lang("day-names-short")[s] + "</th>";
     }
-
     return t;
   }, s.prototype.getMonthDom = function (t) {
     return document.getElementById(this.getMonthTableId(t));
@@ -20354,6 +20347,8 @@ window.HotelDatepicker = function () {
     return "month-" + t + "-" + this.generateId();
   }, s.prototype.getCloseButtonId = function () {
     return "close-" + this.generateId();
+  }, s.prototype.getClearButtonId = function () {
+    return "clear-" + this.generateId();
   }, s.prototype.getTooltipId = function () {
     return "tooltip-" + this.generateId();
   }, s.prototype.getNextMonth = function (t) {
@@ -20369,7 +20364,7 @@ window.HotelDatepicker = function () {
   }, s.prototype.init = function () {
     this.parent = this.container || this.input.parentElement, this.start = !1, this.end = !1, this.minDays = 1 < this.minNights ? this.minNights + 1 : 2, this.maxDays = 0 < this.maxNights ? this.maxNights + 1 : 0, this.startDate && "string" == typeof this.startDate && (this.startDate = this.parseDate(this.startDate)), this.endDate && "string" == typeof this.endDate && (this.endDate = this.parseDate(this.endDate)), this.isTouchDevice() && (this.hoveringTooltip = !1), this.isOpen = !1, this.changed = !1, this.createDom();
     var t = new Date();
-    this.startDate && this.compareMonth(t, this.startDate) < 0 && (t = new Date(this.startDate.getTime())), this.endDate && 0 < this.compareMonth(this.getNextMonth(t), this.endDate) && (t = new Date(this.getPrevMonth(this.endDate.getTime()))), 0 < this.disabledDates.length && this.parseDisabledDates(), this.showMonth(t, 1), this.showMonth(this.getNextMonth(t), 2), this.topBarDefaultText(), this.addListeners(), this.isFirstDisabledDate = 0, this.lastDisabledDate = !1;
+    this.startDate && this.compareMonth(t, this.startDate) < 0 && (t = new Date(this.startDate.getTime())), this.endDate && 0 < this.compareMonth(this.getNextMonth(t), this.endDate) && (t = new Date(this.getPrevMonth(this.endDate.getTime()))), 0 < this.disabledDates.length && this.parseDisabledDates(), this.showMonth(t, 1), this.showMonth(this.getNextMonth(t), 2), this.topBarDefaultText(), this.inline && (this.openDatepicker(), this.clearButton && (document.getElementById(this.getClearButtonId()).disabled = !0)), this.addListeners(), this.isFirstDisabledDate = 0, this.lastDisabledDate = !1;
   }, s.prototype.addListeners = function () {
     for (var e = this, t = this.datepicker.getElementsByClassName("datepicker__month-button--next"), s = 0; s < t.length; s++) {
       t[s].addEventListener("click", function (t) {
@@ -20377,16 +20372,18 @@ window.HotelDatepicker = function () {
       });
     }
 
-    for (var a = this.datepicker.getElementsByClassName("datepicker__month-button--prev"), i = 0; i < a.length; i++) {
-      a[i].addEventListener("click", function (t) {
+    for (var i = this.datepicker.getElementsByClassName("datepicker__month-button--prev"), a = 0; a < i.length; a++) {
+      i[a].addEventListener("click", function (t) {
         return e.goToPreviousMonth(t);
       });
     }
 
     this.addBoundedListener(this.input, "click", function (t) {
       return e.openDatepicker(t);
-    }), this.showTopbar && document.getElementById(this.getCloseButtonId()).addEventListener("click", function (t) {
+    }), this.showTopbar && !this.inline && document.getElementById(this.getCloseButtonId()).addEventListener("click", function (t) {
       return e.closeDatepicker(t);
+    }), this.showTopbar && this.clearButton && document.getElementById(this.getClearButtonId()).addEventListener("click", function (t) {
+      return e.clearDatepicker(t);
     }), this.datepicker.addEventListener("mouseover", function (t) {
       return e.datepickerHover(t);
     }), this.datepicker.addEventListener("mouseout", function (t) {
@@ -20400,29 +20397,30 @@ window.HotelDatepicker = function () {
     var t = this.createDatepickerDomString();
     this.parent.insertAdjacentHTML("beforeend", t), this.datepicker = document.getElementById(this.getDatepickerId());
   }, s.prototype.createDatepickerDomString = function () {
-    var t = '<div id="' + this.getDatepickerId() + '" style="display:none" class="datepicker datepicker--closed">';
-    t += '<div class="datepicker__inner">', this.showTopbar && (t += '<div class="datepicker__topbar"><div class="datepicker__info datepicker__info--selected"><span class="datepicker__info datepicker__info--selected-label">' + this.lang("selected") + ' </span> <strong class="datepicker__info-text datepicker__info-text--start-day">...</strong> <span class="datepicker__info-text datepicker__info--separator">' + this.separator + '</span> <strong class="datepicker__info-text datepicker__info-text--end-day">...</strong> <em class="datepicker__info-text datepicker__info-text--selected-days">(<span></span>)</em></div><div class="datepicker__info datepicker__info--feedback"></div><button type="button" id="' + this.getCloseButtonId() + '" class="datepicker__close-button">' + this.lang("button") + "</button></div>"), t += '<div class="datepicker__months">';
+    var t = this.inline ? " datepicker--inline" : "",
+        e = this.inline ? "" : ' style="display:none"',
+        s = '<div id="' + this.getDatepickerId() + '"' + e + ' class="datepicker datepicker--closed' + t + '">';
+    s += '<div class="datepicker__inner">', this.showTopbar && (s += '<div class="datepicker__topbar"><div class="datepicker__info datepicker__info--selected"><span class="datepicker__info datepicker__info--selected-label">' + this.lang("selected") + ' </span> <strong class="datepicker__info-text datepicker__info-text--start-day">...</strong> <span class="datepicker__info-text datepicker__info--separator">' + this.separator + '</span> <strong class="datepicker__info-text datepicker__info-text--end-day">...</strong> <em class="datepicker__info-text datepicker__info-text--selected-days">(<span></span>)</em></div><div class="datepicker__info datepicker__info--feedback"></div>', this.inline || (s += '<button type="button" id="' + this.getCloseButtonId() + '" class="datepicker__close-button">' + this.lang("button") + "</button>"), this.clearButton && (s += '<button type="button" id="' + this.getClearButtonId() + '" class="datepicker__clear-button">' + this.lang("clearButton") + "</button>"), s += "</div>"), s += '<div class="datepicker__months">';
 
-    for (var e = 1; e <= 2; e++) {
-      t += '<table id="' + this.getMonthTableId(e) + '" class="datepicker__month datepicker__month--month' + e + '"><thead><tr class="datepicker__month-caption"><th><span class="datepicker__month-button datepicker__month-button--prev" month="' + e + '">&lt;</span></th><th colspan="5" class="datepicker__month-name"></th><th><span class="datepicker__month-button datepicker__month-button--next" month="' + e + '">&gt;</span></th></tr><tr class="datepicker__week-days">' + this.getWeekDayNames(e) + "</tr></thead><tbody></tbody></table>";
+    for (var i = 1; i <= 2; i++) {
+      s += '<table id="' + this.getMonthTableId(i) + '" class="datepicker__month datepicker__month--month' + i + '"><thead><tr class="datepicker__month-caption"><th><span class="datepicker__month-button datepicker__month-button--prev" month="' + i + '">&lt;</span></th><th colspan="5" class="datepicker__month-name"></th><th><span class="datepicker__month-button datepicker__month-button--next" month="' + i + '">&gt;</span></th></tr><tr class="datepicker__week-days">' + this.getWeekDayNames(i) + "</tr></thead><tbody></tbody></table>";
     }
 
-    return t += "</div>", t += '<div style="display:none" id="' + this.getTooltipId() + '" class="datepicker__tooltip"></div>', t += "</div>", t += "</div>";
+    return s = (s = (s += "</div>") + ('<div style="display:none" id="' + this.getTooltipId() + '" class="datepicker__tooltip"></div>')) + "</div>" + "</div>";
   }, s.prototype.showMonth = function (t, e) {
     t.setHours(0, 0, 0, 0);
     var s = this.getMonthName(t.getMonth()),
-        a = this.getMonthDom(e),
-        i = a.getElementsByClassName("datepicker__month-name")[0],
-        a = a.getElementsByTagName("tbody")[0];
-    i.textContent = s + " " + t.getFullYear(), this.emptyElement(a), a.insertAdjacentHTML("beforeend", this.createMonthDomString(t)), this.updateSelectableRange(), this["month" + e] = t;
+        i = this.getMonthDom(e),
+        a = i.getElementsByClassName("datepicker__month-name")[0],
+        i = i.getElementsByTagName("tbody")[0];
+    a.textContent = s + " " + t.getFullYear(), this.emptyElement(i), i.insertAdjacentHTML("beforeend", this.createMonthDomString(t)), this.updateSelectableRange(), this["month" + e] = t;
   }, s.prototype.createMonthDomString = function (t) {
     var e = this,
         s = [],
-        a = "";
-    t.setDate(1);
-    var i = t.getDay(),
+        i = "",
+        a = (t.setDate(1), t.getDay()),
         n = t.getMonth();
-    if (0 < (i = 0 === i && "monday" === this.startOfWeek ? 7 : i)) for (var o = i; 0 < o; o--) {
+    if (0 < (a = 0 === a && "monday" === this.startOfWeek ? 7 : a)) for (var o = a; 0 < o; o--) {
       var r = new Date(t.getTime() - 864e5 * o),
           h = e.isValidDate(r.getTime());
       (e.startDate && e.compareDay(r, e.startDate) < 0 || e.endDate && 0 < e.compareDay(r, e.endDate)) && (h = !1), s.push({
@@ -20446,46 +20444,42 @@ window.HotelDatepicker = function () {
     }
 
     for (var c = 0; c < 6 && "nextMonth" !== s[7 * c].type; c++) {
-      a += '<tr class="datepicker__week-row">';
+      i += '<tr class="datepicker__week-row">';
 
       for (var p = 0; p < 7; p++) {
-        var m,
-            g,
-            u,
-            y = s[7 * c + (y = "monday" === e.startOfWeek ? p + 1 : p)],
-            D = e.getDateString(y.time) === e.getDateString(new Date()),
-            f = e.getDateString(y.time) === e.getDateString(e.startDate),
+        var m = s[7 * c + (m = "monday" === e.startOfWeek ? p + 1 : p)],
+            g = e.getDateString(m.time) === e.getDateString(new Date()),
+            u = e.getDateString(m.time) === e.getDateString(e.startDate),
+            y = !1,
+            D = !1,
+            f = !1,
             k = !1,
             _ = !1,
             v = !1,
-            b = !1,
-            C = !1,
-            M = !1;
+            b = (!m.valid && "visibleMonth" !== m.type || (M = e.getDateString(m.time, "YYYY-MM-DD"), 0 < e.disabledDates.length && ((b = e.getClosestDates(m.date))[0] && b[1] && e.compareDay(m.date, b[0]) && 0 < e.countDays(b[0], b[1]) - 2 && (C = e.countDays(b[1], m.date) - 1, b = e.countDays(m.date, b[0]) - 1, (e.selectForward && C < e.minDays || !e.selectForward && C < e.minDays && b < e.minDays) && (m.valid = !1), !m.valid && e.enableCheckout && 2 == C && (v = !0)), -1 < e.disabledDates.indexOf(M) ? (y = !(m.valid = !1), e.isFirstDisabledDate++, e.lastDisabledDate = m.date) : e.isFirstDisabledDate = 0, m.valid && e.lastDisabledDate && 0 < e.compareDay(m.date, e.lastDisabledDate) && 2 === e.countDays(m.date, e.lastDisabledDate) && (_ = !0)), 0 < e.disabledDaysOfWeek.length && -1 < e.disabledDaysOfWeek.indexOf(fecha.format(m.time, "dddd")) && (k = !(m.valid = !1)), 0 < e.noCheckInDates.length && -1 < e.noCheckInDates.indexOf(M) && (_ = !(D = !0)), 0 < e.noCheckOutDates.length && -1 < e.noCheckOutDates.indexOf(M) && (f = !0)), ["datepicker__month-day--" + m.type, "datepicker__month-day--" + (m.valid ? "valid" : "invalid"), g ? "datepicker__month-day--today" : "", y ? "datepicker__month-day--disabled" : "", y && e.enableCheckout && 1 === e.isFirstDisabledDate ? "datepicker__month-day--checkout-enabled" : "", v ? "datepicker__month-day--before-disabled-date" : "", u || _ ? "datepicker__month-day--checkin-only" : "", D ? "datepicker__month-day--no-checkin" : "", f ? "datepicker__month-day--no-checkout" : "", k ? "datepicker__month-day--day-of-week-disabled" : ""]),
+            C = "",
+            M = (D && (C = e.i18n["checkin-disabled"]), f && (C && (C += ". "), C += e.i18n["checkout-disabled"]), {
+          time: m.time,
+          "class": b.join(" ")
+        });
 
-        !y.valid && "visibleMonth" !== y.type || (m = e.getDateString(y.time, "YYYY-MM-DD"), 0 < e.disabledDates.length && ((u = e.getClosestDates(y.date))[0] && u[1] && e.compareDay(y.date, u[0]) && 0 < e.countDays(u[0], u[1]) - 2 && (g = e.countDays(u[1], y.date) - 1, u = e.countDays(y.date, u[0]) - 1, (e.selectForward && g < e.minDays || !e.selectForward && g < e.minDays && u < e.minDays) && (y.valid = !1), !y.valid && e.enableCheckout && 2 == g && (M = !0)), -1 < e.disabledDates.indexOf(m) ? (k = !(y.valid = !1), e.isFirstDisabledDate++, e.lastDisabledDate = y.date) : e.isFirstDisabledDate = 0, y.valid && e.lastDisabledDate && 0 < e.compareDay(y.date, e.lastDisabledDate) && 2 === e.countDays(y.date, e.lastDisabledDate) && (C = !0)), 0 < e.disabledDaysOfWeek.length && -1 < e.disabledDaysOfWeek.indexOf(fecha.format(y.time, "dddd")) && (b = !(y.valid = !1)), 0 < e.noCheckInDates.length && -1 < e.noCheckInDates.indexOf(m) && (C = !(_ = !0)), 0 < e.noCheckOutDates.length && -1 < e.noCheckOutDates.indexOf(m) && (v = !0));
-        C = ["datepicker__month-day--" + y.type, "datepicker__month-day--" + (y.valid ? "valid" : "invalid"), D ? "datepicker__month-day--today" : "", k ? "datepicker__month-day--disabled" : "", k && e.enableCheckout && 1 === e.isFirstDisabledDate ? "datepicker__month-day--checkout-enabled" : "", M ? "datepicker__month-day--before-disabled-date" : "", f || C ? "datepicker__month-day--checkin-only" : "", _ ? "datepicker__month-day--no-checkin" : "", v ? "datepicker__month-day--no-checkout" : "", b ? "datepicker__month-day--day-of-week-disabled" : ""], b = "";
-        _ && (b = e.i18n["checkin-disabled"]), v && (b && (b += ". "), b += e.i18n["checkout-disabled"]);
-        C = {
-          time: y.time,
-          "class": C.join(" ")
-        };
-        b && (C.title = b), a += '<td class="datepicker__month-day ' + C["class"] + '" ' + e.printAttributes(C) + ">" + y.day + "</td>";
+        C && (M.title = C), i += '<td class="datepicker__month-day ' + M["class"] + '" ' + e.printAttributes(M) + ">" + m.day + "</td>";
       }
 
-      a += "</tr>";
+      i += "</tr>";
     }
 
-    return a;
+    return i;
   }, s.prototype.openDatepicker = function () {
     var e = this;
-    this.isOpen || (this.removeClass(this.datepicker, "datepicker--closed"), this.addClass(this.datepicker, "datepicker--open"), this.checkAndSetDefaultValue(), this.slideDown(this.datepicker, this.animationSpeed), this.isOpen = !0, this.showSelectedDays(), this.disableNextPrevButtons(), this.addBoundedListener(document, "click", function (t) {
+    this.isOpen || (this.removeClass(this.datepicker, "datepicker--closed"), this.addClass(this.datepicker, "datepicker--open"), this.checkAndSetDefaultValue(), this.inline || this.slideDown(this.datepicker, this.animationSpeed), this.isOpen = !0, this.showSelectedDays(), this.disableNextPrevButtons(), this.addBoundedListener(document, "click", function (t) {
       return e.documentClick(t);
     }), this.onOpenDatepicker && this.onOpenDatepicker());
   }, s.prototype.closeDatepicker = function () {
     var t;
-    this.isOpen && (this.removeClass(this.datepicker, "datepicker--open"), this.addClass(this.datepicker, "datepicker--closed"), this.slideUp(this.datepicker, this.animationSpeed), this.isOpen = !1, (t = document.createEvent("Event")).initEvent("afterClose", !0, !0), this.input.dispatchEvent(t), this.removeAllBoundedListeners(document, "click"));
+    this.isOpen && !this.inline && (this.removeClass(this.datepicker, "datepicker--open"), this.addClass(this.datepicker, "datepicker--closed"), this.slideUp(this.datepicker, this.animationSpeed), this.isOpen = !1, (t = document.createEvent("Event")).initEvent("afterClose", !0, !0), this.input.dispatchEvent(t), this.removeAllBoundedListeners(document, "click"));
   }, s.prototype.autoclose = function () {
-    this.autoClose && this.changed && this.isOpen && this.start && this.end && this.closeDatepicker();
+    this.autoClose && this.changed && this.isOpen && this.start && this.end && !this.inline && this.closeDatepicker();
   }, s.prototype.documentClick = function (t) {
     this.parent.contains(t.target) || t.target === this.input ? "td" === t.target.tagName.toLowerCase() && this.dayClicked(t.target) : this.preventContainerClose || this.closeDatepicker();
   }, s.prototype.datepickerHover = function (t) {
@@ -20493,8 +20487,9 @@ window.HotelDatepicker = function () {
   }, s.prototype.datepickerMouseOut = function (t) {
     t.target.tagName && "td" === t.target.tagName.toLowerCase() && (document.getElementById(this.getTooltipId()).style.display = "none");
   }, s.prototype.checkAndSetDefaultValue = function () {
-    var t = this.getValue(),
-        e = t ? t.split(this.separator) : "";
+    var t,
+        e = this.getValue(),
+        e = e ? e.split(this.separator) : "";
     e && 2 <= e.length ? (t = this.format, this.changed = !1, this.setDateRange(this.parseDate(e[0], t), this.parseDate(e[1], t)), this.changed = !0) : this.showTopbar && (this.datepicker.getElementsByClassName("datepicker__info--selected")[0].style.display = "none");
   }, s.prototype.setDateRange = function (t, e) {
     t.getTime() > e.getTime() && (s = e, e = t, t = s, s = null);
@@ -20504,12 +20499,12 @@ window.HotelDatepicker = function () {
   }, s.prototype.showSelectedDays = function () {
     var t = this;
     if (this.start || this.end) for (var e = this.datepicker.getElementsByTagName("td"), s = 0; s < e.length; s++) {
-      var a = parseInt(e[s].getAttribute("time"), 10);
-      t.start && t.end && t.end >= a && t.start <= a || t.start && !t.end && t.getDateString(t.start, "YYYY-MM-DD") === t.getDateString(a, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--selected") : t.removeClass(e[s], "datepicker__month-day--selected"), t.start && t.getDateString(t.start, "YYYY-MM-DD") === t.getDateString(a, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--first-day-selected") : t.removeClass(e[s], "datepicker__month-day--first-day-selected"), t.end && t.getDateString(t.end, "YYYY-MM-DD") === t.getDateString(a, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--last-day-selected") : t.removeClass(e[s], "datepicker__month-day--last-day-selected");
+      var i = parseInt(e[s].getAttribute("time"), 10);
+      t.start && t.end && t.end >= i && t.start <= i || t.start && !t.end && t.getDateString(t.start, "YYYY-MM-DD") === t.getDateString(i, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--selected") : t.removeClass(e[s], "datepicker__month-day--selected"), t.start && t.getDateString(t.start, "YYYY-MM-DD") === t.getDateString(i, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--first-day-selected") : t.removeClass(e[s], "datepicker__month-day--first-day-selected"), t.end && t.getDateString(t.end, "YYYY-MM-DD") === t.getDateString(i, "YYYY-MM-DD") ? t.addClass(e[s], "datepicker__month-day--last-day-selected") : t.removeClass(e[s], "datepicker__month-day--last-day-selected");
     }
   }, s.prototype.showSelectedInfo = function () {
-    var t, e, s, a, i;
-    this.showTopbar ? (a = (t = this.datepicker.getElementsByClassName("datepicker__info--selected")[0]).getElementsByClassName("datepicker__info-text--start-day")[0], s = t.getElementsByClassName("datepicker__info-text--end-day")[0], e = t.getElementsByClassName("datepicker__info-text--selected-days")[0], i = document.getElementById(this.getCloseButtonId()), a.textContent = "...", s.textContent = "...", e.style.display = "none", this.start && (t.style.display = "", a.textContent = this.getDateString(new Date(parseInt(this.start, 10)), this.infoFormat)), this.end && (s.textContent = this.getDateString(new Date(parseInt(this.end, 10)), this.infoFormat)), this.start && this.end ? (s = 1 == (a = this.countDays(this.end, this.start) - 1) ? a + " " + this.lang("night") : a + " " + this.lang("nights"), a = this.getDateString(new Date(this.start)) + this.separator + this.getDateString(new Date(this.end)), e.style.display = "", e.firstElementChild.textContent = s, i.disabled = !1, this.setValue(a, this.getDateString(new Date(this.start)), this.getDateString(new Date(this.end))), this.changed = !0) : i.disabled = !0) : this.start && this.end && (i = this.getDateString(new Date(this.start)) + this.separator + this.getDateString(new Date(this.end)), this.setValue(i, this.getDateString(new Date(this.start)), this.getDateString(new Date(this.end))), this.changed = !0);
+    var t, e, s, i, a, n;
+    this.showTopbar ? (a = (i = this.datepicker.getElementsByClassName("datepicker__info--selected")[0]).getElementsByClassName("datepicker__info-text--start-day")[0], n = i.getElementsByClassName("datepicker__info-text--end-day")[0], t = i.getElementsByClassName("datepicker__info-text--selected-days")[0], e = document.getElementById(this.getCloseButtonId()), s = document.getElementById(this.getClearButtonId()), a.textContent = "...", n.textContent = "...", t.style.display = "none", this.start && (i.style.display = "", a.textContent = this.getDateString(new Date(parseInt(this.start, 10)), this.infoFormat)), this.end && (n.textContent = this.getDateString(new Date(parseInt(this.end, 10)), this.infoFormat)), this.start && this.end ? (a = 1 == (i = this.countDays(this.end, this.start) - 1) ? i + " " + this.lang("night") : i + " " + this.lang("nights"), n = this.getDateString(new Date(this.start)) + this.separator + this.getDateString(new Date(this.end)), t.style.display = "", t.firstElementChild.textContent = a, this.inline ? this.clearButton && (s.disabled = !1) : e.disabled = !1, this.setValue(n, this.getDateString(new Date(this.start)), this.getDateString(new Date(this.end))), this.changed = !0) : this.inline ? this.clearButton && (s.disabled = !0) : e.disabled = !0) : this.start && this.end && (i = this.getDateString(new Date(this.start)) + this.separator + this.getDateString(new Date(this.end)), this.setValue(i, this.getDateString(new Date(this.start)), this.getDateString(new Date(this.end))), this.changed = !0);
   }, s.prototype.dayClicked = function (t) {
     if (!this.hasClass(t, "datepicker__month-day--invalid")) {
       var e = this.start && this.end || !this.start && !this.end;
@@ -20519,7 +20514,7 @@ window.HotelDatepicker = function () {
       } else if (this.start && this.hasClass(t, "datepicker__month-day--no-checkout")) return;
 
       var s = parseInt(t.getAttribute("time"), 10);
-      this.addClass(t, "datepicker__month-day--selected"), e ? (this.start = s, this.end = !1) : this.start && (this.end = s), this.start && this.end && this.start > this.end && (s = this.end, this.end = this.start, this.start = s), this.start = parseInt(this.start, 10), this.end = parseInt(this.end, 10), this.clearHovering(), this.start && !this.end && this.dayHovering(t), this.updateSelectableRange(), this.checkSelection(), this.showSelectedInfo(), this.showSelectedDays(), this.autoclose(), this.onDayClick && this.onDayClick(), this.end && this.onSelectRange && this.onSelectRange();
+      this.addClass(t, "datepicker__month-day--selected"), e ? (this.start = s, this.end = !1) : this.start && (this.end = s), this.start && this.end && this.start > this.end && (e = this.end, this.end = this.start, this.start = e), this.start = parseInt(this.start, 10), this.end = parseInt(this.end, 10), this.clearHovering(), this.start && !this.end && this.dayHovering(t), this.updateSelectableRange(), this.checkSelection(), this.showSelectedInfo(), this.showSelectedDays(), this.autoclose(), this.onDayClick && this.onDayClick(), this.end && this.onSelectRange && this.onSelectRange();
     }
   }, s.prototype.isValidDate = function (t) {
     if (t = parseInt(t, 10), this.startDate && this.compareDay(t, this.startDate) < 0 || this.endDate && 0 < this.compareDay(t, this.endDate)) return !1;
@@ -20544,19 +20539,19 @@ window.HotelDatepicker = function () {
     if (this.maxDays && e > this.maxDays) {
       this.start = !1, this.end = !1;
 
-      for (var a, i = this.datepicker.getElementsByTagName("td"), n = 0; n < i.length; n++) {
-        t.removeClass(i[n], "datepicker__month-day--selected"), t.removeClass(i[n], "datepicker__month-day--first-day-selected"), t.removeClass(i[n], "datepicker__month-day--last-day-selected");
+      for (var i = this.datepicker.getElementsByTagName("td"), a = 0; a < i.length; a++) {
+        t.removeClass(i[a], "datepicker__month-day--selected"), t.removeClass(i[a], "datepicker__month-day--first-day-selected"), t.removeClass(i[a], "datepicker__month-day--last-day-selected");
       }
 
-      this.showTopbar && (a = this.maxDays - 1, this.topBarErrorText(s, "error-more", a));
+      this.showTopbar && (n = this.maxDays - 1, this.topBarErrorText(s, "error-more", n));
     } else if (this.minDays && e < this.minDays) {
       this.start = !1, this.end = !1;
 
-      for (var o = this.datepicker.getElementsByTagName("td"), r = 0; r < o.length; r++) {
+      for (var n, o = this.datepicker.getElementsByTagName("td"), r = 0; r < o.length; r++) {
         t.removeClass(o[r], "datepicker__month-day--selected"), t.removeClass(o[r], "datepicker__month-day--first-day-selected"), t.removeClass(o[r], "datepicker__month-day--last-day-selected");
       }
 
-      this.showTopbar && (e = this.minDays - 1, this.topBarErrorText(s, "error-less", e));
+      this.showTopbar && (n = this.minDays - 1, this.topBarErrorText(s, "error-less", n));
     } else this.start || this.end ? this.showTopbar && (this.removeClass(s, "datepicker__info--error"), this.removeClass(s, "datepicker__info--help")) : this.showTopbar && (this.removeClass(s, "datepicker__info--error"), this.addClass(s, "datepicker__info--help"));
   }, s.prototype.addDays = function (t, e) {
     t = new Date(t);
@@ -20564,11 +20559,11 @@ window.HotelDatepicker = function () {
   }, s.prototype.countDays = function (t, e) {
     return Math.abs(this.daysFrom1970(t) - this.daysFrom1970(e)) + 1;
   }, s.prototype.compareDay = function (t, e) {
-    e = parseInt(this.getDateString(t, "YYYYMMDD"), 10) - parseInt(this.getDateString(e, "YYYYMMDD"), 10);
-    return 0 < e ? 1 : 0 == e ? 0 : -1;
+    t = parseInt(this.getDateString(t, "YYYYMMDD"), 10) - parseInt(this.getDateString(e, "YYYYMMDD"), 10);
+    return 0 < t ? 1 : 0 == t ? 0 : -1;
   }, s.prototype.compareMonth = function (t, e) {
-    e = parseInt(this.getDateString(t, "YYYYMM"), 10) - parseInt(this.getDateString(e, "YYYYMM"), 10);
-    return 0 < e ? 1 : 0 == e ? 0 : -1;
+    t = parseInt(this.getDateString(t, "YYYYMM"), 10) - parseInt(this.getDateString(e, "YYYYMM"), 10);
+    return 0 < t ? 1 : 0 == t ? 0 : -1;
   }, s.prototype.daysFrom1970 = function (t) {
     return Math.round(this.toLocalTimestamp(t) / 864e5);
   }, s.prototype.toLocalTimestamp = function (t) {
@@ -20576,25 +20571,25 @@ window.HotelDatepicker = function () {
   }, s.prototype.printAttributes = function (t) {
     var e,
         s = t,
-        a = "";
+        i = "";
 
     for (e in t) {
-      Object.prototype.hasOwnProperty.call(s, e) && (a += e + '="' + s[e] + '" ');
+      Object.prototype.hasOwnProperty.call(s, e) && (i += e + '="' + s[e] + '" ');
     }
 
-    return a;
+    return i;
   }, s.prototype.goToNextMonth = function (t) {
-    var e = t.target.getAttribute("month"),
-        s = 1 < e,
-        t = s ? this.month2 : this.month1,
-        t = this.getNextMonth(t);
-    !this.isSingleMonth() && !s && 0 <= this.compareMonth(t, this.month2) || this.isMonthOutOfRange(t) || (this.moveBothMonths && s && this.showMonth(this.month2, 1), this.showMonth(t, e), this.showSelectedDays(), this.disableNextPrevButtons());
+    var t = t.target.getAttribute("month"),
+        e = 1 < t,
+        s = e ? this.month2 : this.month1,
+        s = this.getNextMonth(s);
+    !this.isSingleMonth() && !e && 0 <= this.compareMonth(s, this.month2) || this.isMonthOutOfRange(s) || (this.moveBothMonths && e && this.showMonth(this.month2, 1), this.showMonth(s, t), this.showSelectedDays(), this.disableNextPrevButtons());
   }, s.prototype.goToPreviousMonth = function (t) {
-    var e = t.target.getAttribute("month"),
-        s = 1 < e,
-        t = s ? this.month2 : this.month1,
-        t = this.getPrevMonth(t);
-    s && this.compareMonth(t, this.month1) <= 0 || this.isMonthOutOfRange(t) || (this.moveBothMonths && !s && this.showMonth(this.month1, 2), this.showMonth(t, e), this.showSelectedDays(), this.disableNextPrevButtons());
+    var t = t.target.getAttribute("month"),
+        e = 1 < t,
+        s = e ? this.month2 : this.month1,
+        s = this.getPrevMonth(s);
+    e && this.compareMonth(s, this.month1) <= 0 || this.isMonthOutOfRange(s) || (this.moveBothMonths && !e && this.showMonth(this.month1, 2), this.showMonth(s, t), this.showSelectedDays(), this.disableNextPrevButtons());
   }, s.prototype.isSingleMonth = function () {
     return !this.isVisible(this.getMonthDom(2));
   }, s.prototype.isMonthOutOfRange = function (t) {
@@ -20602,37 +20597,37 @@ window.HotelDatepicker = function () {
     return !!(this.startDate && new Date(t.getFullYear(), t.getMonth() + 1, 0, 23, 59, 59) < this.startDate || this.endDate && new Date(t.getFullYear(), t.getMonth(), 1) > this.endDate);
   }, s.prototype.disableNextPrevButtons = function () {
     var t, e, s;
-    this.isSingleMonth() || (e = parseInt(this.getDateString(this.month1, "YYYYMM"), 10), s = parseInt(this.getDateString(this.month2, "YYYYMM"), 10), t = Math.abs(e - s), e = this.datepicker.getElementsByClassName("datepicker__month-button--next"), s = this.datepicker.getElementsByClassName("datepicker__month-button--prev"), 1 < t && 89 !== t ? (this.removeClass(e[0], "datepicker__month-button--disabled"), this.removeClass(s[1], "datepicker__month-button--disabled")) : (this.addClass(e[0], "datepicker__month-button--disabled"), this.addClass(s[1], "datepicker__month-button--disabled")), this.isMonthOutOfRange(this.getPrevMonth(this.month1)) ? this.addClass(s[0], "datepicker__month-button--disabled") : this.removeClass(s[0], "datepicker__month-button--disabled"), this.isMonthOutOfRange(this.getNextMonth(this.month2)) ? this.addClass(e[1], "datepicker__month-button--disabled") : this.removeClass(e[1], "datepicker__month-button--disabled"));
+    this.isSingleMonth() || (t = parseInt(this.getDateString(this.month1, "YYYYMM"), 10), e = parseInt(this.getDateString(this.month2, "YYYYMM"), 10), t = Math.abs(t - e), e = this.datepicker.getElementsByClassName("datepicker__month-button--next"), s = this.datepicker.getElementsByClassName("datepicker__month-button--prev"), 1 < t && 89 !== t ? (this.removeClass(e[0], "datepicker__month-button--disabled"), this.removeClass(s[1], "datepicker__month-button--disabled")) : (this.addClass(e[0], "datepicker__month-button--disabled"), this.addClass(s[1], "datepicker__month-button--disabled")), this.isMonthOutOfRange(this.getPrevMonth(this.month1)) ? this.addClass(s[0], "datepicker__month-button--disabled") : this.removeClass(s[0], "datepicker__month-button--disabled"), this.isMonthOutOfRange(this.getNextMonth(this.month2)) ? this.addClass(e[1], "datepicker__month-button--disabled") : this.removeClass(e[1], "datepicker__month-button--disabled"));
   }, s.prototype.topBarDefaultText = function () {
     var t, e;
     this.showTopbar && (t = "", t = this.minDays && this.maxDays ? this.lang("info-range") : this.minDays && 2 < this.minDays ? this.lang("info-more-plural") : this.minDays ? this.lang("info-more") : this.lang("info-default"), e = this.datepicker.getElementsByClassName("datepicker__info--feedback")[0], t = t.replace(/%d/, this.minDays - 1).replace(/%d/, this.maxDays - 1), this.addClass(e, "datepicker__info--help"), this.removeClass(e, "datepicker__info--error"), e.textContent = t);
   }, s.prototype.topBarErrorText = function (t, e, s) {
     this.showTopbar && (this.addClass(t, "datepicker__info--error"), this.removeClass(t, "datepicker__info--help"), 1 < s ? (e = (e = this.lang(e + "-plural")).replace("%d", s), t.textContent = e) : e = this.lang(e), this.datepicker.getElementsByClassName("datepicker__info--selected")[0].style.display = "none");
   }, s.prototype.updateSelectableRange = function () {
-    for (var t, e = this, s = this.datepicker.getElementsByTagName("td"), a = this.start && !this.end, i = 0; i < s.length; i++) {
-      e.hasClass(s[i], "datepicker__month-day--invalid") && e.hasClass(s[i], "datepicker__month-day--tmp") && (e.removeClass(s[i], "datepicker__month-day--tmp"), e.hasClass(s[i], "datepicker__month-day--tmpinvalid") ? e.removeClass(s[i], "datepicker__month-day--tmpinvalid") : (e.removeClass(s[i], "datepicker__month-day--invalid"), e.addClass(s[i], "datepicker__month-day--valid"))), a ? e.hasClass(s[i], "datepicker__month-day--visibleMonth") && (e.hasClass(s[i], "datepicker__month-day--valid") || e.hasClass(s[i], "datepicker__month-day--disabled") || e.hasClass(s[i], "datepicker__month-day--before-disabled-date")) && (t = parseInt(s[i].getAttribute("time"), 10), e.isValidDate(t) ? (e.addClass(s[i], "datepicker__month-day--valid"), e.addClass(s[i], "datepicker__month-day--tmp"), e.removeClass(s[i], "datepicker__month-day--invalid"), e.removeClass(s[i], "datepicker__month-day--disabled")) : (e.hasClass(s[i], "datepicker__month-day--invalid") && e.addClass(s[i], "datepicker__month-day--tmpinvalid"), e.addClass(s[i], "datepicker__month-day--invalid"), e.addClass(s[i], "datepicker__month-day--tmp"), e.removeClass(s[i], "datepicker__month-day--valid"))) : (e.hasClass(s[i], "datepicker__month-day--checkout-enabled") || e.hasClass(s[i], "datepicker__month-day--before-disabled-date")) && (e.addClass(s[i], "datepicker__month-day--invalid"), e.removeClass(s[i], "datepicker__month-day--valid"), e.hasClass(s[i], "datepicker__month-day--before-disabled-date") || e.addClass(s[i], "datepicker__month-day--disabled"));
+    for (var t, e = this, s = this.datepicker.getElementsByTagName("td"), i = this.start && !this.end, a = 0; a < s.length; a++) {
+      e.hasClass(s[a], "datepicker__month-day--invalid") && e.hasClass(s[a], "datepicker__month-day--tmp") && (e.removeClass(s[a], "datepicker__month-day--tmp"), e.hasClass(s[a], "datepicker__month-day--tmpinvalid") ? e.removeClass(s[a], "datepicker__month-day--tmpinvalid") : (e.removeClass(s[a], "datepicker__month-day--invalid"), e.addClass(s[a], "datepicker__month-day--valid"))), i ? e.hasClass(s[a], "datepicker__month-day--visibleMonth") && (e.hasClass(s[a], "datepicker__month-day--valid") || e.hasClass(s[a], "datepicker__month-day--disabled") || e.hasClass(s[a], "datepicker__month-day--before-disabled-date")) && (t = parseInt(s[a].getAttribute("time"), 10), e.isValidDate(t) ? (e.addClass(s[a], "datepicker__month-day--valid"), e.addClass(s[a], "datepicker__month-day--tmp"), e.removeClass(s[a], "datepicker__month-day--invalid"), e.removeClass(s[a], "datepicker__month-day--disabled")) : (e.hasClass(s[a], "datepicker__month-day--invalid") && e.addClass(s[a], "datepicker__month-day--tmpinvalid"), e.addClass(s[a], "datepicker__month-day--invalid"), e.addClass(s[a], "datepicker__month-day--tmp"), e.removeClass(s[a], "datepicker__month-day--valid"))) : (e.hasClass(s[a], "datepicker__month-day--checkout-enabled") || e.hasClass(s[a], "datepicker__month-day--before-disabled-date")) && (e.addClass(s[a], "datepicker__month-day--invalid"), e.removeClass(s[a], "datepicker__month-day--valid"), e.hasClass(s[a], "datepicker__month-day--before-disabled-date") || e.addClass(s[a], "datepicker__month-day--disabled"));
     }
 
     return !0;
   }, s.prototype.dayHovering = function (t) {
     var e,
         s,
-        a,
-        i = this,
+        i,
+        a = this,
         n = parseInt(t.getAttribute("time"), 10),
         o = "";
 
     if (!this.hasClass(t, "datepicker__month-day--invalid")) {
       for (var r, h = this.datepicker.getElementsByTagName("td"), d = 0; d < h.length; d++) {
         var l = parseInt(h[d].getAttribute("time"), 10);
-        l === n ? i.addClass(h[d], "datepicker__month-day--hovering") : i.removeClass(h[d], "datepicker__month-day--hovering"), i.start && !i.end && (i.start < l && l <= n || i.start > l && n <= l) ? i.addClass(h[d], "datepicker__month-day--hovering") : i.removeClass(h[d], "datepicker__month-day--hovering");
+        l === n ? a.addClass(h[d], "datepicker__month-day--hovering") : a.removeClass(h[d], "datepicker__month-day--hovering"), a.start && !a.end && (a.start < l && l <= n || a.start > l && n <= l) ? a.addClass(h[d], "datepicker__month-day--hovering") : a.removeClass(h[d], "datepicker__month-day--hovering");
       }
 
       this.start && !this.end && (r = this.countDays(n, this.start) - 1, this.hoveringTooltip && ("function" == typeof this.hoveringTooltip ? o = this.hoveringTooltip(r, this.start, n) : !0 === this.hoveringTooltip && 0 < r && (o = r + " " + (1 == r ? this.lang("night") : this.lang("nights")))));
     }
 
-    o ? (r = t.getBoundingClientRect(), t = this.datepicker.getBoundingClientRect(), e = r.left - t.left, s = r.top - t.top, e += r.width / 2, (a = document.getElementById(this.getTooltipId())).style.display = "", a.textContent = o, r = a.getBoundingClientRect().width, o = a.getBoundingClientRect().height, e -= r / 2, s -= o, setTimeout(function () {
-      a.style.left = e + "px", a.style.top = s + "px";
+    o ? (r = t.getBoundingClientRect(), t = this.datepicker.getBoundingClientRect(), e = r.left - t.left, s = r.top - t.top, e += r.width / 2, (i = document.getElementById(this.getTooltipId())).style.display = "", i.textContent = o, t = i.getBoundingClientRect().width, r = i.getBoundingClientRect().height, e -= t / 2, s -= r, setTimeout(function () {
+      i.style.left = e + "px", i.style.top = s + "px";
     }, 10)) : document.getElementById(this.getTooltipId()).style.display = "none";
   }, s.prototype.clearHovering = function () {
     for (var t = this.datepicker.getElementsByTagName("td"), e = 0; e < t.length; e++) {
@@ -20648,6 +20643,14 @@ window.HotelDatepicker = function () {
     }
 
     this.setValue(""), this.checkSelection(), this.showSelectedInfo(), this.showSelectedDays();
+  }, s.prototype.clearDatepicker = function () {
+    this.start = !1, this.end = !1;
+
+    for (var t = this.datepicker.getElementsByTagName("td"), e = 0; e < t.length; e++) {
+      this.removeClass(t[e], "datepicker__month-day--selected"), this.removeClass(t[e], "datepicker__month-day--first-day-selected"), this.removeClass(t[e], "datepicker__month-day--last-day-selected");
+    }
+
+    this.setValue(""), this.checkSelection(), this.showSelectedInfo(), this.datepicker.getElementsByClassName("datepicker__info--selected")[0].style.display = "none", this.showSelectedDays();
   }, s.prototype.parseDisabledDates = function () {
     var t = [];
     this.setFechaI18n();
@@ -20662,11 +20665,11 @@ window.HotelDatepicker = function () {
   }, s.prototype.getClosestDates = function (t) {
     var e = [!1, !1];
     if (t < this.disabledDatesTime[0]) e = this.enableCheckout ? [!1, this.addDays(this.disabledDatesTime[0], 1)] : [!1, this.disabledDatesTime[0]];else if (t > this.disabledDatesTime[this.disabledDatesTime.length - 1]) e = [this.disabledDatesTime[this.disabledDatesTime.length - 1], !1];else {
-      for (var s, a = this.disabledDatesTime.length, i = this.disabledDatesTime.length, n = Math.abs(new Date(0, 0, 0).valueOf()), o = n, r = -n, h = 0; h < this.disabledDatesTime.length; ++h) {
-        (s = t - this.disabledDatesTime[h]) < 0 && r < s && (i = h, r = s), 0 < s && s < o && (a = h, o = s);
+      for (var s, i = this.disabledDatesTime.length, a = this.disabledDatesTime.length, n = Math.abs(new Date(0, 0, 0).valueOf()), o = n, r = -n, h = 0; h < this.disabledDatesTime.length; ++h) {
+        (s = t - this.disabledDatesTime[h]) < 0 && r < s && (a = h, r = s), 0 < s && s < o && (i = h, o = s);
       }
 
-      this.disabledDatesTime[a] && (e[0] = this.disabledDatesTime[a]), void 0 === this.disabledDatesTime[a] ? e[1] = !1 : this.enableCheckout ? e[1] = this.addDays(this.disabledDatesTime[i], 1) : e[1] = this.disabledDatesTime[i];
+      this.disabledDatesTime[i] && (e[0] = this.disabledDatesTime[i]), void 0 === this.disabledDatesTime[i] ? e[1] = !1 : this.enableCheckout ? e[1] = this.addDays(this.disabledDatesTime[a], 1) : e[1] = this.disabledDatesTime[a];
     }
     return e;
   }, s.prototype.lang = function (t) {
@@ -20714,7 +20717,7 @@ window.HotelDatepicker = function () {
     var t,
         e,
         s = 0;
-    return this.start && this.end ? s = this.countDays(this.end, this.start) - 1 : (t = (e = this.getValue()) ? e.split(this.separator) : "") && 2 <= t.length && (e = this.format, s = this.countDays(this.parseDate(t[0], e), this.parseDate(t[1], e)) - 1), s;
+    return this.start && this.end ? s = this.countDays(this.end, this.start) - 1 : (t = (t = this.getValue()) ? t.split(this.separator) : "") && 2 <= t.length && (e = this.format, s = this.countDays(this.parseDate(t[0], e), this.parseDate(t[1], e)) - 1), s;
   }, s.prototype.destroy = function () {
     document.getElementById(this.getDatepickerId()) && (this.removeAllBoundedListeners(this.input, "click"), this.removeAllBoundedListeners(document, "click"), this.removeAllBoundedListeners(this.input, "change"), this.datepicker.parentNode.removeChild(this.datepicker));
   }, s;
@@ -38652,42 +38655,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Fragment": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Fragment),
 /* harmony export */   "PureComponent": () => (/* binding */ E),
 /* harmony export */   "StrictMode": () => (/* binding */ cn),
-/* harmony export */   "Suspense": () => (/* binding */ L),
-/* harmony export */   "SuspenseList": () => (/* binding */ M),
+/* harmony export */   "Suspense": () => (/* binding */ T),
+/* harmony export */   "SuspenseList": () => (/* binding */ D),
 /* harmony export */   "__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED": () => (/* binding */ X),
 /* harmony export */   "cloneElement": () => (/* binding */ rn),
 /* harmony export */   "createContext": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createContext),
 /* harmony export */   "createElement": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createElement),
 /* harmony export */   "createFactory": () => (/* binding */ tn),
-/* harmony export */   "createPortal": () => (/* binding */ W),
+/* harmony export */   "createPortal": () => (/* binding */ V),
 /* harmony export */   "createRef": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createRef),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "findDOMNode": () => (/* binding */ on),
 /* harmony export */   "flushSync": () => (/* binding */ fn),
-/* harmony export */   "forwardRef": () => (/* binding */ x),
+/* harmony export */   "forwardRef": () => (/* binding */ R),
 /* harmony export */   "hydrate": () => (/* binding */ B),
 /* harmony export */   "isValidElement": () => (/* binding */ en),
-/* harmony export */   "lazy": () => (/* binding */ F),
+/* harmony export */   "lazy": () => (/* binding */ U),
 /* harmony export */   "memo": () => (/* binding */ g),
 /* harmony export */   "render": () => (/* binding */ z),
+/* harmony export */   "startTransition": () => (/* binding */ an),
 /* harmony export */   "unmountComponentAtNode": () => (/* binding */ un),
 /* harmony export */   "unstable_batchedUpdates": () => (/* binding */ ln),
 /* harmony export */   "useCallback": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useCallback),
 /* harmony export */   "useContext": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useContext),
 /* harmony export */   "useDebugValue": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useDebugValue),
+/* harmony export */   "useDeferredValue": () => (/* binding */ sn),
 /* harmony export */   "useEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect),
 /* harmony export */   "useErrorBoundary": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useErrorBoundary),
 /* harmony export */   "useImperativeHandle": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle),
+/* harmony export */   "useInsertionEffect": () => (/* binding */ vn),
 /* harmony export */   "useLayoutEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect),
 /* harmony export */   "useMemo": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useMemo),
 /* harmony export */   "useReducer": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useReducer),
 /* harmony export */   "useRef": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useRef),
 /* harmony export */   "useState": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState),
+/* harmony export */   "useSyncExternalStore": () => (/* binding */ dn),
+/* harmony export */   "useTransition": () => (/* binding */ hn),
 /* harmony export */   "version": () => (/* binding */ nn)
 /* harmony export */ });
 /* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-function C(n,t){for(var e in t)n[e]=t[e];return n}function S(n,t){for(var e in n)if("__source"!==e&&!(e in t))return!0;for(var r in t)if("__source"!==r&&n[r]!==t[r])return!0;return!1}function E(n){this.props=n}function g(n,t){function e(n){var e=this.props.ref,r=e==n.ref;return!r&&e&&(e.call?e(null):e.current=null),t?!t(this.props,n)||!r:S(this.props,n)}function r(t){return this.shouldComponentUpdate=e,(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(n,t)}return r.displayName="Memo("+(n.displayName||n.name)+")",r.prototype.isReactComponent=!0,r.__f=!0,r}(E.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).isPureReactComponent=!0,E.prototype.shouldComponentUpdate=function(n,t){return S(this.props,n)||S(this.state,t)};var w=preact__WEBPACK_IMPORTED_MODULE_1__.options.__b;preact__WEBPACK_IMPORTED_MODULE_1__.options.__b=function(n){n.type&&n.type.__f&&n.ref&&(n.props.ref=n.ref,n.ref=null),w&&w(n)};var R="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.forward_ref")||3911;function x(n){function t(t){var e=C({},t);return delete e.ref,n(e,t.ref||null)}return t.$$typeof=R,t.render=t,t.prototype.isReactComponent=t.__f=!0,t.displayName="ForwardRef("+(n.displayName||n.name)+")",t}var N=function(n,t){return null==n?null:(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)((0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).map(t))},k={map:N,forEach:N,count:function(n){return n?(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).length:0},only:function(n){var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n);if(1!==t.length)throw"Children.only";return t[0]},toArray:preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray},A=preact__WEBPACK_IMPORTED_MODULE_1__.options.__e;preact__WEBPACK_IMPORTED_MODULE_1__.options.__e=function(n,t,e,r){if(n.then)for(var u,o=t;o=o.__;)if((u=o.__c)&&u.__c)return null==t.__e&&(t.__e=e.__e,t.__k=e.__k),u.__c(n,t);A(n,t,e,r)};var O=preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount;function L(){this.__u=0,this.t=null,this.__b=null}function U(n){var t=n.__.__c;return t&&t.__e&&t.__e(n)}function F(n){var t,e,r;function u(u){if(t||(t=n()).then(function(n){e=n.default||n},function(n){r=n}),r)throw r;if(!e)throw t;return (0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(e,u)}return u.displayName="Lazy",u.__f=!0,u}function M(){this.u=null,this.o=null}preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount=function(n){var t=n.__c;t&&t.__R&&t.__R(),t&&!0===n.__h&&(n.type=null),O&&O(n)},(L.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__c=function(n,t){var e=t.__c,r=this;null==r.t&&(r.t=[]),r.t.push(e);var u=U(r.__v),o=!1,i=function(){o||(o=!0,e.__R=null,u?u(l):l())};e.__R=i;var l=function(){if(!--r.__u){if(r.state.__e){var n=r.state.__e;r.__v.__k[0]=function n(t,e,r){return t&&(t.__v=null,t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)}),t.__c&&t.__c.__P===e&&(t.__e&&r.insertBefore(t.__e,t.__d),t.__c.__e=!0,t.__c.__P=r)),t}(n,n.__c.__P,n.__c.__O)}var t;for(r.setState({__e:r.__b=null});t=r.t.pop();)t.forceUpdate()}},f=!0===t.__h;r.__u++||f||r.setState({__e:r.__b=r.__v.__k[0]}),n.then(i,i)},L.prototype.componentWillUnmount=function(){this.t=[]},L.prototype.render=function(n,t){if(this.__b){if(this.__v.__k){var e=document.createElement("div"),r=this.__v.__k[0].__c;this.__v.__k[0]=function n(t,e,r){return t&&(t.__c&&t.__c.__H&&(t.__c.__H.__.forEach(function(n){"function"==typeof n.__c&&n.__c()}),t.__c.__H=null),null!=(t=C({},t)).__c&&(t.__c.__P===r&&(t.__c.__P=e),t.__c=null),t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)})),t}(this.__b,e,r.__O=r.__P)}this.__b=null}var u=t.__e&&(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,n.fallback);return u&&(u.__h=null),[(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,t.__e?null:n.children),u]};var T=function(n,t,e){if(++e[1]===e[0]&&n.o.delete(t),n.props.revealOrder&&("t"!==n.props.revealOrder[0]||!n.o.size))for(e=n.u;e;){for(;e.length>3;)e.pop()();if(e[1]<e[0])break;n.u=e=e[2]}};function D(n){return this.getChildContext=function(){return n.context},n.children}function I(n){var t=this,e=n.i;t.componentWillUnmount=function(){(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,t.l),t.l=null,t.i=null},t.i&&t.i!==e&&t.componentWillUnmount(),n.__v?(t.l||(t.i=e,t.l={nodeType:1,parentNode:e,childNodes:[],appendChild:function(n){this.childNodes.push(n),t.i.appendChild(n)},insertBefore:function(n,e){this.childNodes.push(n),t.i.appendChild(n)},removeChild:function(n){this.childNodes.splice(this.childNodes.indexOf(n)>>>1,1),t.i.removeChild(n)}}),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)((0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(D,{context:t.context},n.__v),t.l)):t.l&&t.componentWillUnmount()}function W(n,t){var e=(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(I,{__v:n,i:t});return e.containerInfo=t,e}(M.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__e=function(n){var t=this,e=U(t.__v),r=t.o.get(n);return r[0]++,function(u){var o=function(){t.props.revealOrder?(r.push(u),T(t,n,r)):u()};e?e(o):o()}},M.prototype.render=function(n){this.u=null,this.o=new Map;var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n.children);n.revealOrder&&"b"===n.revealOrder[0]&&t.reverse();for(var e=t.length;e--;)this.o.set(t[e],this.u=[1,0,this.u]);return n.children},M.prototype.componentDidUpdate=M.prototype.componentDidMount=function(){var n=this;this.o.forEach(function(t,e){T(n,e,t)})};var P="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103,V=/^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|marker(?!H|W|U)|overline|paint|shape|stop|strikethrough|stroke|text(?!L)|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,$="undefined"!=typeof document,j=function(n){return("undefined"!=typeof Symbol&&"symbol"==typeof Symbol()?/fil|che|rad/i:/fil|che|ra/i).test(n)};function z(n,t,e){return null==t.__k&&(t.textContent=""),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(n,t),"function"==typeof e&&e(),n?n.__c:null}function B(n,t,e){return (0,preact__WEBPACK_IMPORTED_MODULE_1__.hydrate)(n,t),"function"==typeof e&&e(),n?n.__c:null}preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype.isReactComponent={},["componentWillMount","componentWillReceiveProps","componentWillUpdate"].forEach(function(n){Object.defineProperty(preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype,n,{configurable:!0,get:function(){return this["UNSAFE_"+n]},set:function(t){Object.defineProperty(this,n,{configurable:!0,writable:!0,value:t})}})});var H=preact__WEBPACK_IMPORTED_MODULE_1__.options.event;function Z(){}function Y(){return this.cancelBubble}function q(){return this.defaultPrevented}preact__WEBPACK_IMPORTED_MODULE_1__.options.event=function(n){return H&&(n=H(n)),n.persist=Z,n.isPropagationStopped=Y,n.isDefaultPrevented=q,n.nativeEvent=n};var G,J={configurable:!0,get:function(){return this.class}},K=preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode;preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode=function(n){var t=n.type,e=n.props,r=e;if("string"==typeof t){var u=-1===t.indexOf("-");for(var o in r={},e){var i=e[o];$&&"children"===o&&"noscript"===t||"value"===o&&"defaultValue"in e&&null==i||("defaultValue"===o&&"value"in e&&null==e.value?o="value":"download"===o&&!0===i?i="":/ondoubleclick/i.test(o)?o="ondblclick":/^onchange(textarea|input)/i.test(o+t)&&!j(e.type)?o="oninput":/^onfocus$/i.test(o)?o="onfocusin":/^onblur$/i.test(o)?o="onfocusout":/^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o)?o=o.toLowerCase():u&&V.test(o)?o=o.replace(/[A-Z0-9]/,"-$&").toLowerCase():null===i&&(i=void 0),/^oninput$/i.test(o)&&(o=o.toLowerCase(),r[o]&&(o="oninputCapture")),r[o]=i)}"select"==t&&r.multiple&&Array.isArray(r.value)&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=-1!=r.value.indexOf(n.props.value)})),"select"==t&&null!=r.defaultValue&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=r.multiple?-1!=r.defaultValue.indexOf(n.props.value):r.defaultValue==n.props.value})),n.props=r,e.class!=e.className&&(J.enumerable="className"in e,null!=e.className&&(r.class=e.className),Object.defineProperty(r,"className",J))}n.$$typeof=P,K&&K(n)};var Q=preact__WEBPACK_IMPORTED_MODULE_1__.options.__r;preact__WEBPACK_IMPORTED_MODULE_1__.options.__r=function(n){Q&&Q(n),G=n.__c};var X={ReactCurrentDispatcher:{current:{readContext:function(n){return G.__n[n.__c].props.value}}}},nn="17.0.2";function tn(n){return preact__WEBPACK_IMPORTED_MODULE_1__.createElement.bind(null,n)}function en(n){return!!n&&n.$$typeof===P}function rn(n){return en(n)?preact__WEBPACK_IMPORTED_MODULE_1__.cloneElement.apply(null,arguments):n}function un(n){return!!n.__k&&((0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,n),!0)}function on(n){return n&&(n.base||1===n.nodeType&&n)||null}var ln=function(n,t){return n(t)},fn=function(n,t){return n(t)},cn=preact__WEBPACK_IMPORTED_MODULE_1__.Fragment;/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({useState:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState,useReducer:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useReducer,useEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect,useLayoutEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect,useRef:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useRef,useImperativeHandle:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle,useMemo:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useMemo,useCallback:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useCallback,useContext:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useContext,useDebugValue:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useDebugValue,version:"17.0.2",Children:k,render:z,hydrate:B,unmountComponentAtNode:un,createPortal:W,createElement:preact__WEBPACK_IMPORTED_MODULE_1__.createElement,createContext:preact__WEBPACK_IMPORTED_MODULE_1__.createContext,createFactory:tn,cloneElement:rn,createRef:preact__WEBPACK_IMPORTED_MODULE_1__.createRef,Fragment:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,isValidElement:en,findDOMNode:on,Component:preact__WEBPACK_IMPORTED_MODULE_1__.Component,PureComponent:E,memo:g,forwardRef:x,flushSync:fn,unstable_batchedUpdates:ln,StrictMode:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,Suspense:L,SuspenseList:M,lazy:F,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:X});
+function S(n,t){for(var e in t)n[e]=t[e];return n}function C(n,t){for(var e in n)if("__source"!==e&&!(e in t))return!0;for(var r in t)if("__source"!==r&&n[r]!==t[r])return!0;return!1}function E(n){this.props=n}function g(n,t){function e(n){var e=this.props.ref,r=e==n.ref;return!r&&e&&(e.call?e(null):e.current=null),t?!t(this.props,n)||!r:C(this.props,n)}function r(t){return this.shouldComponentUpdate=e,(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(n,t)}return r.displayName="Memo("+(n.displayName||n.name)+")",r.prototype.isReactComponent=!0,r.__f=!0,r}(E.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).isPureReactComponent=!0,E.prototype.shouldComponentUpdate=function(n,t){return C(this.props,n)||C(this.state,t)};var w=preact__WEBPACK_IMPORTED_MODULE_1__.options.__b;preact__WEBPACK_IMPORTED_MODULE_1__.options.__b=function(n){n.type&&n.type.__f&&n.ref&&(n.props.ref=n.ref,n.ref=null),w&&w(n)};var x="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.forward_ref")||3911;function R(n){function t(t){var e=S({},t);return delete e.ref,n(e,t.ref||null)}return t.$$typeof=x,t.render=t,t.prototype.isReactComponent=t.__f=!0,t.displayName="ForwardRef("+(n.displayName||n.name)+")",t}var N=function(n,t){return null==n?null:(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)((0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).map(t))},k={map:N,forEach:N,count:function(n){return n?(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).length:0},only:function(n){var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n);if(1!==t.length)throw"Children.only";return t[0]},toArray:preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray},A=preact__WEBPACK_IMPORTED_MODULE_1__.options.__e;preact__WEBPACK_IMPORTED_MODULE_1__.options.__e=function(n,t,e,r){if(n.then)for(var u,o=t;o=o.__;)if((u=o.__c)&&u.__c)return null==t.__e&&(t.__e=e.__e,t.__k=e.__k),u.__c(n,t);A(n,t,e,r)};var O=preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount;function T(){this.__u=0,this.t=null,this.__b=null}function L(n){var t=n.__.__c;return t&&t.__a&&t.__a(n)}function U(n){var t,e,r;function u(u){if(t||(t=n()).then(function(n){e=n.default||n},function(n){r=n}),r)throw r;if(!e)throw t;return (0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(e,u)}return u.displayName="Lazy",u.__f=!0,u}function D(){this.u=null,this.o=null}preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount=function(n){var t=n.__c;t&&t.__R&&t.__R(),t&&!0===n.__h&&(n.type=null),O&&O(n)},(T.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__c=function(n,t){var e=t.__c,r=this;null==r.t&&(r.t=[]),r.t.push(e);var u=L(r.__v),o=!1,i=function(){o||(o=!0,e.__R=null,u?u(l):l())};e.__R=i;var l=function(){if(!--r.__u){if(r.state.__a){var n=r.state.__a;r.__v.__k[0]=function n(t,e,r){return t&&(t.__v=null,t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)}),t.__c&&t.__c.__P===e&&(t.__e&&r.insertBefore(t.__e,t.__d),t.__c.__e=!0,t.__c.__P=r)),t}(n,n.__c.__P,n.__c.__O)}var t;for(r.setState({__a:r.__b=null});t=r.t.pop();)t.forceUpdate()}},f=!0===t.__h;r.__u++||f||r.setState({__a:r.__b=r.__v.__k[0]}),n.then(i,i)},T.prototype.componentWillUnmount=function(){this.t=[]},T.prototype.render=function(n,t){if(this.__b){if(this.__v.__k){var e=document.createElement("div"),r=this.__v.__k[0].__c;this.__v.__k[0]=function n(t,e,r){return t&&(t.__c&&t.__c.__H&&(t.__c.__H.__.forEach(function(n){"function"==typeof n.__c&&n.__c()}),t.__c.__H=null),null!=(t=S({},t)).__c&&(t.__c.__P===r&&(t.__c.__P=e),t.__c=null),t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)})),t}(this.__b,e,r.__O=r.__P)}this.__b=null}var u=t.__a&&(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,n.fallback);return u&&(u.__h=null),[(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,t.__a?null:n.children),u]};var F=function(n,t,e){if(++e[1]===e[0]&&n.o.delete(t),n.props.revealOrder&&("t"!==n.props.revealOrder[0]||!n.o.size))for(e=n.u;e;){for(;e.length>3;)e.pop()();if(e[1]<e[0])break;n.u=e=e[2]}};function I(n){return this.getChildContext=function(){return n.context},n.children}function M(n){var t=this,e=n.i;t.componentWillUnmount=function(){(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,t.l),t.l=null,t.i=null},t.i&&t.i!==e&&t.componentWillUnmount(),n.__v?(t.l||(t.i=e,t.l={nodeType:1,parentNode:e,childNodes:[],appendChild:function(n){this.childNodes.push(n),t.i.appendChild(n)},insertBefore:function(n,e){this.childNodes.push(n),t.i.appendChild(n)},removeChild:function(n){this.childNodes.splice(this.childNodes.indexOf(n)>>>1,1),t.i.removeChild(n)}}),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)((0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(I,{context:t.context},n.__v),t.l)):t.l&&t.componentWillUnmount()}function V(n,t){var e=(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(M,{__v:n,i:t});return e.containerInfo=t,e}(D.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__a=function(n){var t=this,e=L(t.__v),r=t.o.get(n);return r[0]++,function(u){var o=function(){t.props.revealOrder?(r.push(u),F(t,n,r)):u()};e?e(o):o()}},D.prototype.render=function(n){this.u=null,this.o=new Map;var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n.children);n.revealOrder&&"b"===n.revealOrder[0]&&t.reverse();for(var e=t.length;e--;)this.o.set(t[e],this.u=[1,0,this.u]);return n.children},D.prototype.componentDidUpdate=D.prototype.componentDidMount=function(){var n=this;this.o.forEach(function(t,e){F(n,e,t)})};var W="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103,P=/^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|marker(?!H|W|U)|overline|paint|shape|stop|strikethrough|stroke|text(?!L)|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,$="undefined"!=typeof document,j=function(n){return("undefined"!=typeof Symbol&&"symbol"==typeof Symbol()?/fil|che|rad/i:/fil|che|ra/i).test(n)};function z(n,t,e){return null==t.__k&&(t.textContent=""),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(n,t),"function"==typeof e&&e(),n?n.__c:null}function B(n,t,e){return (0,preact__WEBPACK_IMPORTED_MODULE_1__.hydrate)(n,t),"function"==typeof e&&e(),n?n.__c:null}preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype.isReactComponent={},["componentWillMount","componentWillReceiveProps","componentWillUpdate"].forEach(function(n){Object.defineProperty(preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype,n,{configurable:!0,get:function(){return this["UNSAFE_"+n]},set:function(t){Object.defineProperty(this,n,{configurable:!0,writable:!0,value:t})}})});var H=preact__WEBPACK_IMPORTED_MODULE_1__.options.event;function Z(){}function Y(){return this.cancelBubble}function q(){return this.defaultPrevented}preact__WEBPACK_IMPORTED_MODULE_1__.options.event=function(n){return H&&(n=H(n)),n.persist=Z,n.isPropagationStopped=Y,n.isDefaultPrevented=q,n.nativeEvent=n};var G,J={configurable:!0,get:function(){return this.class}},K=preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode;preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode=function(n){var t=n.type,e=n.props,r=e;if("string"==typeof t){var u=-1===t.indexOf("-");for(var o in r={},e){var i=e[o];$&&"children"===o&&"noscript"===t||"value"===o&&"defaultValue"in e&&null==i||("defaultValue"===o&&"value"in e&&null==e.value?o="value":"download"===o&&!0===i?i="":/ondoubleclick/i.test(o)?o="ondblclick":/^onchange(textarea|input)/i.test(o+t)&&!j(e.type)?o="oninput":/^onfocus$/i.test(o)?o="onfocusin":/^onblur$/i.test(o)?o="onfocusout":/^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(o)?o=o.toLowerCase():u&&P.test(o)?o=o.replace(/[A-Z0-9]/,"-$&").toLowerCase():null===i&&(i=void 0),/^oninput$/i.test(o)&&(o=o.toLowerCase(),r[o]&&(o="oninputCapture")),r[o]=i)}"select"==t&&r.multiple&&Array.isArray(r.value)&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=-1!=r.value.indexOf(n.props.value)})),"select"==t&&null!=r.defaultValue&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=r.multiple?-1!=r.defaultValue.indexOf(n.props.value):r.defaultValue==n.props.value})),n.props=r,e.class!=e.className&&(J.enumerable="className"in e,null!=e.className&&(r.class=e.className),Object.defineProperty(r,"className",J))}n.$$typeof=W,K&&K(n)};var Q=preact__WEBPACK_IMPORTED_MODULE_1__.options.__r;preact__WEBPACK_IMPORTED_MODULE_1__.options.__r=function(n){Q&&Q(n),G=n.__c};var X={ReactCurrentDispatcher:{current:{readContext:function(n){return G.__n[n.__c].props.value}}}},nn="17.0.2";function tn(n){return preact__WEBPACK_IMPORTED_MODULE_1__.createElement.bind(null,n)}function en(n){return!!n&&n.$$typeof===W}function rn(n){return en(n)?preact__WEBPACK_IMPORTED_MODULE_1__.cloneElement.apply(null,arguments):n}function un(n){return!!n.__k&&((0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,n),!0)}function on(n){return n&&(n.base||1===n.nodeType&&n)||null}var ln=function(n,t){return n(t)},fn=function(n,t){return n(t)},cn=preact__WEBPACK_IMPORTED_MODULE_1__.Fragment;function an(n){n()}function sn(n){return n}function hn(){return[!1,an]}var vn=preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect;function dn(t,r){var u=(0,preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState)(r),o=u[0],i=u[1];return (0,preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function(){return t(function(){i(r())})},[t,r]),o}/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({useState:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState,useReducer:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useReducer,useEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect,useLayoutEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect,useInsertionEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect,useTransition:hn,useDeferredValue:sn,useSyncExternalStore:dn,startTransition:an,useRef:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useRef,useImperativeHandle:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle,useMemo:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useMemo,useCallback:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useCallback,useContext:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useContext,useDebugValue:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useDebugValue,version:"17.0.2",Children:k,render:z,hydrate:B,unmountComponentAtNode:un,createPortal:V,createElement:preact__WEBPACK_IMPORTED_MODULE_1__.createElement,createContext:preact__WEBPACK_IMPORTED_MODULE_1__.createContext,createFactory:tn,cloneElement:rn,createRef:preact__WEBPACK_IMPORTED_MODULE_1__.createRef,Fragment:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,isValidElement:en,findDOMNode:on,Component:preact__WEBPACK_IMPORTED_MODULE_1__.Component,PureComponent:E,memo:g,forwardRef:R,flushSync:fn,unstable_batchedUpdates:ln,StrictMode:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,Suspense:T,SuspenseList:D,lazy:U,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:X});
 //# sourceMappingURL=compat.module.js.map
 
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
+
     /**
      * Return the Landing Page view.
      *

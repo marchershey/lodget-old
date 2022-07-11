@@ -1,5 +1,5 @@
 <x-layouts.minimal>
-    <div class="flex flex-col max-w-lg p-8 space-y-10">
+    <div class="flex flex-col max-w-lg space-y-10 md:p-8">
 
         {{-- Logo --}}
         <div class="flex justify-center mt-10">
@@ -31,7 +31,7 @@
         {{-- form --}}
         <form method="POST" action="{{ route('auth.register.submit') }}">
             @csrf
-            <div class="flex flex-col space-y-5">
+            <div class="flex flex-col p-5 space-y-5 bg-white rounded-lg">
                 {{-- Name --}}
                 <div class="flex space-x-5">
                     <div>
@@ -64,13 +64,13 @@
                 </div>
                 {{-- Sumbit button --}}
                 <div>
-                    <button type="submit" class="button">Register</button>
+                    <button type="submit" class="w-full button ">Register</button>
                     <div class="mt-5 text-center">
                         <span class="block text-sm text-muted">Already have an account? <a href="{{ route('auth.login') }}" class="link">Sign in</a></span>
                     </div>
                 </div>
                 {{-- Terms --}}
-                <div>
+                <div class="text-center">
                     <span class="block text-xs text-muted">By clicking Register, you agree that you have read and accepted our <a href="#" class="link">Terms of Use</a> and <a href="#" class="link">Privacy Policy</a></span>
                 </div>
             </div>

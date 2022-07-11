@@ -8,10 +8,12 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
+                    dark: colors.blue[700],
                     DEFAULT: colors.blue[600],
                     light: colors.blue[500],
-                    dark: colors.blue[700],
                     muted: colors.blue[300],
+                    lighter: colors.blue[100],
+                    lightest: colors.blue[50],
                 },
                 muted: {
                     DEFAULT: colors.gray[500],
@@ -23,10 +25,14 @@ module.exports = {
             },
         },
     },
-
+    variants: {
+        extend: {
+            lineClamp: ["focus"],
+        },
+    },
     plugins: [
         require("@tailwindcss/forms"),
         require("@tailwindcss/aspect-ratio"),
-        //     require('@tailwindcss/line-clamp'),
+        require("@tailwindcss/line-clamp"),
     ],
 };

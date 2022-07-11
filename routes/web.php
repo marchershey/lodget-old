@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Auth Routes
@@ -27,6 +30,7 @@ Route::name('auth.')->prefix('/auth')->group(function () {
 Route::name('frontend.')->prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\Pages\Frontend\Index::class, 'view'])->name('index');
     Route::get('/property/{property:slug}', [App\Http\Controllers\Pages\Frontend\PropertyController::class, 'view'])->name('property');
+    Route::get('/property/{property:slug}/{reservation:slug}', [App\Http\Controllers\Pages\Frontend\PropertyController::class, 'view'])->middleware('auth')->name('property.reserve');
     // Properties
     // Reservations
 });
@@ -82,7 +86,12 @@ Route::get('/email', function () {
 });
 
 Route::get('/test', function () {
-    $property = App\Models\Property::find(1)->first();
-
-    return count($property->photos()->get());
+    $reservation = new Reservation();
+    $reservation->slug = \App\Helpers\ReservationSlugHelper::generate();
+    $reservation->property_id = 1;
+    $reservation->checkin = '2022-07-28';
+    $reservation->checkout = '2022-07-30';
+    $reservation->guests = 2;
+    $reservation->save();
+    return $reservation;
 });

@@ -1,5 +1,5 @@
 <x-layouts.minimal>
-    <div class="flex flex-col w-full max-w-md p-8 space-y-10">
+    <div class="flex flex-col w-full max-w-md space-y-10 md:p-8">
 
         {{-- Logo --}}
         <div class="flex justify-center mt-10">
@@ -30,7 +30,7 @@
         {{-- form --}}
         <form method="POST" action="{{ route('auth.login.submit') }}">
             @csrf
-            <div class="flex flex-col space-y-5">
+            <div class="flex flex-col p-5 space-y-5 bg-white">
                 {{-- Email Address --}}
                 <div>
                     <label for="email" class="input-label @error('email') input-label-error @enderror">Email Address</label>
