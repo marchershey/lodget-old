@@ -53,6 +53,6 @@ class RegistrationController extends Controller
         Mail::to($user->email)->queue(new \App\Mail\WelcomeUserMail($user->first_name));
 
         // redirect
-        return redirect()->route('dashboard');
+        return redirect()->intended(route('dashboard'));
     }
 }

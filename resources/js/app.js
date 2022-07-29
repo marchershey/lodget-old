@@ -15,7 +15,8 @@ import fecha from "fecha";
 window.fecha = fecha;
 
 // Hotel datepicker
-import "./hotel-datepicker";
+import HotelDatepicker from "./hotel-datepicker";
+window.HotelDatepicker = HotelDatepicker;
 
 // Alpinejs & Tall Toasts
 import Alpine from "alpinejs";

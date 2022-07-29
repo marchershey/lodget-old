@@ -10,7 +10,7 @@ class PropertyController extends Controller
 {
 
     /**
-     * Return the Landing Page view.
+     * Return the Property Page view.
      *
      * @return \Illuminate\View\View
      */

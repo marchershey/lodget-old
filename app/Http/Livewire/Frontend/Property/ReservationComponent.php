@@ -22,14 +22,13 @@ class ReservationComponent extends Component
     // properties
     public $property;
     public $dates;
-    public $buttonText;
     public $checkin;
     public $checkout;
     public $guests = 0;
 
     protected $rules = [
-        'checkin' => 'required|date',
-        'checkout' => 'required|date',
+        'checkin' => 'required|date|before:checkout',
+        'checkout' => 'required|date|after:checkin',
         'guests' => 'required|numeric|min:1|max:16',
     ];
 
@@ -48,7 +47,7 @@ class ReservationComponent extends Component
         $this->showModal = true;
 
         // get reserved dates
-        $reservations = Reservation::where('property_id', $this->property->id)->where('approved', true)->get(['checkin', 'checkout'])->toArray();
+        $reservations = Reservation::where('property_id', $this->property->id)->where('approved', false)->get(['checkin', 'checkout'])->toArray();
 
         $checkins = [];
         $checkouts = [];
@@ -67,14 +66,8 @@ class ReservationComponent extends Component
         }
 
         $this->dispatchBrowserEvent('calendar-init', ['checkins' => $checkins, 'checkouts' => $checkouts, 'disabled' => $disabled]);
-        $this->dispatchBrowserEvent('calendar-open');
 
         $this->showButton = true;
-    }
-
-    public function test()
-    {
-        sleep(2);
     }
 
     public function updated($field, $value)
@@ -119,7 +112,7 @@ class ReservationComponent extends Component
         $reservation->guests = $this->guests;
 
         if ($reservation->save()) {
-            return redirect()->route('frontend.property.reserve', ['property' => $this->property->slug, 'reservation' => $reservation->slug]);
+            return redirect()->route('frontend.checkout', ['reservation' => $reservation->slug]);
         } else {
             toast()->danger('Please refresh the page and try again.', 'Server Error')->push();
         }

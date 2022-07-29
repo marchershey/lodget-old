@@ -30,9 +30,7 @@ Route::name('auth.')->prefix('/auth')->group(function () {
 Route::name('frontend.')->prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\Pages\Frontend\Index::class, 'view'])->name('index');
     Route::get('/property/{property:slug}', [App\Http\Controllers\Pages\Frontend\PropertyController::class, 'view'])->name('property');
-    Route::get('/property/{property:slug}/{reservation:slug}', [App\Http\Controllers\Pages\Frontend\PropertyController::class, 'view'])->middleware('auth')->name('property.reserve');
-    // Properties
-    // Reservations
+    Route::get('/checkout/{reservation:slug}', [App\Http\Controllers\Pages\Frontend\CheckoutController::class, 'view'])->middleware('auth')->name('checkout');
 });
 
 /**

@@ -34,7 +34,7 @@ class AuthenticationController extends Controller
         ]);
 
         if ($user = Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], (isset($validated['remember']) ? true : false))) {
-            return redirect()->route('dashboard');
+            return redirect()->intended(route('dashboard'));
         } else {
             return redirect()->back()->withErrors(['email' => 'The provided credentials do not match our records']);
         }

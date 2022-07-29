@@ -395,14 +395,55 @@
     color: #3b82f6;
 }
 
-/* Selected */
-.datepicker__month-day--hovering {
-    background-color: #dbeafe !important;
-    color: #1d4ed8 !important;
+.datepicker__month-day--asdf {
+    background-color: #000 !important;
+    color: red !important;
 }
-.datepicker__month-day--hovering:hover {
-    background-color: #3b82f6 !important;
-    color: #fff !important;
+
+/* Disabled */
+.datepicker__month-day--invalid {
+    color: #94a3b8;
+}
+.datepicker__month-day--disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+.datepicker__month-day--disabled-important {
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+}
+.datepicker__month-day--no-checkin {
+    background-image: -webkit-linear-gradient(-48deg, #fff 50%, #f1f5f9 50%);
+    color: #94a3b8;
+}
+.datepicker__month-day--no-checkin.datepicker__month-day--tmp:not(.datepicker__month-day--invalid) {
+    color: #3b82f6 !important;
+}
+.datepicker__month-day--no-checkout:not(.datepicker__month-day--selected) {
+    background-image: -webkit-linear-gradient(-48deg, #f1f5f9 50%, #fff 50%);
+    color: #94a3b8;
+}
+.datepicker__month-day--invalid.datepicker__month-day--no-checkin {
+    color: #94a3b8;
+}
+.datepicker__month-day--checkin-only:not(.datepicker__month-day--invalid) {
+    color: #3b82f6;
+}
+/* .datepicker__month-day--checkin-only:not(.datepicker__month-day--selected):not(.datepicker__month-day--today):not(.datepicker__month-day--hovering) {
+    background-image: -webkit-linear-gradient(-45deg, #f1f5f9 50%, #fff 50%);
+}
+.datepicker__month-day--no-checkin:not(.datepicker__month-day--selected):not(.datepicker__month-day--hovering) {
+    background-image: -webkit-linear-gradient(-45deg, #fff 50%, #f1f5f9 50%);
+}
+.datepicker__month-day--checkout-enabled:not(.datepicker__month-day--selected):not(.datepicker__month-day--hovering) {
+    background-image: -webkit-linear-gradient(-45deg, #fff 50%, #f1f5f9 50%);
+} */
+
+/* Selected */
+.datepicker__month-day--hovering.datepicker__month-day--invalid:hover {
+    background-color: #fecaca !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed;
 }
 .datepicker__month-day--selected {
     background-color: #dbeafe !important;
@@ -413,24 +454,11 @@
     background-color: #3b82f6 !important;
     color: #fff !important;
 }
-
-/* Disabled */
-.datepicker__month-day--disabled {
-    background: #f1f5f9;
-    color: #94a3b8;
+.datepicker__month-day--hovering {
+    background-color: #dbeafe !important;
+    color: #1d4ed8 !important;
 }
-.datepicker__month-day--checkin-only:not(.datepicker__month-day--selected):not(.datepicker__month-day--today) {
-    background-image: -webkit-linear-gradient(-45deg, #f1f5f9 50%, #fff 50%);
-}
-.datepicker__month-day--no-checkin:not(.datepicker__month-day--selected):not(.datepicker__month-day--hovering) {
-    background-image: -webkit-linear-gradient(-45deg, #fff 50%, #f1f5f9 50%);
-}
-.datepicker__month-day--checkout-enabled:not(.datepicker__month-day--selected):not(.datepicker__month-day--hovering) {
-    background-image: -webkit-linear-gradient(-45deg, #fff 50%, #f1f5f9 50%);
-}
-/* .datepicker__month-day--no-checkout:not(.datepicker__month-day--first-day-selected) {
-    background-image: -webkit-linear-gradient(-45deg, #f1f5f9 50%, #fff 50%);
-} */
-.datepicker__month-day--checkout-enabled:not(.datepicker__month-day--valid):not(.datepicker__month-day--selected) {
-    background-image: -webkit-linear-gradient(-45deg, #fff 50%, #f1f5f9 50%);
+.datepicker__month-day--hovering:hover {
+    background-color: #3b82f6 !important;
+    color: #fff !important;
 }

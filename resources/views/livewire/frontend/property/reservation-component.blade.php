@@ -43,7 +43,7 @@
                     }" class="w-full my-5">
                         <label for="guests" class="flex items-center justify-between w-full space-x-5">
                             <div class="flex flex-col">
-                                <span class="text-base font-semibold @error('guests') text-red-500 @enderror">Guests</span>
+                                <span class="text-sm font-semibold @error('guests') text-red-500 @enderror">Guests</span>
                                 <span class="text-xs text-muted">How many guests will be staying?</span>
                             </div>
                             <div class="focus-within:ring-primary focus-within:border-primary group mt-1 flex w-full max-w-[150px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('guests') border-red-500 @enderror">
@@ -168,10 +168,12 @@
         window.addEventListener('calendar-init', event => {
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
-                selectForward: false,
+                selectForward: true,
                 minNights: 3,
                 showTopbar: false,
                 startDate: new Date(),
+                noCheckInDates: event.detail.checkins,
+                noCheckOutDates: event.detail.checkouts,
                 disabledDates: event.detail.disabled,
                 enableCheckout: true,
                 hoveringTooltip: function(nights, startTime, hoverTime) {
