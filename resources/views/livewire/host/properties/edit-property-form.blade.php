@@ -367,7 +367,7 @@
 
             <div class="grid grid-cols-4 gap-5">
                 <div>
-                    <label for="rate" class="input-label">Default Base Rate</label>
+                    <label for="rate" class="input-label">Base Rate</label>
                     <div class="relative mt-1">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <span class="text-gray-500 sm:text-sm"> $ </span>
@@ -379,7 +379,7 @@
                     </div>
                 </div>
                 <div>
-                    <label for="tax" class="input-label">Default Tax %</label>
+                    <label for="tax" class="input-label">Tax Rate</label>
                     <div class="relative mt-1">
                         <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 input" placeholder="0">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -395,6 +395,9 @@
             @if (count($fees) > 0)
                 <div class="flex flex-col space-y-3">
                     <hr>
+                    <div class="px-5 py-4 pb-3 text-xs text-center text-blue-800 align-bottom rounded-lg bg-blue-50">
+                        <div><span class="font-semibold">Note:</span> Percentage fees are applied towards the total base rate only.</div>
+                    </div>
                     @foreach ($fees as $key => $fee)
                         <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
                             <div>

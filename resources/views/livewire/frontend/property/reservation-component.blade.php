@@ -1,4 +1,4 @@
-<div class="mt-10" x-data="{ open: true }" wire:init="load">
+<div class="mt-10" x-data="{ open: false }" wire:init="load">
 
     @if ($showButton)
         <button wire:loading.remove wire:target="load" x-on:click="open = true" type="button" class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-primary">Select Dates</button>

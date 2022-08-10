@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Host\Properties;
 
 use App\Models\Property;
 use App\Models\PropertyAmenity;
+use App\Models\PropertyFee;
 use App\Models\PropertyPhoto;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
@@ -101,6 +102,10 @@ class EditPropertyForm extends Component
         // rates & fees
         $this->default_rate = $this->property->default_rate;
         $this->default_tax = $this->property->default_tax;
+
+        foreach ($this->property->fees as $fee) {
+            $this->fees[$fee['id']] = $fee;
+        }
 
         // listing
         $this->headline = $this->property->headline;
@@ -229,16 +234,36 @@ class EditPropertyForm extends Component
         }
         // re-add current amenities
         if ($this->amenities) {
-            foreach ($this->amenities as $text) {
-                $amenity = new PropertyAmenity();
-                $amenity->text = $text;
-                $amenity->property_id = $this->property->id;
-                $amenity->user_id = 1;
-                $amenity->save();
+            foreach ($this->amenities as $amenity) {
+                $newAmenity = new PropertyAmenity();
+                $newAmenity->text = $amenity;
+                $newAmenity->property_id = $this->property->id;
+                $newAmenity->user_id = 1;
+                $newAmenity->save();
             }
         }
 
-        // rates & fees
+        // default base and tax rate
+        $property->default_rate = $this->default_rate;
+        $property->default_tax = $this->default_tax;
+
+        // additional fees 
+        // delete existing fees
+        foreach ($this->property->fees as $fee) {
+            $fee->delete();
+        }
+        // re-add current fees
+        if ($this->fees) {
+            foreach ($this->fees as $fee) {
+                $newFee = new PropertyFee();
+                $newFee->property_id = $this->property->id;
+                $newFee->name = $fee['name'];
+                $newFee->amount = $fee['amount'];
+                $newFee->type = $fee['type'];
+                $newFee->save();
+            }
+        }
+
 
         // options
         $property->active = $this->active;

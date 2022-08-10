@@ -13,9 +13,8 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
 // Fetcha (requirement for hotel datepicker)
 import fecha from "fecha";
 window.fecha = fecha;
-
 // Hotel datepicker
-import HotelDatepicker from "./hotel-datepicker";
+import HotelDatepicker from "hotel-datepicker";
 window.HotelDatepicker = HotelDatepicker;
 
 // Alpinejs & Tall Toasts

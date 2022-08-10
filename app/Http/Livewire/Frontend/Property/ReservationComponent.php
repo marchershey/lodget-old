@@ -24,6 +24,7 @@ class ReservationComponent extends Component
     public $dates;
     public $checkin;
     public $checkout;
+    public $nights;
     public $guests = 0;
 
     protected $rules = [
@@ -47,7 +48,7 @@ class ReservationComponent extends Component
         $this->showModal = true;
 
         // get reserved dates
-        $reservations = Reservation::where('property_id', $this->property->id)->where('approved', false)->get(['checkin', 'checkout'])->toArray();
+        $reservations = Reservation::where('property_id', $this->property->id)->where('approved', true)->get(['checkin', 'checkout'])->toArray();
 
         $checkins = [];
         $checkouts = [];
@@ -109,6 +110,7 @@ class ReservationComponent extends Component
         $reservation->property_id = $this->property->id;
         $reservation->checkin = $this->checkin;
         $reservation->checkout = $this->checkout;
+        $reservation->nights = Carbon::parse($this->checkin)->diffInDays($this->checkout);
         $reservation->guests = $this->guests;
 
         if ($reservation->save()) {

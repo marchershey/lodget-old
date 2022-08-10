@@ -1,5 +1,5 @@
 <x-layouts.minimal>
-    <div class="flex flex-col w-full max-w-md space-y-10 md:p-8">
+    <div class="flex flex-col w-full max-w-xl space-y-10 md:p-8" wire:init="load">
 
         {{-- Logo --}}
         <div class="flex justify-center mt-10">
@@ -8,10 +8,7 @@
             </a>
         </div>
 
-        {{-- Title and description --}}
-        <div class="text-center">
-            <h1 class="text-2xl font-semibold">Sign into your account</h1>
-        </div>
+        <livewire:frontend.checkout.checkout-component :reservation="$reservation" />
 
     </div>
 </x-layouts.minimal>

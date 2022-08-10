@@ -20,6 +20,21 @@ class Property extends Model
         });
     }
 
+    public function isVisible()
+    {
+        // is property set to active?
+        if (!$this->active) {
+            return false;
+        }
+
+        // does the property have photos?
+        if (count($this->photos()->get()) == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function slug()
     {
         return \Illuminate\Support\Str::slug($this->name);
@@ -35,18 +50,8 @@ class Property extends Model
         return $this->hasMany(PropertyAmenity::class);
     }
 
-    public function isVisible()
+    public function fees()
     {
-        // is property set to active?
-        if (!$this->active) {
-            return false;
-        }
-
-        // does the property have photos?
-        if (count($this->photos()->get()) == 0) {
-            return false;
-        }
-
-        return true;
+        return $this->hasMany(PropertyFee::class);
     }
 }
