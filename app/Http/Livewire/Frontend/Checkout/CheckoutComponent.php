@@ -39,6 +39,9 @@ class CheckoutComponent extends Component
 
     public function calcPricing()
     {
+
+        $this->dispatchBrowserEvent('log', 'this is a test');
+
         $total = "0";
 
         // base rate
