@@ -25,6 +25,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->boolean('active')->default(true);
             $table->string('type')->default('guest'); // type of user ('host' or 'guest')
+            $table->string('stripe_id')->nullable()->index();
+            $table->string('pm_type')->nullable();
+            $table->string('pm_last_four', 4)->nullable();
             $table->timestamps();
         });
     }

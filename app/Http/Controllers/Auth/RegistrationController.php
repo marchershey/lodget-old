@@ -46,6 +46,15 @@ class RegistrationController extends Controller
         $user->password = Hash::make($validated['password']);
         $user->save();
 
+        // create stripe customer
+        $user->createAsStripeCustomer([
+            'name' => $user->first_name . ' ' . $user->last_name,
+            'email' => $user->email,
+            'metadata' => [
+                'user_id' => $user->id,
+            ],
+        ]);
+
         // authenticate user
         $user = Auth::loginUsingId($user->id);
 

@@ -83,6 +83,17 @@ Route::get('/email', function () {
     return new \App\Mail\WelcomeUserMail();
 });
 
+Route::get('/teest', function () {
+    \Stripe\Stripe::setApiKey('sk_test_7HbatSavw1SIlWBE7N4tuq3900J1akEjfG');
+
+    return \Stripe\PaymentIntent::create([
+        'amount' => 1099,
+        'currency' => 'usd',
+        'payment_method_types' => ['card'],
+        'capture_method' => 'manual',
+    ]);
+});
+
 Route::get('/test', function () {
     $reservation = new Reservation();
     $reservation->slug = \App\Helpers\ReservationSlugHelper::generate();

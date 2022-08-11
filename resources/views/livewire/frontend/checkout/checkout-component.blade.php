@@ -56,11 +56,11 @@
         </div>
     </div>
 
-    <div class="panel" wire:init="pricing">
+    <div class="panel" wire:init="calcPricing">
         <h1 class="panel-heading">Pricing Details</h1>
 
         {{-- Pricing loading --}}
-        <div class="items-center justify-center" wire:loading.flex wire:target="pricing">
+        <div class="items-center justify-center" wire:loading.flex wire:target="calcPricing">
             <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -68,7 +68,7 @@
         </div>
 
         @if ($total != 0)
-            <div class="flex flex-col space-y-1 text-sm text-muted" wire:loading.remove wire:target="pricing">
+            <div class="flex flex-col space-y-1 text-sm text-muted" wire:loading.remove wire:target="calcPricing">
                 <div class="flex justify-between">
                     <span>${{ $reservation->property->default_rate }} x {{ $reservation->nights }} nights</span>
                     <span>${{ number_format($base_rate, 2) }}</span>
@@ -87,19 +87,29 @@
                 </div>
                 <div class="flex justify-between text-base font-medium text-gray-800">
                     <span>Total</span>
-                    <span>${{ number_format($total, 2) }}</span>
+                    <span>${{ $total }}</span>
                 </div>
             </div>
         @endif
     </div>
 
-    <div class="panel" wire:init="billing">
+    <div class="panel">
         <h1 class="panel-heading">Billing Details</h1>
 
-        <div>
-            <div wire:ignore id="card-element" class="px-3 py-2 font-sans border border-gray-300 rounded-md font-base"></div>
-
+        <div class="items-center justify-center" wire:loading.flex wire:target="setupBilling">
+            <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
         </div>
+
+        @if ($total != 0)
+            <div wire:init="setupBilling">
+                <div wire:loading.class="hidden" wire:target="setupBilling">
+                    <div wire:ignore id="card-element" class="px-3 py-2 font-sans border border-gray-300 rounded-md font-base"></div>
+                </div>
+            </div>
+        @endif
     </div>
 
 </div>
@@ -121,6 +131,10 @@
                 }
             });
             cardElement.mount('#card-element');
+        });
+
+        window.addEventListener('log', event => {
+            console.log(event.detail);
         });
     </script>
 @endpush
