@@ -44,6 +44,9 @@ class CheckoutComponent extends Component
         // base rate
         // here is where you will need to add a variable rate when possible.
         $this->base_rate = $this->reservation->property->default_rate * $this->reservation->nights;
+
+        $this->dispatchBrowserEvent('log', $this->reservation);
+
         $total = $total + $this->base_rate;
 
         // fees
@@ -64,7 +67,6 @@ class CheckoutComponent extends Component
 
         // set the total 
         $this->total = number_format($total, 2);
-        $this->dispatchBrowserEvent('log', 'Total: ' . $this->base_rate);
     }
 
     public function setupBilling()
