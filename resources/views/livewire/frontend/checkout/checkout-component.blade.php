@@ -134,7 +134,7 @@
         });
 
         window.addEventListener('log', event => {
-            console.log(event.detail);
+            console.log(event.detail.message);
         });
     </script>
 @endpush
