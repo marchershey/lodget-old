@@ -64,7 +64,7 @@ class CheckoutComponent extends Component
 
         // set the total 
         $this->total = number_format($total, 2);
-        $this->dispatchBrowserEvent('log', 'Total: ' . $this->total);
+        $this->dispatchBrowserEvent('log', 'Total: ' . $total);
     }
 
     public function setupBilling()
