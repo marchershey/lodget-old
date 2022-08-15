@@ -93,92 +93,388 @@
         @endif
     </div>
 
-    <div class="panel">
-        <h1 class="panel-heading">Billing Details</h1>
+    <div class="panel" wire:init="initPaymentMethods">
+        <h1 class="panel-heading">Payment Method</h1>
 
-        <div class="items-center justify-center" wire:loading.flex wire:target="setupBilling">
+        {{-- loading payment methods --}}
+        <div class="items-center justify-center" wire:loading.flex wire:target="initPaymentMethods">
             <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
         </div>
 
-        @if ($total != 0)
-            <div wire:init="" x-data="checkout" wire:loading.remove wire:target="setupBilling">
-                <form @submit.prevent="submitForm" class="flex flex-col space-y-5">
+        {{-- add payment methods --}}
+        <div wire:loading.remove wire:target="initPaymentMethods">
 
+            {{-- Default payment method --}}
+            <div x-data="updateDefaultPaymentMethodModal" class="relative">
+
+                @if ($default_payment_method)
+                    <div x-on:click="openupdateDefaultPaymentMethodModal" class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded cursor-pointer bg-gray-50">
+                        <div class="flex items-center space-x-5">
+                            <div class="">
+                                <img src="/img/{{ $default_payment_method['card']['brand'] }}.svg" class="w-12">
+                            </div>
+                            <div class="flex flex-col text-sm">
+                                <span class="text-sm">Ending with {{ $default_payment_method['card']['last4'] }}</span>
+                                <span class="text-xs text-muted">Expires {{ $default_payment_method['card']['exp_month'] }}/{{ $default_payment_method['card']['exp_year'] }}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="p-2 text-xs text-primary">Change</button>
+                        </div>
+                    </div>
+                @endif
+
+                <div x-show="updateDefaultPaymentMethodModalOpen" style="display: none" x-on:keydown.escape.prevent.stop="closeupdateDefaultPaymentMethodModal" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+                    <div x-show="updateDefaultPaymentMethodModalOpen" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+                    <div x-show="updateDefaultPaymentMethodModalOpen" x-transition.opacity x-on:click="closeupdateDefaultPaymentMethodModal" class="relative flex items-end justify-center min-h-screen sm:items-center">
+                        <div x-on:click.stop class="w-full max-w-lg m-0 panel">
+                            <h1 class="panel-heading">Select Default Payment Method</h1>
+
+                            @if ($payment_methods)
+                                <div class="space-y-3">
+                                    @foreach ($payment_methods as $pm)
+                                        <div class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded bg-gray-50">
+                                            <div class="flex items-center space-x-5">
+                                                <div class="">
+                                                    <img src="/img/{{ $pm['card']['brand'] }}.svg" class="w-12">
+                                                </div>
+                                                <div class="flex flex-col text-sm">
+                                                    <div class="flex">
+                                                        <span class="text-sm">Ending with {{ $pm['card']['last4'] }}</span>
+                                                        @if ($default_payment_method['id'] == $pm['id'])
+                                                            <span class="px-2 py-0.5 ml-2 text-xs bg-blue-100 rounded">Default</span>
+                                                        @endif
+                                                    </div>
+                                                    <span class="text-xs text-muted">Expires {{ $pm['card']['exp_month'] }}/{{ $pm['card']['exp_year'] }}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex space-x-2 cursor-pointer">
+                                                <button x-on:click="updateDefaultPaymentMethod('{{ $pm['id'] }}')" type="button" class="p-2 text-xs text-primary">Select</button>
+                                                <button type="button" class="p-2 text-xs text-red-500">Delete</button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Add new payment methods --}}
+            <div x-data="newPaymentMethodModal" class="flex justify-center mt-3">
+
+                <button x-on:click="openNewPaymentMethodModal" class="button button-light">Add new payment method</button>
+
+                <div x-show="newPaymentMethodModalOpen" style="display: none" x-on:keydown.escape.prevent.stop="closeNewPaymentMethodModal" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+                    <div x-show="newPaymentMethodModalOpen" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+                    <div x-show="newPaymentMethodModalOpen" x-transition.opacity x-on:click="closeNewPaymentMethodModal" class="relative flex items-end justify-center min-h-screen sm:items-center">
+                        <div x-on:click.stop class="w-full max-w-lg m-0 panel">
+                            <form @submit.prevent="submitNewPaymentMethod" class="space-y-5">
+                                <h2 class="panel-heading">Add Payment Method</h2>
+                                <div class="flex flex-col space-y-5">
+                                    <p class="text-muted">To add a new payment method, fill out your billing information below.</p>
+                                    <div class="grid grid-cols-2 gap-x-3" :class="newPaymentMethodModalLoading && 'opacity-25'">
+                                        <label class="label col-span-full">Full Name</label>
+                                        <div>
+                                            <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" :disabled="newPaymentMethodModalLoading">
+                                        </div>
+                                        <div>
+                                            <input wire:model.debounce.500ms="last_name" type="text" class="capitalize input" placeholder="Last name" :disabled="newPaymentMethodModalLoading">
+                                        </div>
+                                    </div>
+
+                                    <div :class="newPaymentMethodModalLoading && 'opacity-25'">
+                                        <label class="label">Address</label>
+                                        <div class="grid grid-cols-12 gap-x-3 gap-y-1">
+                                            <div class="col-span-9">
+                                                <input wire:model.debounce.500ms="address" type="text" class="capitalize input @error('address') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Street address" :disabled="newPaymentMethodModalLoading">
+                                            </div>
+                                            <div class="col-span-3">
+                                                <input wire:model.debounce.500ms="unit" type="text" class="capitalize input @error('unit') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Unit" :disabled="newPaymentMethodModalLoading">
+                                            </div>
+                                            <div class="col-span-12 sm:col-span-5">
+                                                <input wire:model.debounce.500ms="city" type="text" class="capitalize input @error('city') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="City" :disabled="newPaymentMethodModalLoading">
+                                            </div>
+                                            <div class="col-span-8 sm:col-span-4">
+                                                <select wire:model.debounce.500ms="state" class="input @error('state') bg-red-100 border-red-500 text-red-800 @enderror" :disabled="newPaymentMethodModalLoading">
+                                                    <option value="" selected hidden>State...</option>
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="AK">Alaska</option>
+                                                    <option value="AZ">Arizona</option>
+                                                    <option value="AR">Arkansas</option>
+                                                    <option value="CA">California</option>
+                                                    <option value="CO">Colorado</option>
+                                                    <option value="CT">Connecticut</option>
+                                                    <option value="DE">Delaware</option>
+                                                    <option value="DC">District Of Columbia</option>
+                                                    <option value="FL">Florida</option>
+                                                    <option value="GA">Georgia</option>
+                                                    <option value="HI">Hawaii</option>
+                                                    <option value="ID">Idaho</option>
+                                                    <option value="IL">Illinois</option>
+                                                    <option value="IN">Indiana</option>
+                                                    <option value="IA">Iowa</option>
+                                                    <option value="KS">Kansas</option>
+                                                    <option value="KY">Kentucky</option>
+                                                    <option value="LA">Louisiana</option>
+                                                    <option value="ME">Maine</option>
+                                                    <option value="MD">Maryland</option>
+                                                    <option value="MA">Massachusetts</option>
+                                                    <option value="MI">Michigan</option>
+                                                    <option value="MN">Minnesota</option>
+                                                    <option value="MS">Mississippi</option>
+                                                    <option value="MO">Missouri</option>
+                                                    <option value="MT">Montana</option>
+                                                    <option value="NE">Nebraska</option>
+                                                    <option value="NV">Nevada</option>
+                                                    <option value="NH">New Hampshire</option>
+                                                    <option value="NJ">New Jersey</option>
+                                                    <option value="NM">New Mexico</option>
+                                                    <option value="NY">New York</option>
+                                                    <option value="NC">North Carolina</option>
+                                                    <option value="ND">North Dakota</option>
+                                                    <option value="OH">Ohio</option>
+                                                    <option value="OK">Oklahoma</option>
+                                                    <option value="OR">Oregon</option>
+                                                    <option value="PA">Pennsylvania</option>
+                                                    <option value="RI">Rhode Island</option>
+                                                    <option value="SC">South Carolina</option>
+                                                    <option value="SD">South Dakota</option>
+                                                    <option value="TN">Tennessee</option>
+                                                    <option value="TX">Texas</option>
+                                                    <option value="UT">Utah</option>
+                                                    <option value="VT">Vermont</option>
+                                                    <option value="VA">Virginia</option>
+                                                    <option value="WA">Washington</option>
+                                                    <option value="WV">West Virginia</option>
+                                                    <option value="WI">Wisconsin</option>
+                                                    <option value="WY">Wyoming</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-span-4 sm:col-span-3">
+                                                <input wire:model.debounce.500ms="zip" type="text" class="input @error('zip') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Zip" :disabled="newPaymentMethodModalLoading">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div :class="newPaymentMethodModalLoading && 'opacity-25'">
+                                        <label class="label col-span-full">Card Details</label>
+                                        <div class="h-[44px] border border-gray-300 input px-4 py-3 @error('incomplete_number') border-red-500 @enderror @error('invalid_number') border-red-500 @enderror @error('incomplete_expiry') border-red-500 @enderror @error('invalid_expiry_month_past') border-red-500 @enderror @error('invalid_expiry_year_past') border-red-500 @enderror  @error('incomplete_cvc') border-red-500 @enderror @error('incomplete_zip') border-red-500 @enderror">
+                                            <div id="card-element" wire:ignore></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- This example requires Tailwind CSS v2.0+ -->
+                                    <div x-data="{ value: @entangle('setDefaultPaymentMethod') }" class="flex items-center justify-between cursor-pointer">
+                                        <span @click="$refs.toggle.click(); $refs.toggle.focus()" class="flex flex-col flex-grow">
+                                            <span class="label" id="availability-label">Set as default payment method</span>
+                                        </span>
+                                        <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
+                                        <button x-ref="toggle" @click="value = ! value" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description" :class="value ? 'bg-primary' : 'bg-gray-200'">
+                                            <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                                            <span aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0" :class="value ? 'translate-x-5' : 'translate-x-0'"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="flex justify-end space-x-2">
+                                    <button type="submit" class="w-auto button" x-show="!newPaymentMethodModalLoading">Add payment method</button>
+                                    <div class="flex items-center" x-show="newPaymentMethodModalLoading">
+                                        <svg class="w-8 h-8 mr-8 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                    <button x-on:click="closeNewPaymentMethodModal" type="button" class="w-auto button button-light">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="hidden panel">
+        <h1 class="panel-heading">Payment Methods</h1>
+
+
+
+        {{-- @if ($total != 0)
+            <div wire:init="setupBilling" wire:loading.remove wire:target="setupBilling, finalize">
+                <form @submit.prevent="submitForm" class="flex flex-col space-y-5" :class="loading && 'opacity-25'">
                     <div class="grid grid-cols-2 gap-x-3">
                         <label class="label col-span-full">Full Name</label>
                         <div>
-                            <input type="email" name="email" id="email" class="input" placeholder="First name">
+                            <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" :disabled="loading">
                         </div>
                         <div>
-                            <input type="text" name="password" id="password" class="input" placeholder="Last name">
+                            <input wire:model.debounce.500ms="last_name" type="text" class="capitalize input" placeholder="Last name" :disabled="loading">
                         </div>
                     </div>
 
                     <div>
                         <label class="label">Address</label>
-                        <div class="grid grid-cols-3 gap-x-3 gap-y-1">
-                            <div class="col-span-full">
-                                <input type="text" class="input" placeholder="Street address">
+                        <div class="grid grid-cols-12 gap-x-3 gap-y-1">
+                            <div class="col-span-9">
+                                <input wire:model.debounce.500ms="address" type="text" class="capitalize input @error('address') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Street address" :disabled="loading">
                             </div>
-                            <div class="col-span-full">
-                                <input type="text" class="input" placeholder="City">
+                            <div class="col-span-3">
+                                <input wire:model.debounce.500ms="unit" type="text" class="capitalize input @error('unit') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Unit" :disabled="loading">
                             </div>
-                            <div class="col-span-2">
-                                <input type="text" class="input" placeholder="State">
+                            <div class="col-span-12 sm:col-span-5">
+                                <input wire:model.debounce.500ms="city" type="text" class="capitalize input @error('city') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="City" :disabled="loading">
                             </div>
-                            <div>
-                                <input type="text" class="input" placeholder="Zip">
+                            <div class="col-span-8 sm:col-span-4">
+                                <select wire:model.debounce.500ms="state" class="input @error('state') bg-red-100 border-red-500 text-red-800 @enderror" :disabled="loading">
+                                    <option value="" selected hidden>State...</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="col-span-4 sm:col-span-3">
+                                <input wire:model.debounce.500ms="zip" type="text" class="input @error('zip') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Zip" :disabled="loading">
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block label">Card details</label>
-                        <span class="text-sm text-muted">To help keep you safe and to maintain PCI compliance, . </span>
+                        <label class="block mb-2 label">Payment method</label>
+
+                        <!-- This example requires Tailwind CSS v2.0+ -->
+                        <fieldset x-data="{
+                            value: @entangle('selected_payment_method'),
+                            select(option) { this.value = option },
+                            isSelected(option) { return this.value === option }
+                        }">
+                            <div class="space-y-3">
+
+                                @if ($payment_methods)
+                                    @foreach ($payment_methods as $pm)
+                                        <div x-data="{ option: '{{ $pm['id'] }}' }" @click="select(option)" class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded cursor-pointer bg-gray-50">
+                                            <div class="flex items-center space-x-5">
+                                                <div class="">
+                                                    <img src="/img/{{ $pm['card']['brand'] }}.svg" class="w-12">
+                                                </div>
+                                                <div class="flex flex-col text-sm">
+                                                    <span class="text-sm">Ending with {{ $pm['card']['last4'] }}</span>
+                                                    <span class="text-xs text-muted">Expires {{ $pm['card']['exp_month'] }}/{{ $pm['card']['exp_year'] }}</span>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button type="button" class="p-2 text-xs text-primary">Change</button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                            </div>
+                        </fieldset>
+
+                        <button type="button" wire:click="test">Test</button> --}}
+
+
+
+
+        {{-- @if ($payment_methods)
+                            @foreach ($payment_methods as $payment_method)
+                                {{ $payment_method->card->brand }}
+                            @endforeach
+                        @endif --}}
+
+        {{-- <br><Br><br><br><br><br><br>
+                        <hr>
+
+                        <div class="border border-gray-300 input @error('incomplete_number') border-red-500 @enderror @error('invalid_number') border-red-500 @enderror @error('incomplete_expiry') border-red-500 @enderror @error('invalid_expiry_month_past') border-red-500 @enderror @error('invalid_expiry_year_past') border-red-500 @enderror  @error('incomplete_cvc') border-red-500 @enderror @error('incomplete_zip') border-red-500 @enderror" :disabled="loading">
+                            <div id="card-element" wire:ignore></div>
+                        </div>
+                        <p class="mt-2 text-xs italic text-muted">To help keep you safe, your card details are handled directly by Stripe.com and never stored on our servers. To learn more about our safe practices, please refer to our Privacy Policy.</p>
                     </div>
 
-
-                    <hr>
-                    <div class="grid grid-cols-12 gap-3">
-                        <div>
-                            <label class="label" for="email">Email</label>
-                            <div class="mt-1">
-                                <input type="email" name="email" id="email" class="block w-full text-gray-800 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Card number">
-                            </div>
+                    <div class="relative flex items-start">
+                        <div class="flex items-center h-5">
+                            <input wire:model.debounce.500ms="terms" id="terms" type="checkbox" class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary" :disabled="loading">
                         </div>
-                        <div>
-                            <label for="password" class="input-label">Password</label>
-                            <div class="mt-1">
-                                <input type="text" name="password" id="password" class="pl-8 input" placeholder="Card number">
-                            </div>
+                        <div class="ml-3 text-sm">
+                            <label for="terms" class="text-sm text-gray-500 @error('terms') text-red-500 @enderror">
+                                I agree to allow {{ config('app.name') }} to place a <strong class="font-semibold">${{ $total }}</strong> hold on my card for up to 7 days. Once your reservation is approved, we will then charge your card. If your reservation is denied or we do not approve your reservation within 7 days, your funds will be released back to you.
+                            </label>
                         </div>
-
-                        {{-- <x-forms.text wireId="unit" label="Unit" class="col-span-3" />
-                        <x-forms.text wireId="city" label="City" class="col-span-full" />
-                        <x-forms.select wireId="state" label="State" class="col-span-8" :options="['AL' => 'Alabama', 'AK' => 'Alaska', 'AZ' => 'Arizona', 'AR' => 'Arkansas', 'CA' => 'California', 'CO' => 'Colorado', 'CT' => 'Connecticut', 'DE' => 'Delaware', 'DC' => 'District of Columbia', 'FL' => 'Florida', 'GA' => 'Georgia', 'HI' => 'Hawaii', 'ID' => 'Idaho', 'IL' => 'Illinois', 'IN' => 'Indiana', 'IA' => 'Iowa', 'KS' => 'Kansas', 'KY' => 'Kentucky', 'LA' => 'Louisiana', 'ME' => 'Maine', 'MD' => 'Maryland', 'MA' => 'Massachusetts', 'MI' => 'Michigan', 'MN' => 'Minnesota', 'MS' => 'Mississippi', 'MO' => 'Missouri', 'MT' => 'Montana', 'NE' => 'Nebraska', 'NV' => 'Nevada', 'NH' => 'New Hampshire', 'NJ' => 'New Jersey', 'NM' => 'New Mexico', 'NY' => 'New York', 'NC' => 'North Carolina', 'ND' => 'North Dakota', 'OH' => 'Ohio', 'OK' => 'Oklahoma', 'OR' => 'Oregon', 'PA' => 'Pennsylvania', 'RI' => 'Rhode Island', 'SC' => 'South Carolina', 'SD' => 'South Dakota', 'TN' => 'Tennessee', 'TX' => 'Texas', 'UT' => 'Utah', 'VT' => 'Vermont', 'VA' => 'Virginia', 'WA' => 'Washington', 'WV' => 'West Virginia', 'WI' => 'Wisconsin', 'WY' => 'Wyoming']" />
-                        <x-forms.text wireId="zip" label="Zip" inputType="tel" inputClass="zip-code" class="col-span-4" /> --}}
                     </div>
+
                     <div>
-                        <span class="label">Card details</span>
-                        <div wire:ignore id="card-element" class=""></div>
+                        <button type="submit" class="w-full button" x-show="!loading">Confirm Reservation</button>
+                        <button type="button" class="w-full button" x-show="loading">
+                            <svg class="w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
                     </div>
-                    <p class="mt-2 text-xs italic text-muted">By confirming this reservation, you are authorizing us to place a ${{ $total }} hold on your card for up to 7 days until the reservation has been approved or rejected. If your reservation has yet to be approved or rejected within 7 days, the transaction will be cancelled and the funds will be released back to you. If your reservation is rejected, the transaction will also be cancelled and the funds will be released back to you as well.</p>
-                    <button type="sumbit" type="button" class="w-full button button-primary">Confirm Reservation</button>
-                    {{-- <div x-show="!loading">
-                    </div> --}}
-                    {{-- <div class="flex justify-center" x-show="loading" x-clock>
-                        <svg class="h-[36px] w-[36px] animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </div> --}}
-                    <p class="mt-2 text-xs italic text-muted"><strong>Please note:</strong> To help us keep you 100% safe online and to maintain PCI compliance, your billing details are handled by <strong>Stripe.com</strong>. We never see your billing details, nor will our servers ever save your billing details. Check out our <span class="text-link">Privacy Policy</span> for more information.</p>
                 </form>
             </div>
-        @endif
+        @endif --}}
     </div>
 
 </div>
@@ -186,7 +482,83 @@
 @push('scripts')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        window.addEventListener('stripeSetup', event => {
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('newPaymentMethodModal', () => ({
+                newPaymentMethodModalOpen: false,
+                newPaymentMethodModalLoading: true,
+                async openNewPaymentMethodModal() {
+                    this.newPaymentMethodModalOpen = true;
+                    await @this.initNewPaymentMethod();
+                    this.newPaymentMethodModalLoading = false;
+                },
+                closeNewPaymentMethodModal() {
+                    this.newPaymentMethodModalOpen = false;
+                    this.newPaymentMethodModalLoading = false;
+                    cardElement.destroy();
+                },
+                async submitNewPaymentMethod() {
+                    // activate loading
+                    this.newPaymentMethodModalLoading = true;
+
+                    // validate guest's billing details
+                    // stop if validation fails
+                    if (await @this.validateBillingDetails()) {
+
+                        const {
+                            setupIntent,
+                            error
+                        } = await stripe.confirmCardSetup(
+                            @this.stripe_client_secret, {
+                                payment_method: {
+                                    card: cardElement,
+                                    billing_details: {
+                                        name: @this.first_name + ' ' + @this.last_name,
+                                        address: {
+                                            line1: @this.address,
+                                            line2: @this.unit,
+                                            city: @this.city,
+                                            state: @this.state,
+                                            postal_code: @this.zip,
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                        if (error) {
+                            console.log(error);
+                            Toast.danger(error.message)
+                            this.newPaymentMethodModalLoading = false
+                            return
+                        } else {
+                            await @this.addNewPaymentMethod(setupIntent);
+                        }
+                    }
+
+                    this.newPaymentMethodModalLoading = false
+                    return;
+                }
+            }))
+
+            Alpine.data('updateDefaultPaymentMethodModal', () => ({
+                updateDefaultPaymentMethodModalOpen: false,
+                updateDefaultPaymentMethodModalLoading: false,
+                openupdateDefaultPaymentMethodModal() {
+                    this.updateDefaultPaymentMethodModalOpen = true;
+                },
+                closeupdateDefaultPaymentMethodModal() {
+                    this.updateDefaultPaymentMethodModalOpen = false;
+                },
+                async updateDefaultPaymentMethod(paymentMethodId) {
+                    updateDefaultPaymentMethodModalLoading: true;
+                    await @this.updateDefaultPaymentMethod(paymentMethodId);
+                    // await @this.initPaymentMethods();
+                    updateDefaultPaymentMethodModalLoading: false;
+                },
+
+            }))
+        })
+
+        window.addEventListener('initStripeCardElement', event => {
             window.stripe = Stripe('{{ env('STRIPE_KEY') }}');
             window.cardElement = stripe.elements({
                 fonts: [{
@@ -196,10 +568,12 @@
                 style: {
                     base: {
                         fontSize: "15px",
-                        color: "#1e293b",
-                        borderColor: "#cbd5e1",
-                        "::placeholder": {
-                            color: "#64748b"
+                        fontWeight: "400",
+                        iconColor: '#2563eb',
+                        color: '#334155',
+                        letterSpacing: "-0.3px",
+                        '::placeholder': {
+                            color: '#6b7280',
                         },
                         fontFamily: 'Montserrat'
                     }
@@ -207,37 +581,6 @@
             });
             cardElement.mount('#card-element');
         });
-
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('checkout', () => ({
-                loading: false,
-                async submitForm() {
-                    console.log('test');
-                    const {
-                        error
-                    } = await stripe.confirmSetup({
-                        //`Elements` instance that was used to create the Payment Element
-                        elements,
-                        confirmParams: {
-                            return_url: 'https://example.com/account/payments/setup-complete',
-                        }
-                    });
-
-                    if (error) {
-                        // This point will only be reached if there is an immediate error when
-                        // confirming the payment. Show error to your customer (for example, payment
-                        // details incomplete)
-                        const messageContainer = document.querySelector('#error-message');
-                        messageContainer.textContent = error.message;
-                    } else {
-                        Toast.success('test')
-                        // Your customer will be redirected to your `return_url`. For some payment
-                        // methods like iDEAL, your customer will be redirected to an intermediate
-                        // site first to authorize the payment, then redirected to the `return_url`.
-                    }
-                }
-            }))
-        })
 
         window.addEventListener('log', event => {
             console.log(event.detail.message);

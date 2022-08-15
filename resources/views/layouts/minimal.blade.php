@@ -1,6 +1,6 @@
 <x-layouts.base>
 
-    <div class="flex justify-center w-full h-full bg-gray-100">
+    <div class="flex justify-center w-full h-screen overflow-y-auto bg-gray-100">
         {{ $slot }}
     </div>
 
