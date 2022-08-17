@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Helpers\Currency;
+use Illuminate\Support\Arr;
 use Laravel\Cashier\Cashier;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -28,15 +29,15 @@ class CheckoutComponent extends Component
     public $city;
     public $state;
     public $zip;
-    public $setDefaultPaymentMethod = true;
+    public $setDefaultPaymentMethod;
 
     // payment methods
     public $payment_methods = [];
     public $default_payment_method;
+    public $selected_payment_method;
+
     // stripe
     public $stripe_client_secret;
-
-    public $test;
 
     protected $rules = [
         'address' => 'required|max:100',
@@ -102,21 +103,59 @@ class CheckoutComponent extends Component
         $this->total = number_format($total, 2);
     }
 
+    // Payment Methods
+
     public function initPaymentMethods()
     {
-        // does guest have any payment methods?
-        if ($this->user->hasPaymentMethod()) {
-            // get all payment methods
-            $this->payment_methods = $this->user->paymentMethods()->toArray();
-            // does guest have a default payment method (most likely)
-            if ($this->user->hasDefaultPaymentMethod()) {
-                $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
-            }
-        } else {
-            toast()->debug('does not have default payment method')->push();
+        $this->loadSelectedPaymentMethod();
+    }
+
+    public function loadSelectedPaymentMethod()
+    {
+        $this->default_payment_method = [];
+        $this->selected_payment_method = [];
+
+        if ($this->user->hasDefaultPaymentMethod() && $this->user->defaultPaymentMethod()) {
+            $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
+            $this->selected_payment_method = $this->default_payment_method;
+        } elseif ($this->user->hasPaymentMethod()) {
+            $this->default_payment_method = Arr::first($this->user->paymentMethods()->toArray());
+            $this->selected_payment_method = $this->default_payment_method;
+            $this->user->updateDefaultPaymentMethod($this->default_payment_method['id']);
         }
     }
 
+    public function loadPaymentMethods()
+    {
+        toast()->debug('loadPaymentMethod')->push();
+
+        $this->payment_methods = [];
+
+        if ($this->user->hasPaymentMethod()) {
+            toast()->debug('has payment methods')->push();
+            $this->payment_methods = $this->user->paymentMethods()->toArray();
+            toast()->debug('refreshed payment methods')->push();
+        }
+    }
+
+    public function clearPaymentMethods()
+    {
+        $this->payment_methods = [];
+    }
+
+    public function updatePaymentMethod($payment_method_id)
+    {
+        $this->user->updateDefaultPaymentMethod($payment_method_id);
+        // $this->loadSelectedPaymentMethod();
+    }
+
+    public function deletePaymentMethod($payment_method_id)
+    {
+        $payment_method = $this->user->findPaymentMethod($payment_method_id);
+        $payment_method->delete();
+    }
+
+    // New Payment Method
     public function initNewPaymentMethod()
     {
         $this->first_name = $this->user->first_name;
@@ -127,34 +166,14 @@ class CheckoutComponent extends Component
         $this->state = $this->user->state;
         $this->zip = $this->user->zip;
 
+        $this->setDefaultPaymentMethod = true;
+
         // Create Setup intent & get client secret
         $this->stripe_client_secret = $this->user->createSetupIntent([
             'customer' => $this->user->stripe_id,
             'payment_method_types' => ['card'],
-            // 'capture_method' => 'manual',
-            // 'setup_future_usage' => 'off_session',
         ])->client_secret;
-
-        // Mount the stripe card element
-        $this->dispatchBrowserEvent('initStripeCardElement');
     }
-
-    public function addNewPaymentMethod($setupIntent)
-    {
-        toast()->debug($setupIntent)->push();
-
-        if ($this->setDefaultPaymentMethod) {
-            $this->user->updateDefaultPaymentMethod($setupIntent['payment_method']);
-        }
-        # code...
-    }
-
-    public function updateDefaultPaymentMethod($paymentMethodId)
-    {
-        $this->user->updateDefaultPaymentMethod($paymentMethodId);
-        $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
-    }
-
     public function validateBillingDetails()
     {
         $this->withValidator(function (Validator $validator) {
@@ -177,6 +196,121 @@ class CheckoutComponent extends Component
 
         return true;
     }
+
+    public function addedNewPaymentMethod($payment_method_id)
+    {
+        if ($this->setDefaultPaymentMethod) {
+            $this->updatePaymentMethod($payment_method_id);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // public function initNewPaymentMethod()
+    // {
+    //     $this->first_name = $this->user->first_name;
+    //     $this->last_name = $this->user->last_name;
+    //     $this->address = $this->user->address;
+    //     $this->unit = $this->user->unit;
+    //     $this->city = $this->user->city;
+    //     $this->state = $this->user->state;
+    //     $this->zip = $this->user->zip;
+
+    //     $this->setDefaultPaymentMethod = true;
+
+    //     // Create Setup intent & get client secret
+    //     $this->stripe_client_secret = $this->user->createSetupIntent([
+    //         'customer' => $this->user->stripe_id,
+    //         'payment_method_types' => ['card'],
+    //         // 'capture_method' => 'manual',
+    //         // 'setup_future_usage' => 'off_session',
+    //     ])->client_secret;
+
+    //     // Mount the stripe card element
+    //     $this->dispatchBrowserEvent('initStripeCardElement');
+    // }
+
+    // // guest just added a new payment method
+    // public function addedNewPaymentMethod($payment_method_id)
+    // {
+    //     // does guest want new payment method to be default?
+    //     if ($this->setDefaultPaymentMethod) {
+    //         $this->updateDefaultPaymentMethod($payment_method_id);
+    //     }
+    // }
+
+    // public function deletePaymentMethod($payment_method_id)
+    // {
+    //     // get payment method
+    //     $payment_method = $this->user->findPaymentMethod($payment_method_id);
+    //     // delete payment method
+    //     $payment_method->delete();
+    // }
+
+    // public function updateDefaultPaymentMethod($payment_method_id)
+    // {
+    //     $this->user->updateDefaultPaymentMethod($payment_method_id);
+    //     $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
+    //     $this->selected_payment_method = $this->default_payment_method;
+    // }
+
+    // public function validateBillingDetails()
+    // {
+    //     $this->withValidator(function (Validator $validator) {
+    //         $validator->after(function ($validator) {
+    //             $count = count($validator->errors());
+    //             if ($count > 0) {
+    //                 $error = $validator->errors()->first();
+    //                 toast()->danger($error . ($count > 1 ? ' and ' . $count . ' more errors to fix.' : $count), 'Error')->push();
+    //             }
+    //         });
+    //     })->validate([
+    //         'first_name' => 'required',
+    //         'last_name' => 'required',
+    //         'address' => 'required',
+    //         'unit' => 'nullable',
+    //         'city' => 'required',
+    //         'state' => 'required',
+    //         'zip' => 'required'
+    //     ]);
+
+    //     return true;
+    // }
 
 
 
