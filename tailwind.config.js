@@ -3,7 +3,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-    content: ["./resources/**/*.blade.php"],
+    content: ["./resources/**/*.blade.php", "./resources/css/**/*.css"],
     theme: {
         extend: {
             colors: {

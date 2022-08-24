@@ -3,12 +3,10 @@
 namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Helpers\Currency;
-use Illuminate\Support\Arr;
-use Laravel\Cashier\Cashier;
+use App\Models\Transaction;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
-use Stripe\SetupIntent;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class CheckoutComponent extends Component
@@ -24,20 +22,23 @@ class CheckoutComponent extends Component
     // new payment method
     public $first_name;
     public $last_name;
+    public $email;
     public $address;
     public $unit;
     public $city;
     public $state;
     public $zip;
+    public $ip;
     public $setDefaultPaymentMethod;
 
     // payment methods
     public $payment_methods = [];
     public $default_payment_method;
-    public $selected_payment_method;
 
     // stripe
     public $stripe_client_secret;
+
+    public $agree;
 
     protected $rules = [
         'address' => 'required|max:100',
@@ -55,7 +56,21 @@ class CheckoutComponent extends Component
     public function mount($reservation)
     {
         $this->user = auth()->user();
+        $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->reservation = $reservation;
+
+        // assign this reservation to the guest
+        if (!$this->reservation->user_id) {
+            $this->reservation->user_id = $this->user->id;
+            $this->reservation->save();
+        }
+    }
+
+    public function hydrate()
+    {
+        if (Transaction::where('reservation_id', $this->reservation->id)->exists()) {
+            return redirect('/dashboard');
+        }
     }
 
     public function updated($propertyName, $propertyValue)
@@ -104,58 +119,102 @@ class CheckoutComponent extends Component
     }
 
     // Payment Methods
-
     public function initPaymentMethods()
     {
-        $this->loadSelectedPaymentMethod();
-    }
-
-    public function loadSelectedPaymentMethod()
-    {
-        $this->default_payment_method = [];
-        $this->selected_payment_method = [];
+        $this->user->updateDefaultPaymentMethodFromStripe();
 
         if ($this->user->hasDefaultPaymentMethod() && $this->user->defaultPaymentMethod()) {
             $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
-            $this->selected_payment_method = $this->default_payment_method;
-        } elseif ($this->user->hasPaymentMethod()) {
-            $this->default_payment_method = Arr::first($this->user->paymentMethods()->toArray());
-            $this->selected_payment_method = $this->default_payment_method;
-            $this->user->updateDefaultPaymentMethod($this->default_payment_method['id']);
         }
+
+        if ($this->default_payment_method) {
+            $this->selected_payment_method = $this->default_payment_method;
+        }
+    }
+
+    public function validateBillingDetails()
+    {
+        $this->withValidator(function (Validator $validator) {
+            $validator->after(function ($validator) {
+                $count = count($validator->errors());
+                if ($count > 0) {
+                    $error = $validator->errors()->first();
+                    toast()->danger($error . ($count > 1 ? ' and ' . $count - 1 . ' more ' . Str::plural('error', $count - 1) . ' to fix.' : ''), 'Error')->push();
+                }
+            });
+        })->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'unit' => 'nullable',
+            'city' => 'required',
+            'state' => 'required',
+            'zip' => 'required'
+        ]);
+
+        return true;
     }
 
     public function loadPaymentMethods()
     {
-        toast()->debug('loadPaymentMethod')->push();
-
-        $this->payment_methods = [];
+        unset($this->payment_methods);
 
         if ($this->user->hasPaymentMethod()) {
-            toast()->debug('has payment methods')->push();
-            $this->payment_methods = $this->user->paymentMethods()->toArray();
-            toast()->debug('refreshed payment methods')->push();
+            $this->payment_methods = $this->user->paymentMethods()->sortBy('created')->toArray();
         }
     }
 
     public function clearPaymentMethods()
     {
-        $this->payment_methods = [];
+        unset($this->payment_methods);
     }
 
-    public function updatePaymentMethod($payment_method_id)
+    public function addedNewPaymentMethod($payment_method_id)
     {
-        $this->user->updateDefaultPaymentMethod($payment_method_id);
-        // $this->loadSelectedPaymentMethod();
-    }
+        // check if guest wants to update default payment method
+        if ($this->setDefaultPaymentMethod) {
+            $this->updateDefaultPaymentMethod($payment_method_id);
+        }
 
+        $this->user->address = $this->address;
+        $this->user->unit = $this->unit;
+        $this->user->city = $this->city;
+        $this->user->state = $this->state;
+        $this->user->zip = $this->zip;
+        $this->user->save();
+
+        // submit to stripe
+
+    }
     public function deletePaymentMethod($payment_method_id)
     {
+
         $payment_method = $this->user->findPaymentMethod($payment_method_id);
         $payment_method->delete();
+
+        $this->loadPaymentMethods();
+
+        if (isset($this->payment_methods)) {
+            if ($this->default_payment_method['id'] == $payment_method_id) {
+                if (count($this->payment_methods) > 0) {
+                    $this->updateDefaultPaymentMethod($this->payment_methods[0]['id']);
+                } else {
+                    unset($this->default_payment_method);
+                    $this->dispatchBrowserEvent('close');
+                }
+            }
+        } else {
+            unset($this->default_payment_method);
+            $this->dispatchBrowserEvent('close');
+        }
     }
 
-    // New Payment Method
+    public function updateDefaultPaymentMethod($payment_method_id)
+    {
+        $this->user->updateDefaultPaymentMethod($payment_method_id);
+        $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
+    }
+
     public function initNewPaymentMethod()
     {
         $this->first_name = $this->user->first_name;
@@ -174,312 +233,161 @@ class CheckoutComponent extends Component
             'payment_method_types' => ['card'],
         ])->client_secret;
     }
-    public function validateBillingDetails()
+
+    // handles the error thrown by stripe
+    public function handleErrors($error)
+    {
+        $this->resetValidation();
+
+        $this->addError($error['code'], $error['message']);
+        toast()->danger($error['message'], 'Error')->push();
+    }
+
+    public function finalize()
     {
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 $count = count($validator->errors());
                 if ($count > 0) {
                     $error = $validator->errors()->first();
-                    toast()->danger($error . ($count > 1 ? ' and ' . $count . ' more errors to fix.' : $count), 'Error')->push();
+                    toast()->danger($error . ($count > 1 ? ' and ' . $count - 1 . ' more ' . Str::plural('error', $count - 1) . ' to fix.' : ''), 'Error')->push();
                 }
             });
         })->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'address' => 'required',
-            'unit' => 'nullable',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required'
+            'agree' => 'required',
+        ], [
+            'agree.required' => 'Please confirm the agreement.',
         ]);
 
-        return true;
-    }
 
-    public function addedNewPaymentMethod($payment_method_id)
-    {
-        if ($this->setDefaultPaymentMethod) {
-            $this->updatePaymentMethod($payment_method_id);
+        // Save user data
+        $this->user->address = $this->address;
+        $this->user->unit = $this->unit;
+        $this->user->city = $this->city;
+        $this->user->state = $this->state;
+        $this->user->zip = $this->zip;
+        $this->user->save();
+
+        // Update User's Stripe data
+        $this->user->updateStripeCustomer([
+            'address' => [
+                'city' => $this->city,
+                'country' => 'US',
+                'line1' => $this->address,
+                'line2' => $this->unit,
+                'postal_code' => $this->zip,
+                'state' => $this->state,
+            ]
+        ]);
+
+
+        // Create payment hold
+        try {
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+            $payment_intent = $stripe->paymentIntents->create([
+                'customer' => $this->default_payment_method['customer'],
+                'payment_method' => $this->default_payment_method['id'],
+                'amount' => Currency::toPennies($this->total),
+                'currency' => 'usd',
+                'off_session' => true,
+                'confirm' => true,
+                'description' => $this->reservation->property->name . ' -- ' . $this->reservation->checkin . '/' . $this->reservation->checkout,
+                'statement_descriptor_suffix' => Str::upper(Str::limit($this->reservation->property->name, 22, '')),
+                'statement_descriptor' => strtoupper(Str::limit(config('app.name') . '-' . $this->reservation->property->city . '-' . $this->reservation->property->state, 22, '')),
+
+                'payment_method_options' => [
+                    'card' => [
+                        'capture_method' => 'manual',
+                    ],
+                ],
+
+                'metadata' => [
+                    'reservation_id' => $this->reservation->id,
+                ],
+            ], [
+                'idempotency_key' => $this->reservation->slug,
+            ]);
+
+            // $this->user->idempotency_key = 'test';
+            // $payment_intent = $this->user->charge(Currency::toPennies($this->total), $this->default_payment_method['id'], [
+            //     'off_session' => true,
+            //     'confirm' => true,
+            //     'description' => 'RESERVATION #' . $this->reservation->id,
+            //     'statement_descriptor_suffix' => Str::upper(Str::limit($this->reservation->property->name, 22, '')),
+            //     'statement_descriptor' => strtoupper(Str::limit(config('app.name') . '-' . $this->reservation->property->city . '-' . $this->reservation->property->state, 22, '')),
+
+            //     'payment_method_options' => [
+            //         'card' => [
+            //             'capture_method' => 'manual',
+            //         ],
+            //     ],
+            // ]);
+
+        } catch (\Laravel\Cashier\Exceptions\IncompletePayment $e) {
+            if ($e->payment->requiresPaymentMethod()) {
+                // ...
+                toast()->danger('User doesn\'t have payment method...')->push();
+                return;
+            } elseif ($e->payment->requiresConfirmation()) {
+                // ...
+                toast()->danger('Requires Authentication')->push();
+                return;
+            }
+        } catch (\Stripe\Exception\CardException $e) {
+            // Since it's a decline, \Stripe\Exception\CardException will be caught
+            toast()->danger($e->getError()->message)->push();
+            return;
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Too many requests made to the API too quickly
+            toast()->danger($e->getError()->message)->push();
+            return;
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Invalid parameters were supplied to Stripe's API
+            toast()->danger($e->getError()->message)->push();
+            return;
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Authentication with Stripe's API failed
+            // (maybe you changed API keys recently)
+            toast()->danger($e->getError()->message)->push();
+            return;
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Network communication with Stripe failed
+            toast()->danger($e->getError()->message)->push();
+            return;
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Display a very generic error to the user, and maybe send
+            // yourself an email
+            toast()->danger('There was an error. Please go back and try again. (2)')->push();
+            return;
+        } catch (\Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            toast()->danger('There was an error. Please go back and try again.')->push();
+            return;
         }
+
+        if (Transaction::where('stripe_payment_id', $payment_intent->id)->exists()) {
+            return redirect('/dashobard');
+        }
+
+        // Create a new transaction
+        $transaction = new Transaction();
+        $transaction->reservation_id = $this->reservation->id;
+        $transaction->user_id = $this->user->id;
+        $transaction->stripe_payment_id = $payment_intent->id;
+        $transaction->amount = Currency::toPennies($this->total);
+        $transaction->save();
+
+
+        // // Update Reservation
+        // $this->reservation->status = 'pending';
+        // $this->reservation->payment_id = $payment->id;
+        // $this->reservation->save();
+
+        // Send Reservation Created Email to guest
+        // Mail::to($this->user->email)->queue(new \App\Mail\Guests\Reservations\ReservationCreatedEmail($this->reservation));
+
+        toast()->success('done')->push();
+
+        return redirect('/');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // public function initNewPaymentMethod()
-    // {
-    //     $this->first_name = $this->user->first_name;
-    //     $this->last_name = $this->user->last_name;
-    //     $this->address = $this->user->address;
-    //     $this->unit = $this->user->unit;
-    //     $this->city = $this->user->city;
-    //     $this->state = $this->user->state;
-    //     $this->zip = $this->user->zip;
-
-    //     $this->setDefaultPaymentMethod = true;
-
-    //     // Create Setup intent & get client secret
-    //     $this->stripe_client_secret = $this->user->createSetupIntent([
-    //         'customer' => $this->user->stripe_id,
-    //         'payment_method_types' => ['card'],
-    //         // 'capture_method' => 'manual',
-    //         // 'setup_future_usage' => 'off_session',
-    //     ])->client_secret;
-
-    //     // Mount the stripe card element
-    //     $this->dispatchBrowserEvent('initStripeCardElement');
-    // }
-
-    // // guest just added a new payment method
-    // public function addedNewPaymentMethod($payment_method_id)
-    // {
-    //     // does guest want new payment method to be default?
-    //     if ($this->setDefaultPaymentMethod) {
-    //         $this->updateDefaultPaymentMethod($payment_method_id);
-    //     }
-    // }
-
-    // public function deletePaymentMethod($payment_method_id)
-    // {
-    //     // get payment method
-    //     $payment_method = $this->user->findPaymentMethod($payment_method_id);
-    //     // delete payment method
-    //     $payment_method->delete();
-    // }
-
-    // public function updateDefaultPaymentMethod($payment_method_id)
-    // {
-    //     $this->user->updateDefaultPaymentMethod($payment_method_id);
-    //     $this->default_payment_method = $this->user->defaultPaymentMethod()->toArray();
-    //     $this->selected_payment_method = $this->default_payment_method;
-    // }
-
-    // public function validateBillingDetails()
-    // {
-    //     $this->withValidator(function (Validator $validator) {
-    //         $validator->after(function ($validator) {
-    //             $count = count($validator->errors());
-    //             if ($count > 0) {
-    //                 $error = $validator->errors()->first();
-    //                 toast()->danger($error . ($count > 1 ? ' and ' . $count . ' more errors to fix.' : $count), 'Error')->push();
-    //             }
-    //         });
-    //     })->validate([
-    //         'first_name' => 'required',
-    //         'last_name' => 'required',
-    //         'address' => 'required',
-    //         'unit' => 'nullable',
-    //         'city' => 'required',
-    //         'state' => 'required',
-    //         'zip' => 'required'
-    //     ]);
-
-    //     return true;
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // public function validateUserData()
-    // {
-    //     $this->withValidator(function (Validator $validator) {
-    //         $validator->after(function ($validator) {
-    //             $count = count($validator->errors());
-    //             if ($count > 0) {
-    //                 $error = $validator->errors()->first();
-    //                 toast()->danger($error . ($count > 1 ? ' and ' . $count . ' more errors to fix.' : $count), 'Error')->push();
-    //             }
-    //         });
-    //     })->validate();
-    //     return true;
-    // }
-
-    // // handles the error thrown by stripe
-    // public function handleErrors($error)
-    // {
-    //     $this->resetValidation();
-
-    //     $this->addError($error['code'], $error['message']);
-    //     toast()->danger($error['message'], 'Error')->push();
-    // }
-
-    // public function finalize($setupIntent)
-    // {
-    //     // Save user data
-    //     $this->user->address = $this->address;
-    //     $this->user->unit = $this->unit;
-    //     $this->user->city = $this->city;
-    //     $this->user->state = $this->state;
-    //     $this->user->zip = $this->zip;
-    //     $this->user->save();
-
-    //     // Update User's Stripe data
-    //     $this->user->updateStripeCustomer([
-    //         'address' => [
-    //             'city' => $this->city,
-    //             'country' => 'US',
-    //             'line1' => $this->address,
-    //             'line2' => $this->unit,
-    //             'postal_code' => $this->zip,
-    //             'state' => $this->state,
-    //         ]
-    //     ]);
-
-    //     // Update user's default payment method
-    //     $this->user->updateDefaultPaymentMethod($setupIntent['payment_method']);
-
-    //     // // Create payment hold
-    //     // try {
-    //     //     $paymentIntent = $this->user->charge(Currency::toPennies($this->pricing_total), $this->user->defaultPaymentMethod()->id, [
-    //     //         'off_session' => true,
-    //     //         'confirm' => true,
-
-    //     //         'statement_descriptor' => Str::limit($this->property->name . ' ' . $this->property->address_city . ' ' . $this->property->address_state, 22, ''),
-    //     //         'description' => 'RES#' . $this->reservation->id,
-    //     //         // 'statement_descriptor_suffix' => 'defg',
-    //     //         'payment_method_options' => [
-    //     //             'card' => [
-    //     //                 'capture_method' => 'manual',
-    //     //             ],
-    //     //         ],
-    //     //     ]);
-    //     // } catch (\Laravel\Cashier\Exceptions\IncompletePayment $e) {
-    //     //     if ($e->payment->requiresPaymentMethod()) {
-    //     //         // ...
-    //     //         toast()->danger('User doesn\'t have payment method...')->push();
-    //     //         return;
-    //     //     } elseif ($e->payment->requiresConfirmation()) {
-    //     //         // ...
-    //     //         toast()->danger('Requires Authentication')->push();
-    //     //         return;
-    //     //     }
-    //     // } catch (\Stripe\Exception\CardException $e) {
-    //     //     // Since it's a decline, \Stripe\Exception\CardException will be caught
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Stripe\Exception\RateLimitException $e) {
-    //     //     // Too many requests made to the API too quickly
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Stripe\Exception\InvalidRequestException $e) {
-    //     //     // Invalid parameters were supplied to Stripe's API
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Stripe\Exception\AuthenticationException $e) {
-    //     //     // Authentication with Stripe's API failed
-    //     //     // (maybe you changed API keys recently)
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Stripe\Exception\ApiConnectionException $e) {
-    //     //     // Network communication with Stripe failed
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Stripe\Exception\ApiErrorException $e) {
-    //     //     // Display a very generic error to the user, and maybe send
-    //     //     // yourself an email
-    //     //     toast()->danger($e->getError()->message)->push();
-    //     //     return;
-    //     // } catch (\Exception $e) {
-    //     //     // Something else happened, completely unrelated to Stripe
-    //     //     toast()->danger($e->getMessage())->push();
-    //     //     return;
-    //     // }
-
-    //     // Create a payment
-    //     // $payment = new Payment();
-    //     // $payment->reservation_id = $this->reservation->id;
-    //     // $payment->user_id = $this->user->id;
-    //     // $payment->status = 'pending';
-    //     // $payment->payment_intent = $paymentIntent->id;
-    //     // $payment->base_price = $this->pricing_base;
-    //     // $payment->fees = $this->pricing_fees;
-    //     // $payment->tax_price = $this->pricing_tax;
-    //     // $payment->total_cents = Currency::toPennies($this->pricing_total);
-    //     // $payment->save();
-
-
-    //     // Update Reservation's status
-    //     // $this->reservation->status = 'pending';
-    //     // $this->reservation->payment_id = $payment->id;
-    //     // $this->reservation->save();
-
-    //     // Send Reservation Created Email to guest
-    //     // Mail::to($this->user->email)->queue(new \App\Mail\Guests\Reservations\ReservationCreatedEmail($this->reservation));
-
-    //     toast()->success('done')->push();
-
-    //     // return redirect('/success/' . $this->reservation->slug);
-    // }
-
-    // public function updatedSelectedPaymentMethod($value)
-    // {
-    //     toast()->debug($value)->push();
-    // }
-
-    // public function test()
-    // {
-    //     toast()->debug($this->selected_payment_method)->push();
-    // }
 }

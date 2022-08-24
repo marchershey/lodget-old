@@ -35,16 +35,22 @@
         @apply text-primary;
     }
     .panel {
-        @apply flex flex-col p-4 mx-auto mb-5 space-y-5 bg-white border border-gray-200 sm:p-4 sm:rounded-lg;
+        @apply flex flex-col w-full bg-white border border-gray-200 sm:rounded-lg;
     }
     .panel-heading {
-        @apply flex items-center pb-2 space-x-2 text-lg font-medium border-b;
+        @apply flex items-center px-5 py-3 space-x-2 text-lg font-medium border-b;
+    }
+    .panel-body {
+        @apply flex flex-col p-5 space-y-5;
     }
     .panel-heading svg {
         @apply w-6 h-6 stroke-[1.5] text-primary sm:stroke-2;
     }
     .panel-spacing {
-        @apply flex flex-col pb-5 space-y-5;
+        @apply flex flex-col space-y-5;
+    }
+    .panel-action-spacing {
+        @apply flex items-center justify-between space-x-5;
     }
 
     /* Forms */
@@ -52,7 +58,7 @@
         @apply block w-full px-4 py-2 mt-2 border-gray-300 rounded focus:bg-white focus:text-gray-800 focus:ring-primary focus:border-primary focus:placeholder-white sm:text-sm bg-gray-50;
     }
     .input-label {
-        @apply block text-sm font-medium text-gray-700;
+        @apply block font-medium text-gray-700;
     }
     .input-desc {
         @apply block mt-1 text-xs text-muted;

@@ -1,9 +1,10 @@
 <x-layouts.frontend>
     {{-- property search --}}
     <section class="flex items-center justify-center w-full bg-center bg-cover h-view-minus-navbar" style="background-image: url('https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8')">
-        <div class="frontend-container">
-            <div class="max-w-2xl text-center rounded-lg panel bg-white/90">
-                <div>
+
+        <div class="max-w-2xl mx-auto frontend-container">
+            <div class="panel panel-body bg-white/90">
+                <div class="text-center">
                     <h1 class="text-2xl font-semibold text-gray-800 uppercase">Book your perfect family vacation</h1>
                     <span class="text-muted">Search through our properties below</span>
                 </div>

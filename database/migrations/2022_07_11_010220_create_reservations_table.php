@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('checkout');
             $table->string('nights');
             $table->integer('guests');
-            $table->boolean('approved')->default(false);
+            $table->string('status')->default('pending'); // pending, approved, cancelled
+            $table->string('status_by')->nullable(); // who caused the status change
             $table->timestamps();
         });
     }

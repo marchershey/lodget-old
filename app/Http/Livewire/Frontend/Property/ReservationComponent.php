@@ -48,7 +48,7 @@ class ReservationComponent extends Component
         $this->showModal = true;
 
         // get reserved dates
-        $reservations = Reservation::where('property_id', $this->property->id)->where('approved', true)->get(['checkin', 'checkout'])->toArray();
+        $reservations = Reservation::where('property_id', $this->property->id)->where('status', 'approved')->get(['checkin', 'checkout'])->toArray();
 
         $checkins = [];
         $checkouts = [];
