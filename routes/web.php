@@ -42,6 +42,8 @@ Route::name('guest.')->prefix('/guest')->group(function () {
     Route::post('/profile/submit-profile', [App\Http\Controllers\Pages\Guest\UserProfileController::class, 'submitProfile'])->name('profile.submit-profile');
     Route::post('/profile/submit-password', [App\Http\Controllers\Pages\Guest\UserProfileController::class, 'submitPassword'])->name('profile.submit-password');
     // Reservations
+    // Route::view('/dashboard/reservation/{reservation:slug}', 'pages.guest.reservation')->name('reservation');
+    Route::get('/dashboard/reservation/{reservation:slug}', [App\Http\Controllers\Pages\Guest\ReservationController::class, 'view'])->name('reservation');
     // Messages
     // Profile
     // Notifications

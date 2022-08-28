@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('payment_fees', function (Blueprint $table) {
             $table->id();
-            $table->string('reservation_id');
-            $table->string('user_id');
-            $table->string('status')->default('pending'); // pending, completed, cancelled, refunded
-            $table->string('stripe_payment_id');
+            $table->string('payment_id');
+            $table->string('name');
             $table->string('amount');
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('payment_fees');
     }
 };

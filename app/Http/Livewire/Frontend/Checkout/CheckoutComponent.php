@@ -3,7 +3,8 @@
 namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Helpers\Currency;
-use App\Models\Transaction;
+use App\Models\Payment;
+use App\Models\PaymentFee;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
@@ -68,7 +69,7 @@ class CheckoutComponent extends Component
 
     public function hydrate()
     {
-        if (Transaction::where('reservation_id', $this->reservation->id)->exists()) {
+        if (Payment::where('reservation_id', $this->reservation->id)->exists()) {
             return redirect('/dashboard');
         }
     }
@@ -186,6 +187,7 @@ class CheckoutComponent extends Component
         // submit to stripe
 
     }
+
     public function deletePaymentMethod($payment_method_id)
     {
 
@@ -307,22 +309,6 @@ class CheckoutComponent extends Component
             ], [
                 'idempotency_key' => $this->reservation->slug,
             ]);
-
-            // $this->user->idempotency_key = 'test';
-            // $payment_intent = $this->user->charge(Currency::toPennies($this->total), $this->default_payment_method['id'], [
-            //     'off_session' => true,
-            //     'confirm' => true,
-            //     'description' => 'RESERVATION #' . $this->reservation->id,
-            //     'statement_descriptor_suffix' => Str::upper(Str::limit($this->reservation->property->name, 22, '')),
-            //     'statement_descriptor' => strtoupper(Str::limit(config('app.name') . '-' . $this->reservation->property->city . '-' . $this->reservation->property->state, 22, '')),
-
-            //     'payment_method_options' => [
-            //         'card' => [
-            //             'capture_method' => 'manual',
-            //         ],
-            //     ],
-            // ]);
-
         } catch (\Laravel\Cashier\Exceptions\IncompletePayment $e) {
             if ($e->payment->requiresPaymentMethod()) {
                 // ...
@@ -365,17 +351,28 @@ class CheckoutComponent extends Component
             return;
         }
 
-        if (Transaction::where('stripe_payment_id', $payment_intent->id)->exists()) {
+        if (Payment::where('stripe_payment_id', $payment_intent->id)->exists()) {
             return redirect('/dashobard');
         }
 
-        // Create a new transaction
-        $transaction = new Transaction();
-        $transaction->reservation_id = $this->reservation->id;
-        $transaction->user_id = $this->user->id;
-        $transaction->stripe_payment_id = $payment_intent->id;
-        $transaction->amount = Currency::toPennies($this->total);
-        $transaction->save();
+        // Create a new payment
+        $payment = new Payment();
+        $payment->reservation_id = $this->reservation->id;
+        $payment->user_id = $this->user->id;
+        $payment->stripe_payment_id = $payment_intent->id;
+        $payment->amount = Currency::toPennies($this->total);
+        $payment->save();
+
+        // Attach fees to payment
+        if ($this->fees) {
+            foreach ($this->fees as $fee) {
+                $payment_fee = new PaymentFee();
+                $payment_fee->payment_id = $payment->id;
+                $payment_fee->name = $fee['name'];
+                $payment_fee->amount = Currency::toPennies($fee['amount']);
+                $payment_fee->save();
+            }
+        }
 
 
         // // Update Reservation
@@ -386,8 +383,6 @@ class CheckoutComponent extends Component
         // Send Reservation Created Email to guest
         // Mail::to($this->user->email)->queue(new \App\Mail\Guests\Reservations\ReservationCreatedEmail($this->reservation));
 
-        toast()->success('done')->push();
-
-        return redirect('/');
+        return redirect()->route('guest.reservation', [$this->reservation->slug]);
     }
 }

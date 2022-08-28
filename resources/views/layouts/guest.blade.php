@@ -1,7 +1,7 @@
 <x-layouts.base>
     <div class="min-h-screen bg-gray-100" x-data="{ menu: false }">
         <nav class="bg-gray-800">
-            <div class="max-w-4xl px-4 mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -93,12 +93,12 @@
         </nav>
 
         <header class="bg-white shadow-sm">
-            <div class="max-w-4xl px-4 py-4 mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-6xl px-4 py-4 mx-auto sm:px-6 lg:px-8">
                 <h1 class="text-lg font-semibold leading-6 text-gray-900">{{ $pageTitle }}</h1>
             </div>
         </header>
         <main>
-            <div class="max-w-4xl py-6 mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-6xl py-6 mx-auto sm:px-6 lg:px-8">
                 <!-- Replace with your content -->
                 {{ $slot }}
                 <!-- /End replace -->

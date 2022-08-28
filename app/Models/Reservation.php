@@ -19,8 +19,8 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function transactions()
+    public function payment()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasOne(Payment::class);
     }
 }

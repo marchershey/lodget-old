@@ -35,7 +35,7 @@
         @apply text-primary;
     }
     .panel {
-        @apply flex flex-col w-full bg-white border border-gray-200 sm:rounded-lg;
+        @apply flex flex-col w-full overflow-hidden bg-white border border-gray-200 sm:rounded-lg;
     }
     .panel-heading {
         @apply flex items-center px-5 py-3 space-x-2 text-lg font-medium border-b;

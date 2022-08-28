@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Guest\Dashboard;
 
 use App\Models\Reservation;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class RecentReservations extends Component
 {
+    use WireToast;
+
     public $reservations;
     public $selected_reservation;
 
@@ -18,11 +21,5 @@ class RecentReservations extends Component
     public function load()
     {
         $this->reservations = Reservation::where('user_id', auth()->user()->id)->get();
-        // sleep(2);
-    }
-
-    public function selectedReservation($reservation_id)
-    {
-        //
     }
 }
