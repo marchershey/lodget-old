@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Frontend\Checkout;
 
-use App\Helpers\Currency;
 use App\Models\Payment;
 use App\Models\PaymentFee;
+use Cknow\Money\Money;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
@@ -15,6 +15,7 @@ class CheckoutComponent extends Component
     use WireToast;
 
     // pricing details
+    public $default_rate;
     public $base_rate;
     public $tax_rate;
     public $fees;
@@ -92,17 +93,18 @@ class CheckoutComponent extends Component
 
     public function calcPricing()
     {
-        $total = "0";
+        // default rate - prevent double query
+        $this->default_rate = $this->reservation->property->default_rate;
 
         // base rate
         // here is where you will need to add a variable rate when possible.
-        $this->base_rate = $this->reservation->property->default_rate * $this->reservation->nights;
-        $total = $total + $this->base_rate;
+        $this->base_rate = $this->default_rate * $this->reservation->nights;
+        $total = $this->base_rate;
 
         // fees
         foreach ($this->reservation->property->fees as $fee) {
             $name = $fee['name'];
-            $amount = ($fee['type'] === 'percentage' ? ($fee['amount'] / 100) * $this->base_rate : $fee['amount']);
+            $amount = ($fee['type'] === 'percentage') ? (int) Money::USD($this->base_rate)->multiply($fee['amount'] / 100)->getAmount() : $fee['amount'];
             $total = $total + $amount;
 
             $this->fees[] = [
@@ -112,11 +114,12 @@ class CheckoutComponent extends Component
         }
 
         // tax rate
-        $this->tax_rate = ($this->reservation->property->default_tax / 100) * $total;
+        $this->tax_rate = Money::USD($total)->multiply($this->reservation->property->default_tax / 100)->getAmount();
+        // $this->tax_rate = ($this->reservation->property->default_tax / 100) * $total;
         $total = $total + $this->tax_rate;
 
         // set the total 
-        $this->total = number_format($total, 2);
+        $this->total = $total;
     }
 
     // Payment Methods
@@ -247,6 +250,9 @@ class CheckoutComponent extends Component
 
     public function finalize()
     {
+
+        return;
+
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 $count = count($validator->errors());
@@ -360,7 +366,9 @@ class CheckoutComponent extends Component
         $payment->reservation_id = $this->reservation->id;
         $payment->user_id = $this->user->id;
         $payment->stripe_payment_id = $payment_intent->id;
-        $payment->amount = Currency::toPennies($this->total);
+        $payment->base_rate = Currency::toPennies($this->base_rate);
+        $payment->tax_rate = Currency::toPennies($this->tax_rate);
+        $payment->total = Currency::toPennies($this->total);
         $payment->save();
 
         // Attach fees to payment
