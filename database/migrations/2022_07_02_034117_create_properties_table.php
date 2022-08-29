@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('bathrooms');
 
             // rates
-            $table->string('default_rate')->nullable();
-            $table->string('default_tax')->nullable();
+            $table->integer('default_rate')->nullable();
+            $table->integer('default_tax')->nullable();
 
             // options
             $table->boolean('active')->default(false);

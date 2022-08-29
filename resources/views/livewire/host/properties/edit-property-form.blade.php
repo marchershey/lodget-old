@@ -6,96 +6,96 @@
         </div>
     @endif
 
-    {{-- Property Information --}}
-    <div class="w-full panel">
-        <div class="flex flex-col w-full space-y-3">
+    <div class="panel-spacing">
+        <div class="panel">
             <h3 class="panel-heading">Property Information</h3>
-            {{-- Name --}}
-            <div>
-                <label for="name" class="input-label @error('name') text-red-500 @enderror">Property Name</label>
-                <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.lazy="name">
-            </div>
+            <div class="panel-body">
+                {{-- Name --}}
+                <div>
+                    <label for="name" class="input-label @error('name') text-red-500 @enderror">Property Name</label>
+                    <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.lazy="name">
+                </div>
 
-            {{-- Address --}}
-            <div class="grid grid-cols-2 gap-y-3 gap-x-5">
-                <div class="col-span-2">
-                    <label for="street" class="input-label @error('street') text-red-500 @enderror">Street Address</label>
-                    <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.lazy="street">
-                </div>
-                <div class="col-span-2">
-                    <label for="city" class="input-label @error('city') text-red-500 @enderror">City</label>
-                    <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.lazy="city">
-                </div>
-                <div>
-                    <label for="state" class="input-label @error('state') text-red-500 @enderror">State</label>
-                    <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model="state">
-                        <option value=""></option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="zip" class="input-label @error('zip') text-red-500 @enderror">Zip</label>
-                    <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.lazy="zip">
+                {{-- Address --}}
+                <div class="grid grid-cols-2 gap-y-3 gap-x-5">
+                    <div class="col-span-2">
+                        <label for="street" class="input-label @error('street') text-red-500 @enderror">Street Address</label>
+                        <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.lazy="street">
+                    </div>
+                    <div class="col-span-2">
+                        <label for="city" class="input-label @error('city') text-red-500 @enderror">City</label>
+                        <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.lazy="city">
+                    </div>
+                    <div>
+                        <label for="state" class="input-label @error('state') text-red-500 @enderror">State</label>
+                        <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model="state">
+                            <option value=""></option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="zip" class="input-label @error('zip') text-red-500 @enderror">Zip</label>
+                        <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.lazy="zip">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Property details --}}
-    <div class="w-full panel">
-        <div class="flex flex-col space-y-3">
-
-            <h3 class="panel-heading">Property Details</h3>
+    {{-- Property Details --}}
+    <div class="panel">
+        <h3 class="panel-heading">Property Details</h3>
+        <div class="panel-body">
             <div class="space-y-2">
                 <label for="type" class="input-label @error('type') text-red-500 @enderror">Property Type</label>
                 <select id="type" class="input @error('type') bg-red-50 border-red-500 @enderror" wire:model="type">
@@ -240,9 +240,9 @@
     </div>
 
     {{-- Photos --}}
-    <div class="w-full panel">
-        <div class="flex flex-col space-y-3">
-            <h3 class="panel-heading">Photos</h3>
+    <div class="panel">
+        <h3 class="panel-heading">Photos</h3>
+        <div class="panel-body">
             <div class="flex items-center whitespace-nowrap">
                 <label x-show="!isUploading" for="file-upload">
                     <input wire:model="stagedPhotos" id="photo-upload" type="file" accept="image/png, image/jpeg" class="sr-only" multiple>
@@ -318,10 +318,9 @@
     </div>
 
     {{-- Amenities --}}
-    <div class="w-full panel">
-        <div class="flex flex-col space-y-5">
-            <h3 class="panel-heading">Amenities</h3>
-
+    <div class="panel">
+        <h3 class="panel-heading">Amenities</h3>
+        <div class="panel-body">
             <form wire:submit.prevent="addAmenity" class="grid grid-cols-2 gap-5">
                 <div class="w-full">
                     <input wire:model="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
@@ -341,30 +340,13 @@
                     <span class="text-sm text-muted"><span class="font-medium">Note:</span> Click on an amenity to remove it.</span>
                 </div>
             @endif
-
-            {{-- @if ($amenities)
-                <div class="flex flex-wrap gap-x-2 gap-y-3">
-                    @foreach ($amenities as $key => $amenity)
-                        <div>
-                            <span wire:click="removeAmenity({{ $key }})" class="inline px-2 py-1 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-red-50 hover:border-red-200">
-                                {{ $amenity }}
-                            </span>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="w-full px-5 py-2 border border-gray-200 bg-gray-50">
-                        No amenities found.
-                    </div>
-                </div>
-            @endif --}}
         </div>
     </div>
 
     {{-- Rates & fees --}}
-    <div class="w-full panel">
-        <div class="flex flex-col space-y-5">
-            <h3 class="panel-heading">Rates & Fees</h3>
-
+    <div class="panel">
+        <h3 class="panel-heading">Rates & Fees</h3>
+        <div class="panel-body">
             <div class="grid grid-cols-4 gap-5">
                 <div>
                     <label for="rate" class="input-label">Base Rate</label>
@@ -450,14 +432,13 @@
                     @endforeach
                 </div>
             @endif
-
         </div>
     </div>
 
     {{-- Listing --}}
-    <div class="w-full panel">
-        <div class="flex flex-col w-full space-y-3">
-            <h3 class="panel-heading">Property Information</h3>
+    <div class="panel">
+        <h3 class="panel-heading">Listing Information</h3>
+        <div class="panel-body">
             <div>
                 <label for="headline" class="input-label @error('headline') text-red-500 @enderror">Headline</label>
                 <input type="text" id="headline" class="input @error('headline') bg-red-50 border-red-500 @enderror" wire:model.lazy="headline">
@@ -470,9 +451,9 @@
     </div>
 
     {{-- Options --}}
-    <div class="w-full panel">
-        <div class="flex flex-col space-y-3">
-            <h3 class="panel-heading">Options</h3>
+    <div class="panel">
+        <h3 class="panel-heading">Options</h3>
+        <div class="panel-body">
             <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
                 <span class="flex flex-col flex-grow">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Active</span>
@@ -493,7 +474,8 @@
         </div>
     </div>
 
-    <div class="w-full">
-        <button class="button" wire:click="submit">Update Property</button>
+    <div class="flex justify-between">
+        <a href="{{ route('host.properties') }}" class="w-auto button button-light" wire:click="submit">Cancel</a>
+        <button class="w-auto button" wire:click="submit">Update Property</button>
     </div>
 </div>

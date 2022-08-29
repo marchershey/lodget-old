@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('status')->default('pending'); // pending, completed, cancelled, refunded
             $table->string('stripe_payment_id');
-            $table->string('amount');
+            $table->integer('base_rate');
+            $table->integer('tax_rate');
+            $table->string('total');
             $table->timestamps();
         });
     }

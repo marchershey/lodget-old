@@ -54,26 +54,26 @@
                         </svg>
                     </div>
                     @if ($total != 0)
-                        <div class="flex flex-col space-y-1 text-sm text-muted" wire:loading.remove wire:target="calcPricing">
+                        <div class="flex flex-col space-y-1 text-muted" wire:loading.remove wire:target="calcPricing">
                             <div class="flex justify-between">
-                                <span>${{ $reservation->property->default_rate }} x {{ $reservation->nights }} nights</span>
-                                <span>${{ number_format($base_rate, 2) }}</span>
+                                <span>@money($default_rate) x {{ $reservation->nights }} nights</span>
+                                <span>@money($base_rate)</span>
                             </div>
                             @if ($fees)
                                 @foreach ($fees as $fee)
                                     <div class="flex justify-between">
                                         <span>{{ $fee['name'] }}</span>
-                                        <span>${{ number_format($fee['amount'], 2) }}</span>
+                                        <span>@money($fee['amount'])</span>
                                     </div>
                                 @endforeach
                             @endif
                             <div class="flex justify-between">
                                 <span>Taxes</span>
-                                <span>${{ number_format($tax_rate, 2) }}</span>
+                                <span>@money($tax_rate)</span>
                             </div>
                             <div class="flex justify-between text-base font-medium text-gray-800">
                                 <span>Total</span>
-                                <span>${{ $total }}</span>
+                                <span>@money($total)</span>
                             </div>
                         </div>
                     @endif

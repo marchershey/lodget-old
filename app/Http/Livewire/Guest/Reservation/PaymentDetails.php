@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Guest\Reservation;
 
+use App\Helpers\Currency;
 use Livewire\Component;
 
 class PaymentDetails extends Component
@@ -26,42 +27,15 @@ class PaymentDetails extends Component
         // load data
         $this->payment = $this->reservation->payment;
         $this->payment_method = auth()->user()->findPaymentMethod($this->payment->stripe_payment_id);
-        $this->fees = $this->payment->fees->toArray();
-
-        $this->total = $this->payment->amount;
-    }
-
-    public function loadPayment()
-    {
-        $this->transaction = $this->reservation->transaction;
-    }
-
-    public function calcPricing()
-    {
-        $total = "0";
-
-        // base rate
-        // here is where you will need to add a variable rate when possible.
-        $this->base_rate = $this->reservation->property->default_rate * $this->reservation->nights;
-        $total = $total + $this->base_rate;
-
-        // fees
-        foreach ($this->reservation->property->fees as $fee) {
-            $name = $fee['name'];
-            $amount = ($fee['type'] === 'percentage' ? ($fee['amount'] / 100) * $this->base_rate : $fee['amount']);
-            $total = $total + $amount;
-
+        $this->base_rate = Currency::toDollars($this->payment->base_rate);
+        $this->tax_rate = Currency::toDollars($this->payment->tax_rate);
+        $fees = $this->payment->fees->toArray();
+        foreach ($fees as $fee) {
             $this->fees[] = [
-                'name' => $name,
-                'amount' => $amount,
+                'name' => $fee['name'],
+                'amount' => Currency::toDollars($fee['amount']),
             ];
         }
-
-        // tax rate
-        $this->tax_rate = ($this->reservation->property->default_tax / 100) * $total;
-        $total = $total + $this->tax_rate;
-
-        // set the total 
-        $this->total = number_format($total, 2);
+        $this->total = Currency::toDollars($this->payment->total);
     }
 }

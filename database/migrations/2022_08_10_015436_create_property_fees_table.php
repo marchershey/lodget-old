@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('property_id');
             $table->string('name');
-            $table->string('amount');
+            $table->integer('amount');
             $table->string('type');
             $table->timestamps();
         });

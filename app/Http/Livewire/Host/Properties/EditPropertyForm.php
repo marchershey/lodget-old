@@ -6,6 +6,7 @@ use App\Models\Property;
 use App\Models\PropertyAmenity;
 use App\Models\PropertyFee;
 use App\Models\PropertyPhoto;
+use Cknow\Money\Money;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -41,7 +42,7 @@ class EditPropertyForm extends Component
     public $amenities = [];
 
     // rates & fees
-    public $default_date;
+    public $default_rate;
     public $default_tax;
     public $fees = [];
 
@@ -100,11 +101,15 @@ class EditPropertyForm extends Component
         }
 
         // rates & fees
-        $this->default_rate = $this->property->default_rate;
+        $this->default_rate = Money::USD($this->property->default_rate)->formatByDecimal();
         $this->default_tax = $this->property->default_tax;
 
         foreach ($this->property->fees as $fee) {
-            $this->fees[$fee['id']] = $fee;
+            $this->fees[$fee['id']] = [
+                'name' => $fee['name'],
+                'amount' => ($fee['type'] === 'percentage') ? $fee['amount'] : Money::USD($fee['amount'])->formatByDecimal(),
+                'type' => $fee['type'],
+            ];
         }
 
         // listing
@@ -180,7 +185,6 @@ class EditPropertyForm extends Component
 
     public function submit()
     {
-
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {
@@ -244,7 +248,7 @@ class EditPropertyForm extends Component
         }
 
         // default base and tax rate
-        $property->default_rate = $this->default_rate;
+        $property->default_rate = money($this->default_rate, 'USD', true)->getAmount();
         $property->default_tax = $this->default_tax;
 
         // additional fees 
@@ -258,7 +262,7 @@ class EditPropertyForm extends Component
                 $newFee = new PropertyFee();
                 $newFee->property_id = $this->property->id;
                 $newFee->name = $fee['name'];
-                $newFee->amount = $fee['amount'];
+                $newFee->amount = ($fee['type'] === 'percentage') ? $fee['amount'] : money($fee['amount'], 'USD', true)->getAmount();
                 $newFee->type = $fee['type'];
                 $newFee->save();
             }
