@@ -250,9 +250,6 @@ class CheckoutComponent extends Component
 
     public function finalize()
     {
-
-        return;
-
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 $count = count($validator->errors());
@@ -295,7 +292,7 @@ class CheckoutComponent extends Component
             $payment_intent = $stripe->paymentIntents->create([
                 'customer' => $this->default_payment_method['customer'],
                 'payment_method' => $this->default_payment_method['id'],
-                'amount' => Currency::toPennies($this->total),
+                'amount' => $this->total,
                 'currency' => 'usd',
                 'off_session' => true,
                 'confirm' => true,
@@ -366,9 +363,9 @@ class CheckoutComponent extends Component
         $payment->reservation_id = $this->reservation->id;
         $payment->user_id = $this->user->id;
         $payment->stripe_payment_id = $payment_intent->id;
-        $payment->base_rate = Currency::toPennies($this->base_rate);
-        $payment->tax_rate = Currency::toPennies($this->tax_rate);
-        $payment->total = Currency::toPennies($this->total);
+        $payment->base_rate = $this->base_rate;
+        $payment->tax_rate = $this->tax_rate;
+        $payment->total = $this->total;
         $payment->save();
 
         // Attach fees to payment
@@ -377,7 +374,7 @@ class CheckoutComponent extends Component
                 $payment_fee = new PaymentFee();
                 $payment_fee->payment_id = $payment->id;
                 $payment_fee->name = $fee['name'];
-                $payment_fee->amount = Currency::toPennies($fee['amount']);
+                $payment_fee->amount = $fee['amount'];
                 $payment_fee->save();
             }
         }

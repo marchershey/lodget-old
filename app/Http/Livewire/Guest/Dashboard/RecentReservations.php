@@ -10,7 +10,7 @@ class RecentReservations extends Component
 {
     use WireToast;
 
-    public $reservations;
+    public $reservations = [];
     public $selected_reservation;
 
     public function render()
@@ -20,6 +20,6 @@ class RecentReservations extends Component
 
     public function load()
     {
-        $this->reservations = Reservation::where('user_id', auth()->user()->id)->get();
+        $this->reservations = Reservation::where('user_id', auth()->user()->id)->where('status', '!=', 'cancelled')->get();
     }
 }

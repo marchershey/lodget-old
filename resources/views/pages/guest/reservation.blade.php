@@ -35,7 +35,10 @@
                             @if ($reservation->status === 'pending')
                                 <hr class="-mx-5 col-span-full">
                                 <div class="col-span-full">
-                                    <div>Your reservation request is currently pending. Once approved, this page will update with all the information you need. If you have any questions, feel free to reach out to us below.</div>
+                                    <x-alert type="info">
+                                        <span class="font-medium">Reservation Pending</span>
+                                        <span>Your reservation request is currently pending. Once approved, this page will update with all the information you need. If you have any questions, feel free to reach out to us below.</span>
+                                    </x-alert>
                                 </div>
                             @elseif ($reservation->status === 'approved')
                             @endif
@@ -76,9 +79,7 @@
 
             <div class="panel-spacing">
                 <livewire:guest.reservation.payment-details :reservation="$reservation" />
-                <div class="text-center">
-                    <a href="" class="text-red-500">Cancel Reservation</a>
-                </div>
+                <livewire:guest.reservation.cancel-button :reservation="$reservation" />
             </div>
         </div>
 

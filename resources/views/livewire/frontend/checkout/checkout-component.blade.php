@@ -357,7 +357,7 @@
                         <input wire:model="agree" id="agree" type="checkbox" class="w-5 h-5 border-gray-300 rounded text-primary focus:ring-primary">
                     </div>
                     <div class="ml-3">
-                        <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a ${{ $total }} hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>
+                        <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a @money($total) hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>
                     </div>
                 </div>
                 <div>
