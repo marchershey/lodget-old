@@ -17,18 +17,18 @@ window.fecha = fecha;
 import HotelDatepicker from "hotel-datepicker";
 window.HotelDatepicker = HotelDatepicker;
 
+// Full calendar
+import { Calendar } from "@fullcalendar/core";
+import dayGridPlugin from "@fullcalendar/daygrid";
+window.Calendar = Calendar;
+window.dayGridPlugin = dayGridPlugin;
+
 // Alpinejs & Tall Toasts
 import Alpine from "alpinejs";
 import ToastComponent from "../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts";
 Alpine.data("ToastComponent", ToastComponent);
 window.Alpine = Alpine;
 Alpine.start();
-
-// Full calendar
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-window.Calendar = Calendar;
-window.dayGridPlugin = dayGridPlugin;
 
 // Splidejs
 import Splide from "@splidejs/splide";

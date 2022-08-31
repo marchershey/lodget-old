@@ -93,6 +93,7 @@ class CheckoutComponent extends Component
 
     public function calcPricing()
     {
+
         // default rate - prevent double query
         $this->default_rate = $this->reservation->property->default_rate;
 

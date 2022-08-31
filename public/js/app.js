@@ -240,9 +240,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _vdom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vdom.js */ "./node_modules/@fullcalendar/common/vdom.js");
 /*!
-FullCalendar v5.10.2
+FullCalendar v5.11.3
 Docs & License: https://fullcalendar.io/
-(c) 2021 Adam Shaw
+(c) 2022 Adam Shaw
 */
 
 
@@ -1316,8 +1316,7 @@ workerFunc, resEquality, teardownFunc) {
         return currentResults;
     };
 }
-function memoizeHashlike(// used?
-workerFunc, resEquality, teardownFunc) {
+function memoizeHashlike(workerFunc, resEquality, teardownFunc) {
     var _this = this;
     var currentArgHash = {};
     var currentResHash = {};
@@ -1951,13 +1950,14 @@ var CALENDAR_OPTION_REFINERS = {
     eventSources: identity,
 };
 var COMPLEX_OPTION_COMPARATORS = {
-    headerToolbar: isBoolComplexEqual,
-    footerToolbar: isBoolComplexEqual,
-    buttonText: isBoolComplexEqual,
-    buttonHints: isBoolComplexEqual,
-    buttonIcons: isBoolComplexEqual,
+    headerToolbar: isMaybeObjectsEqual,
+    footerToolbar: isMaybeObjectsEqual,
+    buttonText: isMaybeObjectsEqual,
+    buttonHints: isMaybeObjectsEqual,
+    buttonIcons: isMaybeObjectsEqual,
+    dateIncrement: isMaybeObjectsEqual,
 };
-function isBoolComplexEqual(a, b) {
+function isMaybeObjectsEqual(a, b) {
     if (typeof a === 'object' && typeof b === 'object' && a && b) { // both non-null objects
         return isPropsEqual(a, b);
     }
@@ -5300,6 +5300,12 @@ var PureComponent = /** @class */ (function (_super) {
         return !compareObjs(this.props, nextProps, this.propEquality) ||
             !compareObjs(this.state, nextState, this.stateEquality);
     };
+    // HACK for freakin' React StrictMode
+    PureComponent.prototype.safeSetState = function (newState) {
+        if (!compareObjs(this.state, (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({}, this.state), newState), this.stateEquality)) {
+            this.setState(newState);
+        }
+    };
     PureComponent.addPropsEquality = addPropsEquality;
     PureComponent.addStateEquality = addStateEquality;
     PureComponent.contextType = ViewContextType;
@@ -7490,11 +7496,15 @@ var CalendarDataManager = /** @class */ (function () {
         var anyChanges = false;
         var extra = {};
         for (var optionName in raw) {
-            if (raw[optionName] === currentRaw[optionName]) {
+            if (raw[optionName] === currentRaw[optionName] ||
+                (COMPLEX_OPTION_COMPARATORS[optionName] &&
+                    COMPLEX_OPTION_COMPARATORS[optionName](raw[optionName], currentRaw[optionName]))) {
                 refined[optionName] = currentRefined[optionName];
             }
             else {
-                if (raw[optionName] === this.currentCalendarOptionsInput[optionName]) {
+                if (raw[optionName] === this.currentCalendarOptionsInput[optionName] ||
+                    (COMPLEX_OPTION_COMPARATORS[optionName] &&
+                        COMPLEX_OPTION_COMPARATORS[optionName](raw[optionName], this.currentCalendarOptionsInput[optionName]))) {
                     if (optionName in this.currentCalendarOptionsRefined) { // might be an "extra" prop
                         refined[optionName] = this.currentCalendarOptionsRefined[optionName];
                     }
@@ -9327,7 +9337,7 @@ var SimpleScrollGrid = /** @class */ (function (_super) {
         };
         // TODO: can do a really simple print-view. dont need to join rows
         _this.handleSizing = function () {
-            _this.setState((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ shrinkWidth: _this.computeShrinkWidth() }, _this.computeScrollerDims()));
+            _this.safeSetState((0,tslib__WEBPACK_IMPORTED_MODULE_2__.__assign)({ shrinkWidth: _this.computeShrinkWidth() }, _this.computeScrollerDims()));
         };
         return _this;
     }
@@ -9896,7 +9906,7 @@ function pickLatestEnd(seg0, seg1) {
 
 // exports
 // --------------------------------------------------------------------------------------------------
-var version = '5.10.2'; // important to type it, so .d.ts has generic string
+var version = '5.11.3'; // important to type it, so .d.ts has generic string
 
 
 //# sourceMappingURL=main.js.map
@@ -10183,9 +10193,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _fullcalendar_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/common */ "./node_modules/@fullcalendar/common/main.js");
 /*!
-FullCalendar v5.10.2
+FullCalendar v5.11.3
 Docs & License: https://fullcalendar.io/
-(c) 2021 Adam Shaw
+(c) 2022 Adam Shaw
 */
 
 
@@ -10430,9 +10440,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fullcalendar_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/common */ "./node_modules/@fullcalendar/common/main.js");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /*!
-FullCalendar v5.10.2
+FullCalendar v5.11.3
 Docs & License: https://fullcalendar.io/
-(c) 2021 Adam Shaw
+(c) 2022 Adam Shaw
 */
 
 
@@ -11088,7 +11098,7 @@ var TableRow = /** @class */ (function (_super) {
             var oldInstanceHeights = this.state.eventInstanceHeights;
             var newInstanceHeights = this.queryEventInstanceHeights();
             var limitByContentHeight = props.dayMaxEvents === true || props.dayMaxEventRows === true;
-            this.setState({
+            this.safeSetState({
                 // HACK to prevent oscillations of events being shown/hidden from max-event-rows
                 // Essentially, once you compute an element's height, never null-out.
                 // TODO: always display all events, as visibility:hidden?
@@ -20186,11 +20196,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var fecha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fecha */ "./node_modules/fecha/lib/fecha.js");
 /* harmony import */ var hotel_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! hotel-datepicker */ "./node_modules/hotel-datepicker/src/js/hotel-datepicker.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts */ "./vendor/usernotnull/tall-toasts/dist/js/tall-toasts.js");
-/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts */ "./vendor/usernotnull/tall-toasts/dist/js/tall-toasts.js");
+/* harmony import */ var _vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _splidejs_splide__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @splidejs/splide */ "./node_modules/@splidejs/splide/dist/js/splide.esm.js");
 /* harmony import */ var _splidejs_splide_dist_css_themes_splide_default_min_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @splidejs/splide/dist/css/themes/splide-default.min.css */ "./node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css");
  // Windows Size Utility
@@ -20208,18 +20218,18 @@ document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
 window.fecha = fecha__WEBPACK_IMPORTED_MODULE_1__["default"]; // Hotel datepicker
 
 
-window.HotelDatepicker = hotel_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]; // Alpinejs & Tall Toasts
+window.HotelDatepicker = hotel_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]; // Full calendar
 
 
 
-alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"].data("ToastComponent", (_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_4___default()));
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"].start(); // Full calendar
+window.Calendar = _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__.Calendar;
+window.dayGridPlugin = _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__["default"]; // Alpinejs & Tall Toasts
 
 
 
-window.Calendar = _fullcalendar_core__WEBPACK_IMPORTED_MODULE_5__.Calendar;
-window.dayGridPlugin = _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_6__["default"]; // Splidejs
+alpinejs__WEBPACK_IMPORTED_MODULE_5__["default"].data("ToastComponent", (_vendor_usernotnull_tall_toasts_dist_js_tall_toasts__WEBPACK_IMPORTED_MODULE_6___default()));
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_5__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_5__["default"].start(); // Splidejs
 
 
 

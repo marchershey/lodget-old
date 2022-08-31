@@ -240,7 +240,7 @@
     </div>
 
     {{-- Photos --}}
-    <div class="panel">
+    <div class="hidden panel">
         <h3 class="panel-heading">Photos</h3>
         <div class="panel-body">
             <div class="flex items-center whitespace-nowrap">
@@ -369,17 +369,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-2 mt-7">
+                <div class="flex col-span-2 space-x-2 mt-7">
                     <button class="button button-light" wire:click="addFee">Add additional fees</button>
+                </div>
+                <div class="col-span-full">
+                    @livewire('host.properties.rates-calendar')
                 </div>
             </div>
 
             @if (count($fees) > 0)
                 <div class="flex flex-col space-y-3">
                     <hr>
-                    <div class="px-5 py-4 pb-3 text-xs text-center text-blue-800 align-bottom rounded-lg bg-blue-50">
-                        <div><span class="font-semibold">Note:</span> Percentage fees are applied towards the total base rate only.</div>
-                    </div>
+                    <x-alert type="warning">
+                        <div><span class="font-medium">Warning.</span> Percentage fees are applied towards the total base rate only.</div>
+                    </x-alert>
                     @foreach ($fees as $key => $fee)
                         <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
                             <div>
