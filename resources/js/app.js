@@ -20,8 +20,10 @@ window.HotelDatepicker = HotelDatepicker;
 // Full calendar
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import interaction from "@fullcalendar/interaction";
 window.Calendar = Calendar;
 window.dayGridPlugin = dayGridPlugin;
+window.interaction = interaction;
 
 // Alpinejs & Tall Toasts
 import Alpine from "alpinejs";

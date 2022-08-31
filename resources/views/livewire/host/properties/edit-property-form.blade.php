@@ -240,7 +240,7 @@
     </div>
 
     {{-- Photos --}}
-    <div class="hidden panel">
+    <div class="panel">
         <h3 class="panel-heading">Photos</h3>
         <div class="panel-body">
             <div class="flex items-center whitespace-nowrap">
@@ -373,7 +373,7 @@
                     <button class="button button-light" wire:click="addFee">Add additional fees</button>
                 </div>
                 <div class="col-span-full">
-                    @livewire('host.properties.rates-calendar')
+                    @livewire('host.properties.rates-calendar', ['property' => $property])
                 </div>
             </div>
 
