@@ -3,10 +3,15 @@
 namespace App\Http\Livewire\Host\Properties;
 
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class RatesCalendar extends Component
 {
+    use WireToast;
+
     public $property;
+    public $startDate;
+    public $endDate;
 
     public function render()
     {
@@ -16,5 +21,10 @@ class RatesCalendar extends Component
     public function mount($property)
     {
         $this->property = $property;
+    }
+
+    public function test()
+    {
+        //
     }
 }
