@@ -21,18 +21,6 @@
                 Alpine.data('ratesCalendar', () => ({
                     open: false,
                     calendar: null,
-                    // events: [{
-                    //         id: 1,
-                    //         title: 'Build my secret project 🛠',
-                    //         start: '2022-09-05',
-                    //         end: '2022-09-08',
-                    //     },
-                    //     {
-                    //         id: 2,
-                    //         title: 'Launch 🚀',
-                    //         start: '2022-09-23',
-                    //     },
-                    // ],
                     newEventTitle: null,
                     newEventStart: null,
                     newEventEnd: null,
@@ -43,46 +31,50 @@
                             initialDate: new Date,
                             initialView: 'dayGridMonth',
                             selectable: true,
-                            // showNonCurrentDates: false,
                             fixedWeekCount: false,
-                            // unselectAuto: false,
-                            // editable: true,
+                            unselectAuto: false,
                             height: "auto",
 
+                            // dateClick: function(info) {
+                            //     alert('clicked ' + info.dateStr);
+                            // },
                             select: (info) => {
                                 console.log(info);
+                                if (info.isPast) {
+                                    return false;
+                                }
                                 // this.newEventStart = info.startStr
                                 // this.newEventEnd = info.endStr
                                 // alert('selected ' + info.startStr + ' to ' + info.endStr);
                             },
-                            // dateClick: function(info) {
-                            //     alert('clicked ' + info.dateStr);
-                            // },
-                            // eventClick: (info) => {
-                            //     if (confirm('Are you sure you want to remove this event?')) {
-                            //         const index = this.getEventIndex(info)
-                            //         this.events.splice(index, 1)
-                            //         this.calendar.refetchEvents()
-                            //     }
-                            // },
-                            // eventChange: (info) => {
-                            //     const index = this.getEventIndex(info)
-                            //     this.events[index].start = info.event.startStr
-                            //     this.events[index].end = info.event.endStr
-                            // },
+                            selectAllow: (info) => {
+                                var today = new Date
+                                var date = info.start
+
+                                if (today <= date) {
+                                    return true;
+                                }
+
+                                return false;
+                            },
                             dayCellDidMount: function(info) {
-                                console.log(info);
+
                                 var el = info.el;
                                 var frame = el.querySelector('.fc-daygrid-day-frame');
                                 var number = el.querySelector('.fc-daygrid-day-number');
                                 var content = el.querySelector('.fc-daygrid-day-events');
 
+                                if (info.isPast) {
+                                    frame.classList.add('opacity-25', 'cursor-not-allowed');
+                                }
+
                                 frame.classList.add('flex', 'flex-col', '!min-h-full')
-                                number.classList.add('text-center', 'w-full')
+                                number.classList.add('text-center', 'w-full', 'font-semibold')
                                 content.classList.add('text-center')
 
                                 if (!info.isDisabled) {
-                                    content.textContent = "{{ money($property->default_rate) }}"
+                                    content.textContent = "${{ substr($property->default_rate, 0, -2) }}"
+                                    // content.textContent = "{{ Cknow\Money\Money::USD($property->default_rate, false) }}"
 
                                     // number.classList.add('!absolute', '!top-0', '!right-0')
 
@@ -127,33 +119,153 @@
                         this.open = false;
                         this.calendar.destroy()
                     },
-                    getEventIndex(info) {
-                        return this.events.findIndex((event) => event.id == info.event.id)
-                    },
-                    addEvent() {
-                        if (!this.newEventTitle || !this.newEventStart) {
-                            return alert('Please choose a title and start date for the event!')
-                        }
-
-                        let event = {
-                            id: Date.now(),
-                            title: this.newEventTitle,
-                            start: this.newEventStart,
-                            end: this.newEventEnd,
-                        }
-
-                        this.events.push(event)
-                        this.calendar.refetchEvents()
-
-                        this.newEventTitle = null
-                        this.newEventStart = null
-                        this.newEventEnd = null
-
-                        this.calendar.unselect()
-                    },
 
 
                 }))
+                // Alpine.data('ratesCalendar', () => ({
+                //     open: false,
+                //     calendar: null,
+                //     // events: [{
+                //     //         id: 1,
+                //     //         title: 'Build my secret project 🛠',
+                //     //         start: '2022-09-05',
+                //     //         end: '2022-09-08',
+                //     //     },
+                //     //     {
+                //     //         id: 2,
+                //     //         title: 'Launch 🚀',
+                //     //         start: '2022-09-23',
+                //     //     },
+                //     // ],
+                //     newEventTitle: null,
+                //     newEventStart: null,
+                //     newEventEnd: null,
+                //     init() {
+                //         this.calendar = new Calendar(this.$refs.calendar, {
+                //             // events: (info, success) => success(this.events),
+                //             plugins: [dayGridPlugin, interaction],
+                //             initialDate: new Date,
+                //             initialView: 'dayGridMonth',
+                //             selectable: true,
+                //             // showNonCurrentDates: false,
+                //             fixedWeekCount: false,
+                //             // unselectAuto: false,
+                //             // editable: true,
+                //             height: "auto",
+
+                //             select: (info) => {
+                //                 console.log(info);
+                //                 if (info.isPast) {
+                //                     return false;
+                //                 }
+                //                 // this.newEventStart = info.startStr
+                //                 // this.newEventEnd = info.endStr
+                //                 // alert('selected ' + info.startStr + ' to ' + info.endStr);
+                //             },
+                //             // dateClick: function(info) {
+                //             //     alert('clicked ' + info.dateStr);
+                //             // },
+                //             // eventClick: (info) => {
+                //             //     if (confirm('Are you sure you want to remove this event?')) {
+                //             //         const index = this.getEventIndex(info)
+                //             //         this.events.splice(index, 1)
+                //             //         this.calendar.refetchEvents()
+                //             //     }
+                //             // },
+                //             // eventChange: (info) => {
+                //             //     const index = this.getEventIndex(info)
+                //             //     this.events[index].start = info.event.startStr
+                //             //     this.events[index].end = info.event.endStr
+                //             // },
+                //             dayCellDidMount: function(info) {
+
+                //                 var el = info.el;
+                //                 var frame = el.querySelector('.fc-daygrid-day-frame');
+                //                 var number = el.querySelector('.fc-daygrid-day-number');
+                //                 var content = el.querySelector('.fc-daygrid-day-events');
+
+                //                 if (info.isPast) {
+                //                     frame.classList.add('opacity-25');
+                //                 }
+
+                //                 frame.classList.add('flex', 'flex-col', '!min-h-full')
+                //                 number.classList.add('text-center', 'w-full', 'font-semibold')
+                //                 content.classList.add('text-center')
+
+                //                 if (!info.isDisabled) {
+                //                     content.textContent = "${{ substr($property->default_rate, 0, -2) }}"
+                //                     // content.textContent = "{{ Cknow\Money\Money::USD($property->default_rate, false) }}"
+
+                //                     // number.classList.add('!absolute', '!top-0', '!right-0')
+
+                //                     // frame.classList.add('relative')
+                //                     // number.classList.add('text-gray-300')
+                //                     // content.classList.add('absolute', 'bottom-0')
+                //                     // content.textContent = "test"
+                //                 } else {
+                //                     frame.classList.add('text-gray-300')
+                //                 }
+
+                //                 // console.log(info);
+                //                 // const target = el.getElementByClassname('fc-daygrid-day-events')
+                //                 // const div = el.querySelector('.fc-daygrid-day-bottom');
+                //                 // // const div = document.createElement('div');
+                //                 // div.classList.add('w-full', 'text-center');
+                //                 // div.textContent = '$348.00';
+                //                 // // target.appendChild(div);
+
+                //                 // date - Date object
+                //                 // dayNumberText
+                //                 // isPast
+                //                 // isFuture
+                //                 // isToday
+                //                 // isOther
+                //                 // resource - if the date cell lives under a specific resource in vertical resource view, this value will be the Resource Object
+                //                 // el - the <td> element. only available in dayCellDidMount and dayCellWillUnmount
+                //             },
+
+
+
+                //         })
+
+                //         this.openCalendar()
+                //     },
+                //     async openCalendar() {
+                //         this.open = true
+                //         await this.$nextTick()
+                //         this.calendar.render()
+                //     },
+                //     closeCalendar() {
+                //         this.open = false;
+                //         this.calendar.destroy()
+                //     },
+                //     getEventIndex(info) {
+                //         return this.events.findIndex((event) => event.id == info.event.id)
+                //     },
+                //     addEvent() {
+                //         if (!this.newEventTitle || !this.newEventStart) {
+                //             return alert('Please choose a title and start date for the event!')
+                //         }
+
+                //         let event = {
+                //             id: Date.now(),
+                //             title: this.newEventTitle,
+                //             start: this.newEventStart,
+                //             end: this.newEventEnd,
+                //         }
+
+                //         this.events.push(event)
+                //         this.calendar.refetchEvents()
+
+                //         this.newEventTitle = null
+                //         this.newEventStart = null
+                //         this.newEventEnd = null
+
+                //         this.calendar.unselect()
+                //     },
+
+
+                // }))
             })
         </script>
     @endpush

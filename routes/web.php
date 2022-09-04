@@ -36,7 +36,7 @@ Route::name('frontend.')->prefix('/')->group(function () {
 /**
  * Guest Routes
  */
-Route::name('guest.')->prefix('/guest')->group(function () {
+Route::name('guest.')->prefix('/guest')->middleware('auth')->group(function () {
     Route::view('/dashboard', 'pages.guest.dashboard')->name('dashboard');
     Route::get('/profile', [App\Http\Controllers\Pages\Guest\UserProfileController::class, 'view'])->name('profile');
     Route::post('/profile/submit-profile', [App\Http\Controllers\Pages\Guest\UserProfileController::class, 'submitProfile'])->name('profile.submit-profile');
