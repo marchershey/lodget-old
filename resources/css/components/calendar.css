@@ -3,3 +3,15 @@
     padding-top: 5px; /* an override! */
     padding-bottom: 5px; /* an override! */
 }
+
+.fc .fc-day-other .fc-daygrid-day-top {
+    opacity: 100 !important;
+}
+
+.fc .fc-highlight {
+    background-color: rgb(219, 234, 254, 0.3) !important;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: transparent !important;
+}

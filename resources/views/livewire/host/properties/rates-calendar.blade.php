@@ -1,7 +1,17 @@
-<div x-data="ratesCalendar">
+<div x-data="ratesCalendar" class="w-full" @update="updateCalendar">
 
     <div x-show="!loading">
-        <button x-on:click="openCalendar" class="button button-light">Open rates calendar</button>
+        <button x-on:click="openCalendar" class="w-full space-x-2 button button-light">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+                <line x1="16" y1="3" x2="16" y2="7"></line>
+                <line x1="8" y1="3" x2="8" y2="7"></line>
+                <line x1="4" y1="11" x2="20" y2="11"></line>
+                <rect x="8" y="15" width="2" height="2"></rect>
+            </svg>
+            <span>Rates Calendar</span>
+        </button>
     </div>
 
     <div x-show="loading" class="flex justify-center">
@@ -15,298 +25,157 @@
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                 <div x-on:click.away="closeCalendar" class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
+                    {{-- Calendar --}}
                     <div class="min-h-full" x-ref="calendar" wire:ignore></div>
-                    <div class="" x-ref="updatebox">
-                        test
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div x-show="slideover" class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0"></div>
-
-        <div class="fixed inset-0 overflow-hidden">
-            <div class="absolute inset-0 overflow-hidden">
-                <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
-                    <div class="w-screen max-w-md pointer-events-auto">
-                        <div class="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl">
-                            <div class="flex flex-col flex-1 min-h-0 py-6 overflow-y-scroll">
-                                <div class="px-4 sm:px-6">
-                                    <div class="flex items-start justify-between">
-                                        <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Panel title</h2>
-                                        <div class="flex items-center ml-3 h-7">
-                                            <button type="button" class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                                <span class="sr-only">Close panel</span>
-                                                <!-- Heroicon name: outline/x-mark -->
-                                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                    <div id="newRateForm" class="flex items-center justify-between pt-5 space-x-10" :class="newRateActive ? 'opacity-100' : 'opacity-30'">
+                        <span class="flex flex-col flex-grow">
+                            <span class="text-sm font-medium text-gray-900">New Rate</span>
+                            <span class="text-xs text-gray-500">Enter the new rate for the selected days. Leave blank to reset to default</span>
+                        </span>
+                        <div class="flex items-center space-x-2">
+                            <div>
+                                <div class="relative mt-1">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <span class="text-gray-500 sm:text-sm"> $ </span>
+                                    </div>
+                                    <input wire:model="new_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00" x-bind:disabled="!newRateActive">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <span class="text-gray-500 sm:text-sm"> USD </span>
                                     </div>
                                 </div>
-                                <div class="relative flex-1 px-4 mt-6 sm:px-6">
-                                    <!-- Replace with your content -->
-                                    <div class="h-full border-2 border-gray-200 border-dashed" aria-hidden="true"></div>
-                                    <!-- /End replace -->
-                                </div>
                             </div>
-                            <div class="flex justify-end flex-shrink-0 px-4 py-4">
-                                <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
-                                <button type="submit" class="inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                            <div class="flex items-center justify-center flex-none w-[68px] mt-1">
+                                <div wire:loading.remove wire:target="updateRate">
+                                    <button wire:click="updateRate" class="button">Save</button>
+                                </div>
+                                <div wire:loading wire:target="updateRate">
+                                    <x-spinner size="8" />
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    {{-- <div class="flex justify-end mt-5 mb-0">
+                        <span class="text-sm link">View all modified rates </span>
+                    </div> --}}
                 </div>
             </div>
         </div>
     </div>
 
-
-    @push('scripts')
-        <script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('ratesCalendar', () => ({
-                    open: false,
-                    slideover: false,
-                    loading: true,
-                    calendar: null,
-                    defaultRate: {{ substr($property->default_rate, 0, -2) }},
-                    startDate: @entangle('startDate'),
-                    endDate: @entangle('endDate'),
-                    async init() {
-                        await @this.test();
-
-                        this.calendar = new Calendar(this.$refs.calendar, {
-                            // events: (info, success) => success(this.events),
-                            plugins: [dayGridPlugin, interaction],
-                            initialDate: new Date,
-                            initialView: 'dayGridMonth',
-                            selectable: true,
-                            fixedWeekCount: false,
-                            unselectAuto: false,
-                            height: "auto",
-
-                            // initial click...
-                            selectAllow: (info) => {
-                                // check if first selected date is greater or equal to today
-                                var today = new Date().setHours(0, 0, 0, 0)
-                                var selectedDate = new Date(info.start).setHours(0, 0, 0, 0)
-
-                                if (selectedDate >= today) {
-                                    return true;
-                                }
-
-                                return false;
-                            },
-
-                            // after selection has been made...
-                            select: (info) => {
-                                this.slideover = true;
-                                var start = info.start
-                                var end = info.end
-                                end.setDate(end.getDate() - 1) // minus one day because full calendar is stewpid.
-
-                                // format dates
-                                start = start.toLocaleDateString('en-US')
-                                end = end.toLocaleDateString('en-US')
-
-                                // set dates on backend
-                                this.startDate = start
-                                this.endDate = end
-
-                                // prompt user for amount
-                                var amount = prompt("Change the nightly rate for " + (start == end ? start : start + ' through ' + end), this.defaultRate)
-
-                                // cancel if amount is null
-                                if (amount === null) return
-
-                                alert(amount);
-                            },
-                            dayCellDidMount: function(info) {
-
-                                var el = info.el;
-                                var frame = el.querySelector('.fc-daygrid-day-frame');
-                                var number = el.querySelector('.fc-daygrid-day-number');
-                                var content = el.querySelector('.fc-daygrid-day-events');
-
-                                if (info.isPast) {
-                                    frame.classList.add('opacity-25', 'cursor-not-allowed');
-                                }
-
-                                frame.classList.add('flex', 'flex-col', '!min-h-full')
-                                number.classList.add('text-center', 'w-full', 'font-semibold')
-                                content.classList.add('text-center')
-
-                                if (!info.isDisabled) {
-                                    content.textContent = '{{ "$" . substr($property->default_rate, 0, -2) }}'
-                                } else {
-                                    frame.classList.add('text-gray-300')
-                                }
-                            },
-                        })
-
-                        this.loading = false
-                    },
-                    async openCalendar() {
-                        this.open = true
-                        await this.$nextTick()
-                        this.calendar.render()
-                    },
-                    closeCalendar() {
-                        this.open = false;
-                        this.calendar.destroy()
-                    },
-
-
-                }))
-                // Alpine.data('ratesCalendar', () => ({
-                //     open: false,
-                //     calendar: null,
-                //     // events: [{
-                //     //         id: 1,
-                //     //         title: 'Build my secret project 🛠',
-                //     //         start: '2022-09-05',
-                //     //         end: '2022-09-08',
-                //     //     },
-                //     //     {
-                //     //         id: 2,
-                //     //         title: 'Launch 🚀',
-                //     //         start: '2022-09-23',
-                //     //     },
-                //     // ],
-                //     newEventTitle: null,
-                //     newEventStart: null,
-                //     newEventEnd: null,
-                //     init() {
-                //         this.calendar = new Calendar(this.$refs.calendar, {
-                //             // events: (info, success) => success(this.events),
-                //             plugins: [dayGridPlugin, interaction],
-                //             initialDate: new Date,
-                //             initialView: 'dayGridMonth',
-                //             selectable: true,
-                //             // showNonCurrentDates: false,
-                //             fixedWeekCount: false,
-                //             // unselectAuto: false,
-                //             // editable: true,
-                //             height: "auto",
-
-                //             select: (info) => {
-                //                 console.log(info);
-                //                 if (info.isPast) {
-                //                     return false;
-                //                 }
-                //                 // this.newEventStart = info.startStr
-                //                 // this.newEventEnd = info.endStr
-                //                 // alert('selected ' + info.startStr + ' to ' + info.endStr);
-                //             },
-                //             // dateClick: function(info) {
-                //             //     alert('clicked ' + info.dateStr);
-                //             // },
-                //             // eventClick: (info) => {
-                //             //     if (confirm('Are you sure you want to remove this event?')) {
-                //             //         const index = this.getEventIndex(info)
-                //             //         this.events.splice(index, 1)
-                //             //         this.calendar.refetchEvents()
-                //             //     }
-                //             // },
-                //             // eventChange: (info) => {
-                //             //     const index = this.getEventIndex(info)
-                //             //     this.events[index].start = info.event.startStr
-                //             //     this.events[index].end = info.event.endStr
-                //             // },
-                //             dayCellDidMount: function(info) {
-
-                //                 var el = info.el;
-                //                 var frame = el.querySelector('.fc-daygrid-day-frame');
-                //                 var number = el.querySelector('.fc-daygrid-day-number');
-                //                 var content = el.querySelector('.fc-daygrid-day-events');
-
-                //                 if (info.isPast) {
-                //                     frame.classList.add('opacity-25');
-                //                 }
-
-                //                 frame.classList.add('flex', 'flex-col', '!min-h-full')
-                //                 number.classList.add('text-center', 'w-full', 'font-semibold')
-                //                 content.classList.add('text-center')
-
-                //                 if (!info.isDisabled) {
-                //                     content.textContent = "${{ substr($property->default_rate, 0, -2) }}"
-                //                     // content.textContent = "{{ Cknow\Money\Money::USD($property->default_rate, false) }}"
-
-                //                     // number.classList.add('!absolute', '!top-0', '!right-0')
-
-                //                     // frame.classList.add('relative')
-                //                     // number.classList.add('text-gray-300')
-                //                     // content.classList.add('absolute', 'bottom-0')
-                //                     // content.textContent = "test"
-                //                 } else {
-                //                     frame.classList.add('text-gray-300')
-                //                 }
-
-                //                 // console.log(info);
-                //                 // const target = el.getElementByClassname('fc-daygrid-day-events')
-                //                 // const div = el.querySelector('.fc-daygrid-day-bottom');
-                //                 // // const div = document.createElement('div');
-                //                 // div.classList.add('w-full', 'text-center');
-                //                 // div.textContent = '$348.00';
-                //                 // // target.appendChild(div);
-
-                //                 // date - Date object
-                //                 // dayNumberText
-                //                 // isPast
-                //                 // isFuture
-                //                 // isToday
-                //                 // isOther
-                //                 // resource - if the date cell lives under a specific resource in vertical resource view, this value will be the Resource Object
-                //                 // el - the <td> element. only available in dayCellDidMount and dayCellWillUnmount
-                //             },
-
-
-
-                //         })
-
-                //         this.openCalendar()
-                //     },
-                //     async openCalendar() {
-                //         this.open = true
-                //         await this.$nextTick()
-                //         this.calendar.render()
-                //     },
-                //     closeCalendar() {
-                //         this.open = false;
-                //         this.calendar.destroy()
-                //     },
-                //     getEventIndex(info) {
-                //         return this.events.findIndex((event) => event.id == info.event.id)
-                //     },
-                //     addEvent() {
-                //         if (!this.newEventTitle || !this.newEventStart) {
-                //             return alert('Please choose a title and start date for the event!')
-                //         }
-
-                //         let event = {
-                //             id: Date.now(),
-                //             title: this.newEventTitle,
-                //             start: this.newEventStart,
-                //             end: this.newEventEnd,
-                //         }
-
-                //         this.events.push(event)
-                //         this.calendar.refetchEvents()
-
-                //         this.newEventTitle = null
-                //         this.newEventStart = null
-                //         this.newEventEnd = null
-
-                //         this.calendar.unselect()
-                //     },
-
-
-                // }))
-            })
-        </script>
-    @endpush
 </div>
+
+@push('scripts')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('ratesCalendar', () => ({
+                open: false,
+                loading: true,
+                newRateActive: false,
+                calendar: null,
+                defaultRate: {{ substr($property->default_rate, 0, -2) }},
+                startDate: @entangle('start_date'),
+                endDate: @entangle('end_date'),
+                // events: @entangle('events'),
+                async init() {
+                    this.setupCalendar()
+
+                    this.loading = false
+
+                    this.openCalendar()
+                },
+                async setupCalendar() {
+                    this.calendar = new Calendar(this.$refs.calendar, {
+                        // events: (info, success) => success(this.events),
+                        plugins: [dayGridPlugin, interaction],
+                        initialDate: new Date,
+                        initialView: 'dayGridMonth',
+                        selectable: true,
+                        fixedWeekCount: false,
+                        unselectAuto: false,
+                        height: "auto",
+                        unselectAuto: true,
+                        unselectCancel: '#newRateForm',
+                        // initial click...
+                        selectAllow: (info) => {
+                            // check if first selected date is greater or equal to today
+                            var today = new Date().setHours(0, 0, 0, 0)
+                            var selectedDate = new Date(info.start).setHours(0, 0, 0, 0)
+
+                            if (selectedDate >= today) {
+                                return true;
+                            }
+
+                            return false;
+                        },
+                        // after selection has been made...
+                        select: (info) => {
+                            console.log(info);
+                            var start = info.start
+                            var end = info.end
+                            end.setDate(end.getDate() - 1) // minus one day because full calendar is stewpid.
+
+                            // format dates
+                            start = start.toLocaleDateString('en-US')
+                            end = end.toLocaleDateString('en-US')
+
+                            // set dates on backend
+                            this.startDate = start
+                            this.endDate = end
+
+                            this.newRateActive = true;
+                        },
+                        // user clicks away from calendar
+                        unselect: (info) => {
+                            this.newRateActive = false
+                            @this.new_rate = null
+                        },
+                        dayCellDidMount: async function(info) {
+                            var el = info.el;
+                            var frame = el.querySelector('.fc-daygrid-day-frame');
+                            var number = el.querySelector('.fc-daygrid-day-number');
+                            var content = el.querySelector('.fc-daygrid-day-events');
+
+                            // global styling
+                            frame.classList.add('flex', 'flex-col', '!min-h-full', 'cursor-pointer')
+                            number.classList.add('text-center', '!text-gray-900', 'w-full', 'font-medium', 'text-lg', '!text-muted')
+                            content.classList.add('text-center', 'font-semibold', 'text-gray-400', 'text-xs')
+
+                            // disabled days
+                            if (info.isDisabled || info.isPast) {
+                                frame.classList.add('opacity-25')
+                            }
+
+                            // today
+                            if (info.isToday) {
+                                frame.classList.add('bg-yellow-50')
+                            }
+
+                            if (await @this.hasRateChange(info.date)) {
+                                content.classList.add('!text-primary')
+                            }
+
+                            if (!info.isPast) {
+                                content.textContent = '$' + await @this.getRate(info.date)
+                            }
+                        },
+                    })
+                },
+                async openCalendar() {
+                    this.open = true
+                    await this.$nextTick()
+                    this.calendar.render()
+                },
+                closeCalendar() {
+                    this.open = false;
+                    this.calendar.destroy()
+                },
+                updateCalendar() {
+                    this.calendar.destroy()
+                    this.calendar.render()
+                    console.log('it worked!');
+                }
+            }))
+        })
+    </script>
+@endpush

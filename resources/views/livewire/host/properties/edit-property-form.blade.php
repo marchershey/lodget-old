@@ -370,7 +370,7 @@
                     </div>
                 </div>
                 <div class="flex col-span-2 mt-8 space-x-2">
-                    <a href="" class="items-center space-x-2 button button-light">
+                    {{-- <a href="" class="items-center space-x-2 button button-light">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <rect x="4" y="5" width="16" height="16" rx="2"></rect>
@@ -380,8 +380,8 @@
                             <rect x="8" y="15" width="2" height="2"></rect>
                         </svg>
                         <span>Rates Calendar</span>
-                    </a>
-                    {{-- <livewire:host.properties.rates-calendar :property="$property" /> --}}
+                    </a> --}}
+                    <livewire:host.properties.rates-calendar :property="$property" />
                 </div>
                 <div class="col-span-full">
                     <button class="button button-light" wire:click="addFee">Add additional fees</button>
