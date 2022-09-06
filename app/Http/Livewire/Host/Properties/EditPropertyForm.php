@@ -282,6 +282,7 @@ class EditPropertyForm extends Component
         $property->description = $this->description;
 
 
+
         //-----------------------------------
 
         if ($property->save()) {
