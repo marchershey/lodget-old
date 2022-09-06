@@ -26,6 +26,12 @@
 
     @stack('modals')
     @stack('scripts')
+
+    <script>
+        window.addEventListener('log', event => {
+            console.log(event.detail.message);
+        })
+    </script>
 </body>
 
 </html>

@@ -77,11 +77,13 @@
 @push('scripts')
     <script>
         window.addEventListener('calendar-init', event => {
-            console.log(event.detail.disabled);
+            // console.log(event.detail.checkins);
+            // console.log(event.detail.checkouts);
+            // console.log(event.detail.disabled);
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
-                selectForward: true,
-                minNights: 3,
+                selectForward: false,
+                minNights: 2,
                 showTopbar: false,
                 startDate: new Date(),
                 noCheckInDates: event.detail.checkins,
