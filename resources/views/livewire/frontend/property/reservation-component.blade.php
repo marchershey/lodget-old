@@ -83,7 +83,7 @@
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
                 selectForward: false,
-                minNights: 2,
+                minNights: {{ $property->min_nights }},
                 showTopbar: false,
                 startDate: new Date(),
                 noCheckInDates: event.detail.checkins,
