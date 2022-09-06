@@ -53,6 +53,7 @@ class EditPropertyForm extends Component
     // options
     public $active;
     public $slug;
+    public $min_nights;
 
 
     protected $rules = [
@@ -68,6 +69,7 @@ class EditPropertyForm extends Component
         'bathrooms' => 'required|min:0',
         'headline' => 'required|string|max:100',
         'description' => 'required|string|max:65500',
+        'min_nights' => 'required|min:0',
     ];
 
     public function render()
@@ -119,6 +121,7 @@ class EditPropertyForm extends Component
         // Options
         $this->active = (bool) $this->property->active;
         $this->slug = $this->property->slug;
+        $this->min_nights = $this->property->min_nights;
     }
 
     /**
@@ -272,6 +275,7 @@ class EditPropertyForm extends Component
         // options
         $property->active = $this->active;
         $property->slug = $this->slug;
+        $property->min_nights = $this->min_nights;
 
         // listing details
         $property->headline = $this->headline;

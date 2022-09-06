@@ -485,6 +485,40 @@
                 </span>
                 <input wire:model="slug" type="text" class="input">
             </div>
+            <hr>
+            <div x-data="{
+                value: $wire.entangle('min_nights'),
+                step: 1,
+                min: 0,
+                max: 99,
+                add() { this.value = (this.addDisabled) ? (this.value + this.step) : this.value },
+                subtract() { this.value = (this.subtractDisabled) ? (this.value - this.step) : this.value },
+                addDisabled() { return this.value >= this.max },
+                subtractDisabled() { return this.value <= this.min }
+            }">
+                <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                    <span class="flex flex-col flex-grow w-full">
+                        <span class="text-sm font-medium text-gray-900" id="availability-label">Minimum Nights</span>
+                        <span class="text-sm text-gray-500" id="availability-description">Require guests to stay a certain number of nights</span>
+                    </span>
+                    <div class="focus-within:ring-primary group focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('beds') border-red-500 @enderror">
+                        <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                        <input x-model.value="value" type="text" id="beds" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
+                        <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
