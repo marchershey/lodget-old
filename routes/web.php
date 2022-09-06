@@ -58,6 +58,9 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
     Route::get('/properties', [App\Http\Controllers\Pages\Host\Properties::class, 'view'])->name('properties');
     Route::get('/properties/{property:slug}', [App\Http\Controllers\Pages\Host\Properties::class, 'edit'])->name('properties.edit');
     // Reservations
+    Route::view('/reservations', 'pages.host.reservations')->name('reservations');
+    Route::get('/reservations/{reservation:slug}', [App\Http\Controllers\Pages\Host\ReservationsController::class, 'view'])->name('reservation');
+    // Route::get('/reservations/{reservation:slug}', [App\Http\Controllers\Pages\Host\ReservationsController::class, 'view'])->name('reservation');
     // Guests
     // Settings
 

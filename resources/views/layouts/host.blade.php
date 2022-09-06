@@ -97,7 +97,7 @@
                 <div class="max-w-3xl px-2 pt-2 pb-3 mx-auto space-y-1 sm:px-4">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
                     <a href="{{ route('host.dashboard') }}" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Dashboard</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Reservations</a>
+                    <a href="{{ route('host.reservations') }}" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Reservations</a>
                     <a href="{{ route('host.properties') }}" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Properties</a>
                     <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Settings</a>
                 </div>
@@ -145,7 +145,7 @@
                                 <span class="font-bold truncate"> Dashboard </span>
                             </a>
 
-                            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
+                            <a href="{{ route('host.reservations') }}" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>

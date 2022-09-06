@@ -78,7 +78,7 @@ class RatesCalendar extends Component
             }
 
             // save the new rate only if new_rate is set
-            if ($this->new_rate) {
+            if ($this->new_rate && money($this->new_rate, 'USD', true)->getAmount() != $this->property->default_rate) {
                 $propertyRate = new PropertyRate();
                 $propertyRate->property_id = $this->property->id;
                 $propertyRate->date = $date;
