@@ -166,9 +166,9 @@
     background-color: rgba(232, 235, 244, 0.5);
 }
 
-.datepicker__month-day--selected {
-    background-color: rgba(116, 107, 253, 0.2);
-    color: #fff;
+/* .datepicker__month-day--selected {
+    background-color: rgba(116, 107, 253, 0.2) !important;
+    color: #fff !important;
 }
 
 .datepicker__month-day--selected:after {
@@ -187,13 +187,13 @@
 
 .datepicker__month-day--first-day-selected,
 .datepicker__month-day--last-day-selected {
-    background-color: #746bfd;
-    color: #fff;
+    background-color: #746bfd !important;
+    color: #fff !important;
 }
 
 .datepicker__month-day--last-day-selected:after {
     content: none;
-}
+} */
 
 .datepicker__month-button {
     transition-duration: 0.2s;
@@ -407,7 +407,7 @@
     color: #94a3b8;
 }
 .datepicker__month-day--no-checkin.datepicker__month-day--tmp:not(.datepicker__month-day--invalid) {
-    color: #3b82f6 !important;
+    color: #3b82f6;
 }
 .datepicker__month-day--no-checkout:not(.datepicker__month-day--selected) {
     background-image: -webkit-linear-gradient(-48deg, #f1f5f9 50%, #fff 50%);
@@ -441,14 +441,17 @@
 }
 .datepicker__month-day--first-day-selected,
 .datepicker__month-day--last-day-selected {
+    background-image: none;
     background-color: #3b82f6 !important;
     color: #fff !important;
 }
 .datepicker__month-day--hovering {
+    background-image: none;
     background-color: #dbeafe !important;
     color: #1d4ed8 !important;
 }
 .datepicker__month-day--hovering:hover {
+    background-image: none;
     background-color: #3b82f6 !important;
     color: #fff !important;
 }

@@ -9,6 +9,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ReservationComponent extends Component
@@ -45,10 +46,13 @@ class ReservationComponent extends Component
 
     public function load()
     {
-        $this->showModal = true;
-
         // get reserved dates
-        $reservations = Reservation::where('property_id', $this->property->id)->where('status', 'approved')->get(['checkin', 'checkout'])->toArray();
+        $reservations = Reservation::where('property_id', $this->property->id)
+            ->where('status', 'pending')
+            ->orWhere('status', 'approved')
+            ->orWhere('status', 'active')
+            ->orWhere('status', 'completed')
+            ->get(['checkin', 'checkout'])->toArray();
 
         $checkins = [];
         $checkouts = [];
@@ -66,7 +70,30 @@ class ReservationComponent extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('calendar-init', ['checkins' => $checkins, 'checkouts' => $checkouts, 'disabled' => $disabled]);
+        $this->dispatchBrowserEvent('log', ['message' => ['checkins' => $checkins]]);
+        $this->dispatchBrowserEvent('log', ['message' => ['checkouts' => $checkouts]]);
+
+        // sometimes two reservations will go back to back, which our calendar doesn't like. 
+        // We need to get the dates in checkin/checkout that are the same, and add it to the disabled range.
+        $matches = Arr::flatten(array_intersect($checkins, $checkouts));
+        $this->dispatchBrowserEvent('log', ['message' => ['matches' => $matches]]);
+
+        foreach ($matches as $match) {
+            toast()->debug($match)->push();
+            if (($key = array_search($match, $checkins)) !== false) {
+                unset($checkins[$key]);
+            }
+            if (($key = array_search($match, $checkouts)) !== false) {
+                unset($checkouts[$key]);
+            }
+        }
+
+        $this->dispatchBrowserEvent('log', ['message' => ['new checkins' => $checkins]]);
+        $this->dispatchBrowserEvent('log', ['message' => ['new checkouts' => $checkouts]]);
+
+        // $this->dispatchBrowserEvent('log', ['message' => $matches]);
+
+        $this->dispatchBrowserEvent('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
 
         $this->showButton = true;
     }
