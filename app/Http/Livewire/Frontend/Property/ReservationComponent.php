@@ -45,10 +45,13 @@ class ReservationComponent extends Component
 
     public function load()
     {
-        $this->showModal = true;
-
         // get reserved dates
-        $reservations = Reservation::where('property_id', $this->property->id)->where('status', 'approved')->get(['checkin', 'checkout'])->toArray();
+        $reservations = Reservation::where('property_id', $this->property->id)
+            ->where('status', 'pending')
+            ->orWhere('status', 'approved')
+            ->orWhere('status', 'active')
+            ->orWhere('status', 'completed')
+            ->get(['checkin', 'checkout'])->toArray();
 
         $checkins = [];
         $checkouts = [];
@@ -60,6 +63,8 @@ class ReservationComponent extends Component
 
             // $range = CarbonPeriod::create(Carbon::parse($reservation['checkin'])->addDay(), Carbon::parse($reservation['checkout'])->subDay());
             $range = CarbonPeriod::create($reservation['checkin'], Carbon::parse($reservation['checkout'])->subDay());
+
+            toast()->debug($range)->push();
 
             foreach ($range as $date) {
                 $disabled[] = $date->format('Y-m-d');
