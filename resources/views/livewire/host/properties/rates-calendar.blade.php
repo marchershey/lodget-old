@@ -80,7 +80,7 @@
                 async init() {
                     this.setupCalendar()
                     this.loading = false
-                    // this.openCalendar()
+                    this.openCalendar()
                 },
                 async setupCalendar() {
                     this.calendar = new Calendar(this.$refs.calendar, {
@@ -89,13 +89,14 @@
                         initialDate: new Date,
                         initialView: 'dayGridMonth',
                         selectable: true,
-                        fixedWeekCount: false,
+                        fixedWeekCount: true,
                         unselectAuto: false,
                         height: "auto",
                         unselectAuto: true,
                         unselectCancel: '#newRateForm',
                         // initial click...
                         selectAllow: (info) => {
+                            console.log(info);
                             // check if first selected date is greater or equal to today
                             var today = new Date().setHours(0, 0, 0, 0)
                             var selectedDate = new Date(info.start).setHours(0, 0, 0, 0)
@@ -108,7 +109,6 @@
                         },
                         // after selection has been made...
                         select: (info) => {
-                            console.log(info);
                             var start = info.start
                             var end = info.end
                             end.setDate(end.getDate() - 1) // minus one day because full calendar is stewpid.
@@ -130,29 +130,19 @@
                         },
                         dayCellDidMount: async function(info) {
                             var el = info.el;
-                            var frame = el.querySelector('.fc-daygrid-day-frame');
-                            var number = el.querySelector('.fc-daygrid-day-number');
+                            // var frame = el.querySelector('.fc-daygrid-day-frame');
+                            // var number = el.querySelector('.fc-daygrid-day-number');
                             var content = el.querySelector('.fc-daygrid-day-events');
 
-                            // global styling
-                            frame.classList.add('flex', 'flex-col', '!min-h-full', 'cursor-pointer')
-                            number.classList.add('text-center', '!text-gray-900', 'w-full', 'font-medium', 'text-lg', '!text-muted')
-                            content.classList.add('text-center', 'font-semibold', 'text-gray-400', 'text-xs')
+                            // default styles
+                            content.classList.add('text-lg', 'font-medium')
 
-                            // disabled days
-                            if (info.isDisabled || info.isPast) {
-                                frame.classList.add('opacity-25')
-                            }
-
-                            // today
-                            if (info.isToday) {
-                                frame.classList.add('bg-yellow-50')
-                            }
-
+                            // if day has price change, set styling
                             if (await @this.hasRateChange(info.date)) {
                                 content.classList.add('!text-primary')
                             }
 
+                            // load day's rate
                             if (!info.isPast) {
                                 content.textContent = '$' + await @this.getRate(info.date)
                             }

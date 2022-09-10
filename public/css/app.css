@@ -456,22 +456,25 @@
     color: #fff !important;
 }
 
-.fc .fc-col-header-cell-cushion {
-    /* needs to be same precedence */
-    padding-top: 5px; /* an override! */
-    padding-bottom: 5px; /* an override! */
-}
-
+/* RESET */
 .fc .fc-day-other .fc-daygrid-day-top {
-    opacity: 100 !important;
+    /* opacity: 0.3; */
+    opacity: 1 !important;
 }
 
-.fc .fc-highlight {
-    background-color: rgb(219, 234, 254, 0.3) !important;
+.fc .fc-daygrid-day-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.fc .fc-daygrid-day.fc-day-today {
-    background-color: transparent !important;
+.fc .fc-daygrid-day-number {
+    color: #9ca3af;
+}
+
+.fc .fc-day-other,
+.fc .fc-day-past {
+    opacity: 0.3;
 }
 
 /*
@@ -1231,6 +1234,39 @@ select {
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
+}
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+
+  .container {
+    max-width: 1536px;
+  }
 }
 .aspect-w-10 {
   position: relative;
