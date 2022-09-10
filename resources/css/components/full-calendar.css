@@ -1,20 +1,27 @@
-/* RESET */
+/* FULL CALENDAR */
+
+/* Reset */
 .fc .fc-day-other .fc-daygrid-day-top {
     /* opacity: 0.3; */
     opacity: 1 !important;
 }
-
 .fc .fc-daygrid-day-frame {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .fc .fc-daygrid-day-number {
     color: #9ca3af;
 }
-
 .fc .fc-day-other,
 .fc .fc-day-past {
     opacity: 0.3;
+}
+
+/* 
+    EASEPICK
+*/
+
+.calendar {
+    width: 330px;
 }

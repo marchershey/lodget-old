@@ -24,6 +24,10 @@
         "tailwindcss": "^3.1.4"
     },
     "dependencies": {
+        "@easepick/core": "^1.2.0",
+        "@easepick/datetime": "^1.2.0",
+        "@easepick/lock-plugin": "^1.2.0",
+        "@easepick/range-plugin": "^1.2.0",
         "@fullcalendar/core": "^5.11.3",
         "@fullcalendar/daygrid": "^5.11.3",
         "@fullcalendar/interaction": "^5.11.3",

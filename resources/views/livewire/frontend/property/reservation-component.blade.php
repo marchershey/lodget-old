@@ -1,4 +1,4 @@
-<div class="mt-10" x-data="{ open: false }" wire:init="load">
+<div class="mt-10" x-data="{ open: true }" wire:init="load">
 
     @if ($showButton)
         <button wire:loading.remove wire:target="load" x-on:click="open = true" type="button" class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-primary">Select Dates</button>
@@ -19,16 +19,17 @@
         <div class="fixed inset-0 z-50 overflow-y-auto">
             <div class="relative flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                 <div x-on:click.away="open = false" class="relative w-full px-4 pt-5 pb-4 text-left bg-gray-100 rounded-lg sm:my-8 sm:max-w-sm sm:w-full sm:p-6">
-                    <div class="absolute -top-2 -right-2">
+                    <div class="absolute z-50 -top-2 -right-2">
                         <button x-on:click="open = false" class="p-1 bg-gray-100 rounded-full">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
-                    <div class="border @error('checkin') border-red-500 @enderror @error('checkout') border-red-500 @enderror rounded-md">
+                    <div class="z-0 -m-5 @error('checkin') border-red-500 @enderror @error('checkout') border-red-500 @enderror">
                         <div wire:ignore>
-                            <input type="hidden" id="datepicker">
+                            <input type="hidden" id="checkin">
+                            <input type="hidden" id="checkout">
                         </div>
                     </div>
                     <div x-data="{
@@ -76,27 +77,114 @@
 
 @push('scripts')
     <script>
-        window.addEventListener('calendar-init', event => {
+        window.addEventListener('calendar-init', async event => {
             // console.log(event.detail.checkins);
             // console.log(event.detail.checkouts);
             // console.log(event.detail.disabled);
-            window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
-                inline: true,
-                selectForward: false,
-                minNights: {{ $property->min_nights }},
-                showTopbar: false,
-                startDate: new Date(),
-                noCheckInDates: event.detail.checkins,
-                noCheckOutDates: event.detail.checkouts,
-                disabledDates: event.detail.disabled,
-                enableCheckout: true,
-                hoveringTooltip: function(nights, startTime, hoverTime) {
-                    return false;
-                },
-                onSelectRange: function(a) {
-                    @this.updateDates(this.getValue())
+
+            const defaultRate = await @this.getDefaultRate()
+            const rates = await @this.getRates()
+
+            const bookedDates = [
+                '2022-09-02',
+                ['2022-09-06', '2022-09-11'],
+                '2022-09-18',
+                '2022-09-19',
+                '2022-09-20',
+                '2022-09-25',
+                '2022-09-28',
+            ].map(d => {
+                if (d instanceof Array) {
+                    const start = new DateTime(d[0], 'YYYY-MM-DD');
+                    const end = new DateTime(d[1], 'YYYY-MM-DD');
+
+                    return [start, end];
                 }
+
+                return new DateTime(d, 'YYYY-MM-DD');
             });
+
+            console.log(bookedDates);
+
+
+            const picker = new easepick.create({
+                element: "#checkin",
+                css: [
+                    "/css/easepick.css"
+                ],
+                zIndex: 10,
+                inline: true,
+                firstDay: 0,
+                readony: true,
+
+                RangePlugin: {
+                    tooltipNumber(num) {
+                        return num - 1;
+                    },
+                    locale: {
+                        one: 'night',
+                        other: 'nights',
+                    },
+                },
+                LockPlugin: {
+                    minDate: new Date,
+                    minDays: {{ $property->min_nights + 1 }},
+                    inseparable: true,
+
+                },
+                plugins: [RangePlugin, LockPlugin],
+                setup(picker) { // add price to day element
+                    picker.on('view', async (event) => {
+                        var {
+                            view,
+                            date,
+                            target
+                        } = event.detail
+
+                        var d = date ? date.format('YYYY-MM-DD') : null;
+
+                        if (view === 'CalendarDay') {
+                            const span = target.querySelector('.day-price') || document.createElement('span');
+                            span.className = 'day-price';
+                            span.textContent = '$' + defaultRate
+                            rates.forEach(rate => {
+                                if (d == rate.date) {
+                                    if (rate.amount < defaultRate) {
+                                        span.classList.add('day-price-adjusted')
+                                    }
+                                    span.textContent = '$' + rate.amount;
+                                }
+                            });
+
+                            target.append(span);
+                        }
+                    });
+                    picker.on('select', async (event) => {
+                        @this.updateDates(this.getDate())
+                    })
+                }
+
+            })
+
+
+
+            // window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
+            //     inline: true,
+            //     selectForward: false,
+            //     minNights: {{ $property->min_nights }},
+            //     showTopbar: false,
+            //     startDate: new Date(),
+            //     noCheckInDates: event.detail.checkins,
+            //     noCheckOutDates: event.detail.checkouts,
+            //     disabledDates: event.detail.disabled,
+            //     enableCheckout: true,
+            //     hoveringTooltip: function(nights, startTime, hoverTime) {
+            //         return false;
+            //     },
+            //     onSelectRange: function(a) {
+            //         @this.updateDates(this.getValue())
+            //     }
+            // });
         })
     </script>
 @endpush

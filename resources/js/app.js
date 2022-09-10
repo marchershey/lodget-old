@@ -17,6 +17,16 @@ window.fecha = fecha;
 import HotelDatepicker from "hotel-datepicker";
 window.HotelDatepicker = HotelDatepicker;
 
+// easepick - date range picker
+import { easepick } from "@easepick/core";
+import { RangePlugin } from "@easepick/range-plugin";
+import { LockPlugin } from "@easepick/lock-plugin";
+import { DateTime } from "@easepick/datetime";
+window.easepick = easepick;
+window.RangePlugin = RangePlugin;
+window.LockPlugin = LockPlugin;
+window.DateTime = DateTime;
+
 // Full calendar
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";

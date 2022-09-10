@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Frontend\Property;
 
 use App\Models\Property;
+use App\Models\PropertyRate;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -70,9 +71,6 @@ class ReservationComponent extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('log', ['message' => ['checkins' => $checkins]]);
-        $this->dispatchBrowserEvent('log', ['message' => ['checkouts' => $checkouts]]);
-
         // sometimes two reservations will go back to back, which our calendar doesn't like. 
         // We need to get the dates in checkin/checkout that are the same, and add it to the disabled range.
         $matches = Arr::flatten(array_intersect($checkins, $checkouts));
@@ -88,14 +86,28 @@ class ReservationComponent extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('log', ['message' => ['new checkins' => $checkins]]);
-        $this->dispatchBrowserEvent('log', ['message' => ['new checkouts' => $checkouts]]);
-
-        // $this->dispatchBrowserEvent('log', ['message' => $matches]);
-
         $this->dispatchBrowserEvent('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
 
         $this->showButton = true;
+    }
+
+    public function getDefaultRate()
+    {
+        return number_format(substr($this->property->default_rate, 0, -2));
+    }
+
+    public function getRates()
+    {
+        $rates = [];
+
+        foreach (PropertyRate::where('date', '>', Carbon::now()->format('Y-m-d'))->where('property_id', $this->property->id)->get() as $rate) {
+            $rates[] = [
+                'date' => $rate->date,
+                'amount' => number_format(substr($rate->amount, 0, -2)),
+            ];
+        }
+
+        return $rates;
     }
 
     public function updated($field, $value)

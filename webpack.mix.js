@@ -13,6 +13,7 @@ const tailwindcss = require("tailwindcss");
 
 mix.js("resources/js/app.js", "public/js")
     .postCss("resources/css/app.css", "public/css", [require("tailwindcss")])
+    .postCss("resources/css/components/easepick.css", "public/css")
     .browserSync({
         proxy: process.env.APP_URL,
         open: false,
