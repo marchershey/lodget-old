@@ -64,7 +64,7 @@ class ReservationComponent extends Component
             $checkouts[] = $reservation['checkout'];
 
             // $range = CarbonPeriod::create(Carbon::parse($reservation['checkin'])->addDay(), Carbon::parse($reservation['checkout'])->subDay());
-            $range = CarbonPeriod::create($reservation['checkin'], Carbon::parse($reservation['checkout'])->subDay());
+            $range = CarbonPeriod::create(Carbon::parse($reservation['checkin'])->addDay(), Carbon::parse($reservation['checkout'])->subDay());
 
             foreach ($range as $date) {
                 $disabled[] = $date->format('Y-m-d');
@@ -74,7 +74,6 @@ class ReservationComponent extends Component
         // sometimes two reservations will go back to back, which our calendar doesn't like. 
         // We need to get the dates in checkin/checkout that are the same, and add it to the disabled range.
         $matches = Arr::flatten(array_intersect($checkins, $checkouts));
-        $this->dispatchBrowserEvent('log', ['message' => ['matches' => $matches]]);
 
         foreach ($matches as $match) {
             toast()->debug($match)->push();

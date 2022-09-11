@@ -26,10 +26,9 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="z-0 -m-5 @error('checkin') border-red-500 @enderror @error('checkout') border-red-500 @enderror">
+                    <div class="z-0 @error('checkin') border-red-500 @enderror @error('checkout') border-red-500 @enderror">
                         <div wire:ignore>
                             <input type="hidden" id="datepicker">
-                            {{-- <input type="hidden" id="checkout"> --}}
                         </div>
                     </div>
                     <div x-data="{
@@ -67,7 +66,7 @@
                     </div>
                     <div class="flex flex-col mt-5 space-y-5 sm:mt-6">
                         <button wire:click="checkout()" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Request Reservation</button>
-                        <button class="w-full bg-gray-100 rounded-md text-muted">Clear Dates</button>
+                        <button wire:click="clearDates()" class="w-full bg-gray-100 rounded-md text-muted">Clear Dates</button>
                     </div>
                 </div>
             </div>
@@ -81,6 +80,26 @@
             // console.log(event.detail.checkins);
             // console.log(event.detail.checkouts);
             // console.log(event.detail.disabled);
+
+            console.log(event.detail.disabled);
+
+            window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
+                inline: true,
+                selectForward: false,
+                minNights: {{ $property->min_nights }},
+                showTopbar: false,
+                startDate: new Date(),
+                noCheckInDates: event.detail.checkins,
+                noCheckOutDates: event.detail.checkouts,
+                disabledDates: event.detail.disabled,
+                enableCheckout: true,
+                hoveringTooltip: function(nights, startTime, hoverTime) {
+                    return false;
+                },
+                onSelectRange: function(a) {
+                    @this.updateDates(this.getValue())
+                }
+            });
 
             // const defaultRate = await @this.getDefaultRate()
             // const rates = await @this.getRates()
@@ -99,7 +118,7 @@
 
 
             // const picker = new easepick.create({
-            //     element: "#checkin",
+            //     element: "#datepicker",
             //     css: [
             //         "/css/easepick.css"
             //     ],
@@ -163,26 +182,6 @@
             //     }
 
             // })
-
-
-
-            window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
-                inline: true,
-                selectForward: false,
-                minNights: {{ $property->min_nights }},
-                showTopbar: false,
-                startDate: new Date(),
-                noCheckInDates: event.detail.checkins,
-                noCheckOutDates: event.detail.checkouts,
-                disabledDates: event.detail.disabled,
-                enableCheckout: true,
-                hoveringTooltip: function(nights, startTime, hoverTime) {
-                    return false;
-                },
-                onSelectRange: function(a) {
-                    @this.updateDates(this.getValue())
-                }
-            });
         })
     </script>
 @endpush
