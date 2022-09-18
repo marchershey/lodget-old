@@ -78,7 +78,12 @@
             </div>
 
             <div class="panel-spacing">
-                <livewire:guest.reservation.payment-details :reservation="$reservation" />
+                <div class="panel">
+                    <h1 class="panel-heading">Pricing Details</h1>
+                    <div class="panel-body">
+                        <livewire:reservation.pricing-table :reservation="$reservation" />
+                    </div>
+                </div>
                 <livewire:guest.reservation.cancel-button :reservation="$reservation" />
             </div>
         </div>

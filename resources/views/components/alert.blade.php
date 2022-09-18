@@ -46,4 +46,20 @@
             </div>
         </div>
     </div>
+@else
+    <div class="p-4 bg-gray-100 rounded-md">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <div class="flex flex-col my-1 ml-3 space-y-2 text-gray-800">
+                {{ $slot }}
+            </div>
+        </div>
+    </div>
 @endif

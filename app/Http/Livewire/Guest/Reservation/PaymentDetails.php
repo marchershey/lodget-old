@@ -26,9 +26,9 @@ class PaymentDetails extends Component
     {
         // load data
         $this->payment = $this->reservation->payment;
-        $this->payment_method = auth()->user()->findPaymentMethod($this->payment->stripe_payment_id);
-        $this->base_rate = Currency::toDollars($this->payment->base_rate);
-        $this->tax_rate = Currency::toDollars($this->payment->tax_rate);
+        // $this->payment_method = auth()->user()->findPaymentMethod($this->payment->stripe_payment_id);
+        // $this->base_rate = Currency::toDollars($this->payment->base_rate);
+        // $this->tax_rate = Currency::toDollars($this->payment->tax_rate);
         $fees = $this->payment->fees->toArray();
         foreach ($fees as $fee) {
             $this->fees[] = [

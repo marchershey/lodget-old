@@ -17,11 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string('reservation_id');
             $table->string('user_id');
-            $table->string('status')->default('pending'); // pending, completed, cancelled, refunded
+            $table->string('status')->default('hold');
+            // hold (placed hold on)
+            // captured (funds captured)
+            // released (funds released from hold)
+            // refunded (funds that have been captured have been refunded)
             $table->string('stripe_payment_id');
             $table->integer('base_rate');
+            $table->integer('average_rate');
             $table->integer('tax_rate');
-            $table->string('total');
+            $table->integer('total');
+
             $table->timestamps();
         });
     }

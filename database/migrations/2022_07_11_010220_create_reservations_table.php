@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('checkout');
             $table->string('nights');
             $table->integer('guests');
-            $table->string('status')->default('pending'); // pending, approved, cancelled
+            $table->string('status')->default('nopayment'); // nopayment, pending, cancelled, rejected, approved, active, completed
             $table->string('status_by')->nullable(); // who caused the status change
             $table->timestamps();
         });

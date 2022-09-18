@@ -41,7 +41,7 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('cancelReservation', () => ({
-                open: true,
+                open: false,
                 async confirmCancel() {
                     await @this.cancelReservation();
                 }

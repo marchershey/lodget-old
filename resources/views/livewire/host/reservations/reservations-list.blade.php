@@ -58,7 +58,9 @@
                                     </div>
                                 </td>
                                 <td class="px-5 py-3 text-center group-hover:bg-gray-50">
-                                    @if ($reservation->status === 'pending')
+                                    @if ($reservation->status === 'nopayment')
+                                        <span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full">No Payment</span>
+                                    @elseif ($reservation->status === 'pending')
                                         <span class="px-2 py-1 text-xs font-medium text-yellow-900 bg-yellow-100 rounded-full">Pending</span>
                                     @elseif($reservation->status === 'cancelled')
                                         <span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full">Cancelled</span>

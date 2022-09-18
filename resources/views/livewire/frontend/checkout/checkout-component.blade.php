@@ -43,41 +43,10 @@
             </div>
         </div>
 
-        <div class="panel" wire:init="calcPricing">
+        <div class="panel">
             <h1 class="panel-heading">Pricing Details</h1>
             <div class="panel-body">
-                <div>
-                    <div class="items-center justify-center" wire:loading.flex wire:target="calcPricing">
-                        <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </div>
-                    @if ($total != 0)
-                        <div class="flex flex-col space-y-1 text-muted" wire:loading.remove wire:target="calcPricing">
-                            <div class="flex justify-between">
-                                <span>@money($default_rate) x {{ $reservation->nights }} nights</span>
-                                <span>@money($base_rate)</span>
-                            </div>
-                            @if ($fees)
-                                @foreach ($fees as $fee)
-                                    <div class="flex justify-between">
-                                        <span>{{ $fee['name'] }}</span>
-                                        <span>@money($fee['amount'])</span>
-                                    </div>
-                                @endforeach
-                            @endif
-                            <div class="flex justify-between">
-                                <span>Taxes</span>
-                                <span>@money($tax_rate)</span>
-                            </div>
-                            <div class="flex justify-between text-base font-medium text-gray-800">
-                                <span>Total</span>
-                                <span>@money($total)</span>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                <livewire:reservation.pricing-table :reservation="$reservation" />
             </div>
         </div>
 
@@ -357,7 +326,7 @@
                         <input wire:model="agree" id="agree" type="checkbox" class="w-5 h-5 border-gray-300 rounded text-primary focus:ring-primary">
                     </div>
                     <div class="ml-3">
-                        <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a @money($total) hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>
+                        <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a @money($pricing['total']) hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>
                     </div>
                 </div>
                 <div>

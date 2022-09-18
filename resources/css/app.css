@@ -88,6 +88,12 @@
     .button-light {
         @apply text-gray-800 bg-white border border-gray-200 hover:bg-gray-50 focus:ring-gray-200;
     }
+    .button-green {
+        @apply bg-green-600 text-white !important;
+    }
+    .button-red {
+        @apply bg-red-600 text-white !important;
+    }
 
     /* Validation */
     .input-error {
