@@ -1,6 +1,6 @@
 <x-layouts.auth>
 
-    <form wire:submit.prevent="submit" class="flex flex-col mt-16 space-y-10">
+    <form wire:submit.prevent="submit" class="flex flex-col mt-5 space-y-10">
         <div>
             <button wire:click="goBack" type="button" class="p-0 button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -11,8 +11,8 @@
             </button>
         </div>
         <div>
-            <h1 class="text-4xl font-black">Hello there.</h1>
-            <p class="font-medium">To continue, enter your email address below.</p>
+            <h1 class="page-heading">Hello there.</h1>
+            <p class="page-desc">To continue, enter your email address below.</p>
         </div>
         <div class="flex flex-col space-y-8">
             <div>
@@ -25,16 +25,6 @@
                     <input wire:model.lazy="password" wire:loading.delay.attr="disabled" type="password" class="input">
                 </div>
             @elseif($authState == 'register')
-                <div>
-                    <label for="password" class="input-label @error('password') text-red-500 @enderror">New Password</label>
-                    <input wire:model.lazy="password" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password">
-                    <p class="input-desc">Passwords must be at least 6 characters long.</p>
-                </div>
-                <div>
-                    <label for="password_confirmation" class="input-label @error('password') text-red-500 @enderror">Confirm Password</label>
-                    <input wire:model.lazy="password_confirmation" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password_confirmation">
-                    <p class="input-desc">Type your password in again to confirm.</p>
-                </div>
                 <div class="grid grid-cols-2 gap-5">
                     <div>
                         <label for="first_name" class="input-label @error('first_name') text-red-500 @enderror">First Name</label>
@@ -44,6 +34,16 @@
                         <label for="last_name" class="input-label @error('last_name') text-red-500 @enderror">Last Name</label>
                         <input wire:model.lazy="last_name" wire:loading.delay.attr="disabled" type="text" class="capitalize input" autocomplete="last-name">
                     </div>
+                </div>
+                <div>
+                    <label for="password" class="input-label @error('password') text-red-500 @enderror">New Password</label>
+                    <input wire:model.lazy="password" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password">
+                    <p class="input-desc">Passwords must be at least 6 characters long.</p>
+                </div>
+                <div>
+                    <label for="password_confirmation" class="input-label @error('password') text-red-500 @enderror">Confirm Password</label>
+                    <input wire:model.lazy="password_confirmation" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password_confirmation">
+                    <p class="input-desc">Type your password in again to confirm.</p>
                 </div>
                 <hr>
                 <div class="text-sm italic">

@@ -17,7 +17,7 @@ class AuthenticationController extends Component
 {
     use WireToast;
     // properties
-    public $email = "marc@hershey.co";
+    public $email = "marc@hershey.coasdf";
     public $password;
     public $password_confirmation;
     public $first_name;

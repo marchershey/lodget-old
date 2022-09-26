@@ -1,290 +1,189 @@
-<div class="flex flex-col h-full bg-gray-100">
-    {{-- Top Section --}}
-    <header class="fixed z-10 flex justify-between w-full h-16 bg-gray-900 shadow">
-        {{-- Logo --}}
-        <div class="flex items-center justify-center flex-none w-20">
-            <div>
-                <x-utils.logo size="h-7 w-7 text-muted" theme="plain-light" />
-            </div>
-        </div>
-        {{-- Mobile Menu Button --}}
-        <div class="flex items-center tablet:hidden">
-            <button class="h-full px-5 text-muted">
-                <svg class="w-8 h-8" x-description="Heroicon name: outline/bars-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-                </svg>
-            </button>
-        </div>
-        {{-- Desktop Topbar --}}
-        <div class="items-center justify-between hidden w-full bg-white tablet:flex">
-            <div class="px-5">
-                asdf
-            </div>
-            <div class="px-5">
-                asdf
-            </div>
-        </div>
-    </header>
-    {{-- Bottom Section --}}
-    <div class="mt-[64px] flex h-full">
+<div class="flex h-full bg-gray-100" x-data="{ mobileMenu: false }">
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+    <div x-show="mobileMenu" x-cloak class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
-        {{-- Desktop Navigaton --}}
-        <div class="flex-col justify-between hidden py-5 bg-gray-800 tablet:flex">
-            <nav class="flex flex-col items-center w-20 space-y-3">
-                <a href="#" class="flex items-center p-4 rounded-lg text-muted hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="13" r="2"></circle>
-                        <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line>
-                        <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
-                    </svg>
-                    <span class="sr-only">Home</span>
-                </a>
-                <a href="#" class="flex items-center p-4 rounded-lg text-muted hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                    </svg>
-                    <span class="sr-only">Calendar</span>
-                </a>
-                <a href="#" class="flex items-center p-4 rounded-lg text-muted hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-                    </svg>
-                    <span class="sr-only">Calendar</span>
-                </a>
-                <a href="#" class="flex items-center p-4 rounded-lg text-muted hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                    </svg>
-                    <span class="sr-only">Calendar</span>
-                </a>
-                <a href="#" class="flex items-center p-4 rounded-lg text-muted hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path>
-                        <line x1="13" y1="7" x2="13" y2="7.01"></line>
-                        <line x1="17" y1="7" x2="17" y2="7.01"></line>
-                        <line x1="17" y1="11" x2="17" y2="11.01"></line>
-                        <line x1="17" y1="15" x2="17" y2="15.01"></line>
-                    </svg>
-                    <span class="sr-only">Calendar</span>
-                </a>
-            </nav>
-            <div class="flex flex-col items-center space-y-3">
-                <a href="#" class="flex items-center p-4 text-red-500 rounded-lg hover:bg-gray-700 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
-                        <path d="M7 12h14l-3 -3m0 6l3 -3"></path>
-                    </svg>
-                    <span class="sr-only">Calendar</span>
-                </a>
-            </div>
-        </div>
-
-        {{-- Sidebar --}}
-        <aside class="relative flex flex-col h-full overflow-hidden overflow-y-auto bg-white border-r border-gray-200 w-96">
-            <div class="h-full">
-                asdfaaaa
-            </div>
-        </aside>
-
-        <main class="container max-h-full overflow-y-auto">
-            <form class="space-y-8 divide-y divide-gray-200">
-                <div class="space-y-8 divide-y divide-gray-200">
-                    <div>
-                        <div>
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
-                            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what you share.</p>
-                        </div>
-
-                        <div class="grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6">
-                            <div class="sm:col-span-4">
-                                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                                <div class="flex mt-1 rounded-md shadow-sm">
-                                    <span class="inline-flex items-center px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50 sm:text-sm">workcation.com/</span>
-                                    <input type="text" name="username" id="username" autocomplete="username" class="flex-1 block w-full min-w-0 border-gray-300 rounded-none rounded-r-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-6">
-                                <label for="about" class="block text-sm font-medium text-gray-700">About</label>
-                                <div class="mt-1">
-                                    <textarea id="about" name="about" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                </div>
-                                <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
-                            </div>
-
-                            <div class="sm:col-span-6">
-                                <label for="photo" class="block text-sm font-medium text-gray-700">Photo</label>
-                                <div class="flex items-center mt-1">
-                                    <span class="w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
-                                        <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                        </svg>
-                                    </span>
-                                    <button type="button" class="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Change</button>
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-6">
-                                <label for="cover-photo" class="block text-sm font-medium text-gray-700">Cover photo</label>
-                                <div class="flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-gray-300 border-dashed rounded-md">
-                                    <div class="space-y-1 text-center">
-                                        <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <div class="flex text-sm text-gray-600">
-                                            <label for="file-upload" class="relative font-medium text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
-                                                <span>Upload a file</span>
-                                                <input id="file-upload" name="file-upload" type="file" class="sr-only">
-                                            </label>
-                                            <p class="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-8">
-                        <div>
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-                            <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
-                        </div>
-                        <div class="grid grid-cols-1 mt-6 gap-y-6 gap-x-4 sm:grid-cols-6">
-                            <div class="sm:col-span-3">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                                <div class="mt-1">
-                                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-3">
-                                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                <div class="mt-1">
-                                    <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-4">
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                <div class="mt-1">
-                                    <input id="email" name="email" type="email" autocomplete="email" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-3">
-                                <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                                <div class="mt-1">
-                                    <select id="country" name="country" autocomplete="country-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        <option>United States</option>
-                                        <option>Canada</option>
-                                        <option>Mexico</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-6">
-                                <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
-                                <div class="mt-1">
-                                    <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                                <div class="mt-1">
-                                    <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-                                <div class="mt-1">
-                                    <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                                <div class="mt-1">
-                                    <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-8">
-                        <div>
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
-                            <p class="mt-1 text-sm text-gray-500">We'll always let you know about important changes, but you pick what else you want to hear about.</p>
-                        </div>
-                        <div class="mt-6">
-                            <fieldset>
-                                <legend class="sr-only">By Email</legend>
-                                <div class="text-base font-medium text-gray-900" aria-hidden="true">By Email</div>
-                                <div class="mt-4 space-y-4">
-                                    <div class="relative flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input id="comments" name="comments" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="comments" class="font-medium text-gray-700">Comments</label>
-                                            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input id="candidates" name="candidates" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="candidates" class="font-medium text-gray-700">Candidates</label>
-                                            <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input id="offers" name="offers" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="offers" class="font-medium text-gray-700">Offers</label>
-                                            <p class="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset class="mt-6">
-                                <legend class="text-base font-medium text-gray-900 contents">Push Notifications</legend>
-                                <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
-                                <div class="mt-4 space-y-4">
-                                    <div class="flex items-center">
-                                        <input id="push-everything" name="push-notifications" type="radio" class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                                        <label for="push-everything" class="block ml-3 text-sm font-medium text-gray-700">Everything</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input id="push-email" name="push-notifications" type="radio" class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                                        <label for="push-email" class="block ml-3 text-sm font-medium text-gray-700">Same as email</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input id="push-nothing" name="push-notifications" type="radio" class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                                        <label for="push-nothing" class="block ml-3 text-sm font-medium text-gray-700">No push notifications</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
+        <div class="fixed inset-0 z-40 flex">
+            <div class="relative flex flex-col flex-1 w-full max-w-xs bg-white focus:outline-none">
+                <div class="absolute top-0 right-0 pt-4 -mr-12">
+                    <button x-on:click="mobileMenu = false" type="button" class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Close sidebar</span>
+                        <!-- Heroicon name: outline/x-mark -->
+                        <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
 
-                <div class="pt-5">
-                    <div class="flex justify-end">
-                        <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
-                        <button type="submit" class="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                <div class="pt-5 pb-4">
+                    <div class="flex items-center flex-shrink-0 px-4">
+                        <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=600" alt="Your Company">
                     </div>
-                </div>
-            </form>
+                    <nav aria-label="Sidebar" class="mt-5">
+                        <div class="px-2 space-y-1">
+                            <a href="#" class="flex items-center p-2 text-base font-medium text-gray-600 rounded-md group hover:bg-gray-50 hover:text-gray-900">
+                                <!-- Heroicon name: outline/home -->
+                                <svg class="w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                </svg>
+                                Home
+                            </a>
 
+                            <a href="#" class="flex items-center p-2 text-base font-medium text-gray-600 rounded-md group hover:bg-gray-50 hover:text-gray-900">
+                                <!-- Heroicon name: outline/fire -->
+                                <svg class="w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                                </svg>
+                                Trending
+                            </a>
+
+                            <a href="#" class="flex items-center p-2 text-base font-medium text-gray-600 rounded-md group hover:bg-gray-50 hover:text-gray-900">
+                                <!-- Heroicon name: outline/bookmark-square -->
+                                <svg class="w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+                                </svg>
+                                Bookmarks
+                            </a>
+
+                            <a href="#" class="flex items-center p-2 text-base font-medium text-gray-600 rounded-md group hover:bg-gray-50 hover:text-gray-900">
+                                <!-- Heroicon name: outline/inbox -->
+                                <svg class="w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z" />
+                                </svg>
+                                Messages
+                            </a>
+
+                            <a href="#" class="flex items-center p-2 text-base font-medium text-gray-600 rounded-md group hover:bg-gray-50 hover:text-gray-900">
+                                <!-- Heroicon name: outline/user -->
+                                <svg class="w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                                Profile
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+                    <a href="#" class="flex-shrink-0 block group">
+                        <div class="flex items-center">
+                            <div>
+                                <img class="inline-block w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">Emily Selman</p>
+                                <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">Account Settings</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex-shrink-0 w-14" aria-hidden="true">
+                <!-- Force sidebar to shrink to fit close icon -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Static sidebar for desktop -->
+    <div class="hidden lg:flex lg:flex-shrink-0">
+        <div class="flex flex-col w-20">
+            <div class="flex flex-col flex-1 min-h-0 overflow-y-auto bg-gray-800">
+                <div class="flex-1">
+                    <div class="flex items-center justify-center py-4 bg-gray-900">
+                        <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="Your Company">
+                    </div>
+                    <nav aria-label="Sidebar" class="flex flex-col items-center py-6 space-y-3">
+                        <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
+                            <!-- Heroicon name: outline/home -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                            <span class="sr-only">Home</span>
+                        </a>
+
+                        <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
+                            <!-- Heroicon name: outline/fire -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                            </svg>
+                            <span class="sr-only">Trending</span>
+                        </a>
+
+                        <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
+                            <!-- Heroicon name: outline/bookmark-square -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+                            </svg>
+                            <span class="sr-only">Bookmarks</span>
+                        </a>
+
+                        <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
+                            <!-- Heroicon name: outline/inbox -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z" />
+                            </svg>
+                            <span class="sr-only">Messages</span>
+                        </a>
+
+                        <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
+                            <!-- Heroicon name: outline/user -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                            <span class="sr-only">Profile</span>
+                        </a>
+                    </nav>
+                </div>
+                <div class="flex flex-shrink-0 pb-5">
+                    <a href="#" class="flex-shrink-0 w-full">
+                        <img class="block w-10 h-10 mx-auto rounded-full" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                        <div class="sr-only">
+                            <p>Emily Selman</p>
+                            <p>Account settings</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
+        <!-- Mobile top navigation -->
+        <div class="lg:hidden">
+            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 sm:px-6 lg:px-8">
+                <div>
+                    <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="Your Company">
+                </div>
+                <div>
+                    <button x-on:click="mobileMenu = true" type="button" class="inline-flex items-center justify-center w-12 h-12 -mr-3 text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open sidebar</span>
+                        <!-- Heroicon name: outline/bars-3 -->
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main class="flex flex-1 overflow-hidden">
+            <!-- Primary column -->
+            <section aria-labelledby="primary-heading" class="flex flex-col flex-1 h-full min-w-0 overflow-y-auto lg:order-last">
+                <div {{ $attributes->class(['container']) }}>
+                    {{ $slot }}
+                </div>
+            </section>
+
+            <!-- Secondary column (hidden on smaller screens) -->
+            @hasSection('sidebar')
+                <aside class="hidden lg:order-first lg:block lg:flex-shrink-0">
+                    <div class="relative flex flex-col h-full overflow-y-auto bg-white border-r border-gray-200 w-72 desktop:w-80 hide-scrollbar">
+                        @yield('sidebar')
+                    </div>
+                </aside>
+            @endif
         </main>
     </div>
 </div>

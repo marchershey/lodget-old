@@ -1,33 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     html {
-        @apply h-full;
+        @apply h-full font-sans subpixel-antialiased text-gray-800 bg-gray-50;
     }
     body {
-        @apply relative h-full font-sans text-gray-800;
+        @apply relative h-full overflow-hidden;
     }
 
     .text-link {
         @apply underline;
     }
+
+    .page-heading {
+        @apply text-3xl font-extrabold tracking-tight;
+    }
+    .page-desc {
+        @apply mt-1 font-normal;
+    }
 }
 
 @layer components {
+    /* Containers */
+    .container {
+        @apply max-w-3xl mx-auto;
+    }
+    .container-large {
+        @apply max-w-5xl;
+    }
+    .padding {
+        @apply p-4 tablet:p-6 laptop:p-8;
+    }
+    .spacing {
+        @apply space-y-10;
+    }
+
+    /* Forms */
+    .form {
+        @apply grid grid-cols-6 gap-5;
+    }
+    .form-full {
+        @apply col-span-full;
+    }
+
+    /* Panels */
+    .panel {
+        @apply p-4 -mx-4 bg-white tablet:rounded tablet:mx-0;
+    }
+    .panel-heading {
+        @apply block text-xl font-bold;
+    }
+    .panel-desc {
+        @apply font-normal;
+    }
+
     /* Inputs */
     .input {
-        @apply block w-full bg-gray-100 border-0 rounded focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-black disabled:opacity-40;
+        @apply block w-full font-medium bg-gray-100 border-0 rounded focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-gray-800 disabled:opacity-40;
     }
     .input-label {
-        @apply block mb-1 font-medium;
+        @apply block mb-1 font-semibold;
     }
     .input-desc {
         @apply block mt-1 text-xs text-muted;
     }
     .checkbox {
-        @apply w-5 h-5 text-black border-gray-300 rounded focus:ring-black focus:ring-offset-2;
+        @apply w-5 h-5 text-gray-800 border-gray-300 rounded focus:ring-gray-800 focus:ring-offset-2;
     }
     .checkbox-label {
         @apply ml-2 text-sm font-medium;
@@ -38,13 +79,13 @@
 
     /* Buttons */
     .button {
-        @apply flex items-center justify-center w-auto p-2 space-x-2 font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black;
+        @apply flex items-center justify-center w-auto px-1 py-2 space-x-2 font-medium rounded tablet:px-5 focus:outline-none focus:ring-2 focus:ring-black;
     }
     .button svg {
         @apply w-6 h-6;
     }
     .button-black {
-        @apply text-white bg-gray-900;
+        @apply px-4 py-2 text-white bg-gray-800 hover:bg-gray-600 focus:ring-offset-2;
     }
     .button-full {
         @apply w-full;
@@ -69,10 +110,12 @@
         @apply hidden desktop:block;
     }
 
-    .container {
-        @apply mx-auto max-w-screen-tablet;
+    /* Hide Scrollbar */
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
     }
-    .container-padding {
-        @apply px-5 py-4;
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }

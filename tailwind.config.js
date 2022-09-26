@@ -1,10 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 
+const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
     content: ["./resources/**/*.blade.php", "./resources/css/**/*.css"],
     theme: {
+        fontFamily: {
+            sans: ['"Montserrat"', ...defaultTheme.fontFamily.sans],
+        },
         extend: {
             colors: {
                 muted: {
@@ -17,16 +21,16 @@ module.exports = {
                     dark: colors.blue[800],
                 },
             },
-        },
-        screens: {
-            tablet: "640px",
-            // => @media (min-width: 640px) { ... }
+            screens: {
+                tablet: "640px",
+                // => @media (min-width: 640px) { ... }
 
-            laptop: "1024px",
-            // => @media (min-width: 1024px) { ... }
+                laptop: "1024px",
+                // => @media (min-width: 1024px) { ... }
 
-            desktop: "1280px",
-            // => @media (min-width: 1280px) { ... }
+                desktop: "1280px",
+                // => @media (min-width: 1280px) { ... }
+            },
         },
     },
     plugins: [

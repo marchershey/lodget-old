@@ -23,7 +23,7 @@
     <livewire:toasts />
     {{ $slot }}
     <livewire:scripts />
-
+    @stack('scripts')
 </body>
 
 </html>
