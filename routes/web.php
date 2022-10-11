@@ -25,8 +25,20 @@ Route::get('/', function () {
 /**
  * Dashboard Routes
  */
-Route::redirect('/dashboard', '/host')->name('dashboard');
+Route::name('dashboard')->middleware('auth')->get('/dashboard', [App\Http\Controllers\DashboardController::class, 'redirect']);
 
+/**
+ * Admin Routes
+ */
+Route::name('admin.')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    // Redirect /admin to /admin/dashboard
+    Route::redirect('/', '/admin/dashboard');
+
+    // Admin dashboard routes
+    Route::get('/dashboard', App\Http\Controllers\Pages\Admin\AdminDashboardController::class)->name('dashboard');
+    Route::get('/users', App\Http\Controllers\Pages\Admin\AdminUsersController::class)->name('users');
+    Route::get('/settings', App\Http\Controllers\Pages\Admin\AdminSettingsController::class)->name('settings');
+});
 
 /**
  * Host Routes
@@ -44,4 +56,9 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
     Route::middleware('property')->group(function () {
         Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
     });
+});
+
+
+Route::get('/test', function () {
+    dd(auth()->user()->roles());
 });

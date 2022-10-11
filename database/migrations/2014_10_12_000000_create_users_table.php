@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('last_login_date')->nullable();
             $table->string('last_login_ip')->nullable();
             $table->string('registered_ip');
-            $table->boolean('isHost')->default(0);
+            $table->boolean('is_host')->default(0);
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

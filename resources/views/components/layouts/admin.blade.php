@@ -94,48 +94,33 @@
                 <div class="flex flex-col flex-1 min-h-0 overflow-y-auto bg-gray-800">
                     <div class="flex-1">
                         <div class="flex items-center justify-center py-4 bg-gray-900">
-                            <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="Your Company">
+                            <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="{{ config('app.name') }}">
                         </div>
                         <nav aria-label="Sidebar" class="flex flex-col items-center py-6 space-y-3">
-                            <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
-                                <!-- Heroicon name: outline/home -->
+                            <a href="{{ route('admin.dashboard') }}" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
                                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                 </svg>
                                 <span class="sr-only">Home</span>
                             </a>
 
-                            <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
-                                <!-- Heroicon name: outline/fire -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                            <a href="{{ route('admin.users') }}" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
                                 </svg>
-                                <span class="sr-only">Trending</span>
+                                <span class="sr-only">Users</span>
                             </a>
-
-                            <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
-                                <!-- Heroicon name: outline/bookmark-square -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+                            <a href="{{ route('admin.settings') }}" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
-                                <span class="sr-only">Bookmarks</span>
-                            </a>
-
-                            <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
-                                <!-- Heroicon name: outline/inbox -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z" />
-                                </svg>
-                                <span class="sr-only">Messages</span>
-                            </a>
-
-                            <a href="#" class="flex items-center p-4 text-gray-200 rounded-lg hover:bg-gray-700">
-                                <!-- Heroicon name: outline/user -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                                <span class="sr-only">Profile</span>
+                                <span class="sr-only">Settings</span>
                             </a>
                         </nav>
                     </div>
@@ -172,10 +157,10 @@
             </div>
         </div>
 
-        <main class="flex flex-1 overflow-hidden">
+        <main class="flex flex-1 overflow-hidden" {{ $attributes }}>
             <!-- Primary column -->
             <section aria-labelledby="primary-heading" class="flex flex-col flex-1 h-full min-w-0 overflow-y-auto lg:order-last">
-                <div {{ $attributes->class(['container', 'my-10']) }}>
+                <div class="container my-10 {{ $attributes->get('class') }}">
                     {{ $slot }}
                 </div>
             </section>
@@ -183,7 +168,13 @@
             <!-- Secondary column (hidden on smaller screens) -->
             @hasSection('sidebar')
                 <aside class="hidden lg:order-first lg:block lg:flex-shrink-0">
-                    <div class="relative flex flex-col h-full overflow-y-auto bg-white border-r border-gray-200 w-72 desktop:w-80 hide-scrollbar">
+                    <div class="sidebar">
+                        @hasSection('sidebar-title')
+                            <div class="sidebar-title">
+                                @yield('sidebar-title')
+                            </div>
+                        @endif
+
                         @yield('sidebar')
                     </div>
                 </aside>

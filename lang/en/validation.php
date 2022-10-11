@@ -168,6 +168,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'property.name' => 'Property Name'
+    ],
 
 ];

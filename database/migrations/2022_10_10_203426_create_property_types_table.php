@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('property_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address_street');
-            $table->string('address_city');
-            $table->string('address_state');
-            $table->string('address_zip');
-
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('property_types');
     }
 };

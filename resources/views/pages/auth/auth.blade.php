@@ -16,34 +16,26 @@
         </div>
         <div class="flex flex-col space-y-8">
             <div>
-                <label for="email" class="input-label @error('email') text-red-500 @enderror">Email Address</label>
-                <input wire:model.lazy="email" type="text" class="input">
+                <x-forms.text label="Email Address" model="email" />
             </div>
             @if ($authState == 'login')
                 <div>
-                    <label for="password" class="input-label @error('password') text-red-500 @enderror">Password</label>
-                    <input wire:model.lazy="password" wire:loading.delay.attr="disabled" type="password" class="input">
+                    <x-forms.text label="Password" model="password" />
                 </div>
             @elseif($authState == 'register')
                 <div class="grid grid-cols-2 gap-5">
                     <div>
-                        <label for="first_name" class="input-label @error('first_name') text-red-500 @enderror">First Name</label>
-                        <input wire:model.lazy="first_name" wire:loading.delay.attr="disabled" type="text" class="capitalize input" autocomplete="first-name">
+                        <x-forms.text label="First Name" model="first_name" class="capitalize" />
                     </div>
                     <div>
-                        <label for="last_name" class="input-label @error('last_name') text-red-500 @enderror">Last Name</label>
-                        <input wire:model.lazy="last_name" wire:loading.delay.attr="disabled" type="text" class="capitalize input" autocomplete="last-name">
+                        <x-forms.text label="Last Name" model="last_name" class="capitalize" />
                     </div>
                 </div>
                 <div>
-                    <label for="password" class="input-label @error('password') text-red-500 @enderror">New Password</label>
-                    <input wire:model.lazy="password" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password">
-                    <p class="input-desc">Passwords must be at least 6 characters long.</p>
+                    <x-forms.text label="New Password" model="password" desc="Passwords must be at least 6 characters long" />
                 </div>
                 <div>
-                    <label for="password_confirmation" class="input-label @error('password') text-red-500 @enderror">Confirm Password</label>
-                    <input wire:model.lazy="password_confirmation" wire:loading.delay.attr="disabled" type="password" class="input" autocomplete="password_confirmation">
-                    <p class="input-desc">Type your password in again to confirm.</p>
+                    <x-forms.text label="Confirm Password" model="password_confirmation" desc="Type your password in again to confirm" />
                 </div>
                 <hr>
                 <div class="text-sm italic">
@@ -53,7 +45,7 @@
         </div>
         <div class="flex flex-col">
             <div wire:loading.delay.remove>
-                <button type="submit" class="button button-black button-full">Continue</button>
+                <button type="submit" class="button button-dark button-full">Continue</button>
             </div>
             <div wire:loading.delay>
                 <div class="flex justify-center">

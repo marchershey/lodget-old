@@ -28,8 +28,29 @@
     .container {
         @apply max-w-3xl mx-auto;
     }
-    .container-large {
+    .container-lg {
         @apply max-w-5xl;
+    }
+    .sidebar {
+        @apply relative flex flex-col h-full overflow-y-auto bg-white border-r border-gray-200 w-72 desktop:w-80 hide-scrollbar;
+    }
+    .sidebar-title {
+        @apply px-4 tablet:px-6 laptop:px-8 h-[64px] flex items-center text-lg font-semibold border-b;
+    }
+    .sidebar-menu {
+        @apply flex flex-col;
+    }
+    .sidebar-menu-item {
+        @apply flex items-center px-4 py-4 space-x-3 border-b cursor-pointer tablet:px-6 laptop:px-8 hover:bg-gray-50;
+    }
+    .sidebar-menu-item-active {
+        @apply bg-gray-100;
+    }
+    .sidebar-menu-item h1 {
+        @apply text-sm font-medium;
+    }
+    .sidebar-menu-item svg {
+        @apply w-5 h-5 text-muted;
     }
     .padding {
         @apply p-4 tablet:p-6 laptop:p-8;
@@ -48,18 +69,44 @@
 
     /* Panels */
     .panel {
-        @apply p-4 -mx-4 bg-white tablet:rounded tablet:mx-0;
+        @apply -mx-4 bg-white tablet:rounded tablet:mx-0;
     }
     .panel-heading {
-        @apply block text-xl font-bold;
+        @apply block text-xl font-semibold;
     }
     .panel-desc {
         @apply font-normal;
     }
 
+    /* Table */
+    .table-container {
+        @apply flex flex-col -mx-4 overflow-x-auto bg-white border tablet:mx-0 tablet:rounded;
+    }
+    .table {
+        @apply w-full min-w-full bg-white;
+    }
+    .table thead {
+        @apply font-semibold border-b bg-gray-50;
+    }
+    .table thead tr td {
+        @apply p-4 whitespace-nowrap;
+    }
+    .table tbody tr {
+        @apply border-b last:border-none;
+    }
+    .table tbody tr td {
+        @apply p-4 whitespace-nowrap;
+    }
+
     /* Inputs */
     .input {
-        @apply block w-full font-medium bg-gray-100 border-0 rounded focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-gray-800 disabled:opacity-40;
+        @apply block w-full px-4 font-medium bg-gray-100 rounded focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-gray-800 disabled:opacity-40 focus:border-transparent;
+    }
+    .input-dark {
+        @apply bg-gray-100 border-gray-200;
+    }
+    .input-light {
+        @apply bg-white border-gray-300;
     }
     .input-label {
         @apply block mb-1 font-semibold;
@@ -79,16 +126,25 @@
 
     /* Buttons */
     .button {
-        @apply flex items-center justify-center w-auto px-1 py-2 space-x-2 font-medium rounded tablet:px-5 focus:outline-none focus:ring-2 focus:ring-black;
+        @apply flex items-center justify-center w-auto px-1 py-2 space-x-2 font-medium rounded tablet:px-5 focus:outline-none focus:ring-2 focus:ring-gray-800;
     }
     .button svg {
         @apply w-6 h-6;
     }
-    .button-black {
+    .button-dark {
         @apply px-4 py-2 text-white bg-gray-800 hover:bg-gray-600 focus:ring-offset-2;
+    }
+    .button-light {
+        @apply px-4 py-2 text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-offset-2;
     }
     .button-full {
         @apply w-full;
+    }
+    .button-sm {
+        @apply !text-sm !px-3 !py-2;
+    }
+    .button-xs {
+        @apply !text-xs !px-2 !py-1;
     }
 }
 

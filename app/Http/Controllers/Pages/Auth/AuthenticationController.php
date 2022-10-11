@@ -17,7 +17,7 @@ class AuthenticationController extends Component
 {
     use WireToast;
     // properties
-    public $email = "marc@hershey.coasdf";
+    public $email;
     public $password;
     public $password_confirmation;
     public $first_name;
@@ -27,11 +27,6 @@ class AuthenticationController extends Component
 
     // states
     public $authState = "emailCheck";
-    // public $authState = "register";
-
-    // protected $rules = [
-    //     'email' => ['required', 'email'],
-    // ];
 
     public function render()
     {
@@ -41,17 +36,6 @@ class AuthenticationController extends Component
     public function updated($propertyName, $propertyValue)
     {
         $this->resetValidation($propertyName);
-
-        // if ($propertyValue) {
-        //     $this->withValidator(function (Validator $validator) {
-        //         $validator->after(function ($validator) {
-        //             if (count($validator->errors()) > 0) {
-        //                 $error = $validator->errors()->first();
-        //                 toast()->danger($error, 'Error')->push();
-        //             }
-        //         });
-        //     })->validateOnly($propertyName);
-        // }
     }
 
     /**
@@ -122,7 +106,7 @@ class AuthenticationController extends Component
 
             if ($userr = Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
                 session()->regenerate();
-                return redirect('/host');
+                return redirect()->route('dashboard');
             } else {
                 $this->password = null;
                 toast()->danger('The password you entered is incorrect. Please try again.', 'Authentication Error')->push();
