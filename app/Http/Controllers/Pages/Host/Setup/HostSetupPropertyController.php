@@ -45,7 +45,7 @@ class HostSetupPropertyController extends Component
 
     public function mount()
     {
-        $this->step = 2;
+        $this->step = 1;
     }
 
     public function updated($field, $value)

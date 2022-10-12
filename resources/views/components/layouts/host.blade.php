@@ -172,10 +172,10 @@
             </div>
         </div>
 
-        <main class="flex flex-1 overflow-hidden">
+        <main class="flex flex-1 overflow-hidden" {{ $attributes }}>
             <!-- Primary column -->
             <section aria-labelledby="primary-heading" class="flex flex-col flex-1 h-full min-w-0 overflow-y-auto lg:order-last">
-                <div {{ $attributes->class(['container', 'my-10']) }}>
+                <div class="container my-10 {{ $attributes->get('class') }}">
                     {{ $slot }}
                 </div>
             </section>
@@ -183,7 +183,13 @@
             <!-- Secondary column (hidden on smaller screens) -->
             @hasSection('sidebar')
                 <aside class="hidden lg:order-first lg:block lg:flex-shrink-0">
-                    <div class="relative flex flex-col h-full overflow-y-auto bg-white border-r border-gray-200 w-72 desktop:w-80 hide-scrollbar">
+                    <div class="sidebar">
+                        @hasSection('sidebar-title')
+                            <div class="sidebar-title">
+                                @yield('sidebar-title')
+                            </div>
+                        @endif
+
                         @yield('sidebar')
                     </div>
                 </aside>

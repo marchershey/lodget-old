@@ -1,10 +1,73 @@
-<x-layouts.host hideNavigation>
+<x-layouts.host hideNavigation x-data="app">
     <div wire:init="load"></div>
 
-    <div class="padding spacing" x-data="app()">
+    @section('sidebar-title', 'Setup')
+    @section('sidebar')
+
+        <nav class="padding">
+            <ol class="space-y-5">
+                <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Basic Information</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Rooms & Spaces</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Amenities</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Photos</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Pricing</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                            <div class="">Publish</div>
+                        </div>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+
+    @endsection
+
+    <div class="padding spacing">
         <div>
-            <h1 class="page-heading">Property Setup <span x-text="step"></span></h1>
-            <p class="page-desc">Fill out the information below to add your first property</p>
+            <h1 class="page-heading">Property Setup</h1>
+            <p class="page-desc">Before we can continue, let's add your very first property!</p>
         </div>
 
 
