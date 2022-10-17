@@ -45,7 +45,7 @@ class HostSetupPropertyController extends Component
 
     public function mount()
     {
-        $this->step = 1;
+        $this->step = 2;
     }
 
     public function updated($field, $value)
@@ -92,23 +92,23 @@ class HostSetupPropertyController extends Component
                     }
                 });
             })->validate([
-                //
+                'property.type' => ['required'],
             ], [], $this->attributes());
         }
 
-        if ($this->step == 3) {
-            $this->withValidator(function (Validator $validator) {
-                $validator->after(function ($validator) {
-                    if (count($validator->errors()) > 0) {
-                        // $error = $validator->errors()->first();
-                        // toast()->danger($error, 'Error')->push();
-                        toast()->danger('Please fix the following errors.', 'Uh oh!')->push();
-                    }
-                });
-            })->validate([
-                //
-            ], [], $this->attributes());
-        }
+        // if ($this->step == 3) {
+        //     $this->withValidator(function (Validator $validator) {
+        //         $validator->after(function ($validator) {
+        //             if (count($validator->errors()) > 0) {
+        //                 // $error = $validator->errors()->first();
+        //                 // toast()->danger($error, 'Error')->push();
+        //                 toast()->danger('Please fix the following errors.', 'Uh oh!')->push();
+        //             }
+        //         });
+        //     })->validate([
+        //         //
+        //     ], [], $this->attributes());
+        // }
 
         $this->step++;
     }

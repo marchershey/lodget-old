@@ -4,7 +4,7 @@ import laravel from "laravel-vite-plugin";
 export default defineConfig({
     server: {
         hmr: {
-            host: "10.0.0.35",
+            host: "172.20.10.5",
         },
     },
     plugins: [
