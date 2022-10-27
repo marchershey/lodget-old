@@ -12,29 +12,67 @@ use Usernotnull\Toast\Concerns\WireToast;
 class HostSetupPropertyController extends Component
 {
     use WireToast;
-    public $step;
     public $property;
-    public $property_types = [];
+
+    // Rooms & Spaces
+    public $bedrooms = [];
+    public $spaces;
+    public $bathrooms;
+
+    // Page data
+    public $step;
+    public $data_property_types = [];
 
     protected function rules()
     {
         return [
+            // Basic Information
             'property.name' => ['required', 'max:100', new AlphaSpace],
             'property.address.street' => ['required', 'max:100', 'regex:/(^[-0-9A-Za-z.,\/ ]+$)/'],
             'property.address.city' => ['required', 'max:100', new AlphaSpace],
             'property.address.state' => ['required', 'size:2', 'alpha'],
             'property.address.zip' => ['required', 'numeric', 'regex:/^[0-9]{5}(?:-[0-9]{4})?$/'],
+            // Property Details
+            'property.details.type' => ['required'],
+            // Rooms & Spaces
+            'property.bedrooms' => ['required'],
+            'property.bedrooms.*.name' => ['required'],
+            'property.bedrooms.*.beds.*.bed_type' => ['required'],
+            'property.areas.*.name' => ['required'],
+            'property.areas.*.beds.*.bed_type' => ['required'],
+            'property.bathrooms' => ['required'],
+            'property.bathrooms.*.name' => ['required'],
+            'property.bathrooms.*.bath_type' => ['required'],
+            // Amenities
+            // Photos
+            // Pricing
         ];
     }
 
     protected function attributes()
     {
         return [
+            // Basic information
             'property.name' => 'Property Name',
             'property.address.street' => 'Street Address',
             'property.address.city' => 'City',
             'property.address.state' => 'State',
             'property.address.zip' => 'Zip / Postal Code',
+            // Property Details
+            'property.details.type' => 'Property Type',
+            // Rooms & Spaces
+            'property.bedrooms' => 'Bedrooms',
+            'property.bedrooms.*.name' => 'Bedroom Name',
+            'property.bedrooms.*.beds.*.bed_type' => 'Bed Type',
+            'property.areas' => 'Areas',
+            'property.areas.*.name' => 'Area Name',
+            'property.areas.*.beds.*.bed_type' => 'Bed Type',
+            'property.bathrooms' => 'Bathrooms',
+            'property.bathrooms.*.name' => 'Bathroom Name',
+            'property.bathrooms.*.bath_type' => 'Bath Type',
+            // Amenities
+            // Photos
+            // Pricing
         ];
     }
 
@@ -45,7 +83,46 @@ class HostSetupPropertyController extends Component
 
     public function mount()
     {
-        $this->step = 2;
+        $this->step = 3;
+    }
+
+    public function load()
+    {
+        $this->loadDevData();
+
+        $this->loadPageData();
+    }
+
+    /**
+     * Load development dummy data
+     */
+    public function loadDevData()
+    {
+        // Basic Information
+        $this->property['name'] = "Ohana Burnside";
+        $this->property['address'] = [
+            'street' => '123 address ave',
+            'city' => 'lexington',
+            'state' => 'KY',
+            'zip' => '10001',
+        ];
+
+        // // Property Details
+        $this->property['details'] = [
+            'type' => 19,
+        ];
+    }
+
+    /**
+     * Load Page Data
+     */
+    public function loadPageData()
+    {
+        // Property Details
+        foreach (PropertyType::all()->sortBy('name') as $property_type) {
+            $this->data_property_types[$property_type->id] = ucFirst($property_type->name);
+        }
+        $this->data_property_types = collect($this->data_property_types);
     }
 
     public function updated($field, $value)
@@ -64,6 +141,7 @@ class HostSetupPropertyController extends Component
 
     public function goNext()
     {
+        // Basic information
         if ($this->step == 1) {
             $this->withValidator(function (Validator $validator) {
                 $validator->after(function ($validator) {
@@ -82,6 +160,7 @@ class HostSetupPropertyController extends Component
             ], [], $this->attributes());
         }
 
+        // Property Details
         if ($this->step == 2) {
             $this->withValidator(function (Validator $validator) {
                 $validator->after(function ($validator) {
@@ -92,23 +171,37 @@ class HostSetupPropertyController extends Component
                     }
                 });
             })->validate([
-                'property.type' => ['required'],
+                'property.details.type' => ['required'],
             ], [], $this->attributes());
         }
 
-        // if ($this->step == 3) {
-        //     $this->withValidator(function (Validator $validator) {
-        //         $validator->after(function ($validator) {
-        //             if (count($validator->errors()) > 0) {
-        //                 // $error = $validator->errors()->first();
-        //                 // toast()->danger($error, 'Error')->push();
-        //                 toast()->danger('Please fix the following errors.', 'Uh oh!')->push();
-        //             }
-        //         });
-        //     })->validate([
-        //         //
-        //     ], [], $this->attributes());
-        // }
+        // Rooms & Spaces
+        if ($this->step == 3) {
+            $this->withValidator(function (Validator $validator) {
+                $validator->after(function ($validator) {
+                    foreach ($validator->errors()->all() as $error) {
+                        toast()->danger($error)->push();
+                    }
+                });
+            })->validate([
+                'property.bedrooms' => ['required'],
+                'property.bedrooms.*.beds' => ['required_with:property.bedrooms'],
+
+                'property.bedrooms.*.name' => ['required_with:property.bedrooms.*.beds'],
+                'property.bedrooms.*.beds.*.bed_type' => ['required'],
+
+                'property.areas.*.name' => ['required'],
+                'property.areas.*.beds.*.bed_type' => ['required'],
+                'property.bathrooms' => ['required'],
+                'property.bathrooms.*.name' => ['required'],
+                'property.bathrooms.*.bath_type' => ['required'],
+            ], [], $this->attributes());
+        }
+
+        // Amenities
+        // Photos
+        // Pricing
+        // Publish
 
         $this->step++;
     }
@@ -118,20 +211,23 @@ class HostSetupPropertyController extends Component
         $this->step--;
     }
 
-    public function load()
+    public function addRoom($roomType)
     {
-        $this->loadPropertyTypes();
+        $this->property[$roomType][] = [];
     }
 
-    /**
-     * Property Types
-     */
-    public function loadPropertyTypes()
+    public function removeRoom($roomType, $roomKey)
     {
-        foreach (PropertyType::all()->sortBy('name') as $property_type) {
-            $this->property_types[$property_type->id] = ucFirst($property_type->name);
-        }
+        unset($this->property[$roomType][$roomKey]);
+    }
 
-        $this->property_types = collect($this->property_types);
+    public function addBed($roomType, $roomKey)
+    {
+        $this->property[$roomType][$roomKey]['beds'][] = [];
+    }
+
+    public function removeBed($roomType, $roomKey, $bedKey)
+    {
+        unset($this->property[$roomType][$roomKey]['beds'][$bedKey]);
     }
 }
