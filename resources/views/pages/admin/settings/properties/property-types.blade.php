@@ -1,6 +1,6 @@
 <div class="panel padding spacing">
     <div>
-        <h2 class="panel-heading">Property Types</h2>
+        <h2 class="panel-heading">Property Types FIX THIS</h2>
         <span class="panel-desc">Property types are sorted alphabetically.</span>
     </div>
     @if ($property_types)

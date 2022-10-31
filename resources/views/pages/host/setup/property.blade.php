@@ -176,11 +176,6 @@
                         <div class="flex flex-col space-y-3">
                             @foreach ($property['bedrooms'] as $roomKey => $room)
                                 <div class="flex flex-col card card-dark padding gap">
-                                    @if (isset($property['bedrooms'][$roomKey]['name']) && $property['bedrooms'][$roomKey]['name'] != null)
-                                        <div>
-                                            <h4 class="title">{{ $property['bedrooms'][$roomKey]['name'] ?? '' }}</h4>
-                                        </div>
-                                    @endif
                                     <div class="">
                                         <x-forms.text label="Bedroom Name" desc="Master Bedroom, Guest Bedroom, Upstairs Kids Room, etc..." model="property.bedrooms.{{ $roomKey }}.name" class="input-light" />
                                     </div>
@@ -205,9 +200,19 @@
                                         </div>
                                     @endif
                                     <div class="flex justify-between">
-                                        <button wire:click="addBed('bedrooms', {{ $roomKey }})" class="button button-sm button-white">Add bed</button>
+                                        <button wire:click="addBed('bedrooms', {{ $roomKey }})" class="button button-sm button-white @error('property.bedrooms.' . $roomKey . '.beds') bg-red-100 border-red-500 @enderror">Add bed</button>
                                         <button wire:click="removeRoom('bedrooms', {{ $roomKey }})" class="button button-sm button-white">Remove bedroom</button>
                                     </div>
+                                    <div class="space-y-2">
+                                        <button wire:click="removeRoom('bedrooms', {{ $roomKey }})" class="button button-white">Remove bedroom</button>
+                                        <button wire:click="removeRoom('bedrooms', {{ $roomKey }})" class="button button-sm button-white">Remove bedroom</button>
+                                        <button wire:click="removeRoom('bedrooms', {{ $roomKey }})" class="button button-xs button-white">Remove bedroom</button>
+                                    </div>
+                                    @error('property.bedrooms.' . $roomKey . '.beds')
+                                        <div class="text-sm text-red-500">
+                                            {{ $errors->first('property.bedrooms.' . $roomKey . '.beds') }}
+                                        </div>
+                                    @enderror
                                 </div>
                             @endforeach
                         </div>
@@ -227,18 +232,13 @@
 
                 <div class="spacing-sm">
                     <div>
-                        <h3 class="title">Other common areas</h3>
+                        <h3 class="title @error('property.areas') text-red-500 @enderror">Other common areas</h3>
                         <span class="subtitle">Common areas are any rooms that offer sleeping arragements that are not a dedicated sleeping area</span>
                     </div>
                     @if (isset($property['areas']))
                         <div class="flex flex-col space-y-3">
                             @foreach ($property['areas'] as $roomKey => $room)
                                 <div class="flex flex-col card card-dark padding gap">
-                                    @if (isset($property['areas'][$roomKey]['name']) && $property['areas'][$roomKey]['name'] != null)
-                                        <div>
-                                            <h4 class="title">{{ $property['areas'][$roomKey]['name'] ?? '' }}</h4>
-                                        </div>
-                                    @endif
                                     <div class="">
                                         <x-forms.text label="Area Name" desc="Living room, Basement living room, Loft, etc..." model="property.areas.{{ $roomKey }}.name" class="input-light" />
                                     </div>
@@ -263,9 +263,14 @@
                                         </div>
                                     @endif
                                     <div class="flex justify-between">
-                                        <button wire:click="addBed('areas', {{ $roomKey }})" class="button button-sm button-white">Add bed</button>
+                                        <button wire:click="addBed('areas', {{ $roomKey }})" class="button button-sm button-white @error('property.areas.' . $roomKey . '.beds') bg-red-100 border-red-500 @enderror">Add bed</button>
                                         <button wire:click="removeRoom('areas', {{ $roomKey }})" class="button button-sm button-white">Remove area</button>
                                     </div>
+                                    @error('property.areas.' . $roomKey . '.beds')
+                                        <div class="text-sm text-red-500">
+                                            {{ $errors->first('property.areas.' . $roomKey . '.beds') }}
+                                        </div>
+                                    @enderror
                                 </div>
                             @endforeach
                         </div>
@@ -273,24 +278,25 @@
                     <div>
                         <button wire:click="addRoom('areas')" class="button button-light button-sm">Add area</button>
                     </div>
+
+                    @error('property.areas')
+                        <div class="text-red-500">
+                            {{ $errors->first('property.areas') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <hr>
 
                 <div class="spacing-sm">
                     <div>
-                        <h3 class="title">Bathrooms</h3>
+                        <h3 class="title @error('property.bathrooms') text-red-500 @enderror">Bathrooms</h3>
                         <span class="subtitle">Add all of the bathrooms this property has to offer</span>
                     </div>
                     @if (isset($property['bathrooms']))
                         <div class="flex flex-col space-y-3">
                             @foreach ($property['bathrooms'] as $roomKey => $room)
                                 <div class="flex flex-col card card-dark padding gap">
-                                    @if (isset($property['bathrooms'][$roomKey]['name']) && $property['bathrooms'][$roomKey]['name'] != null)
-                                        <div>
-                                            <h4 class="title">{{ $property['bathrooms'][$roomKey]['name'] ?? '' }}</h4>
-                                        </div>
-                                    @endif
                                     <div class="grid grid-cols-2 gap">
                                         <x-forms.text label="Bathroom Name" desc="Master Bath, Outside shower, etc..." model="property.bathrooms.{{ $roomKey }}.name" class="input-light" />
                                         <x-forms.select label="Bath Type" model="property.bathrooms.{{ $roomKey }}.bath_type" class="bg-white" :options="['Shower' => 'Shower', 'Half' => 'Half', 'Full' => 'Full']" />
@@ -305,7 +311,34 @@
                     <div>
                         <button wire:click="addRoom('bathrooms')" class="button button-light button-sm">Add Bathroom</button>
                     </div>
+                    @error('property.bathrooms')
+                        <div class="text-red-500">
+                            {{ $errors->first('property.bathrooms') }}
+                        </div>
+                    @enderror
                 </div>
+            </div>
+        </div>
+
+        {{-- Property Details --}}
+        <div x-show="step == 4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak class="spacing">
+            <div class="panel padding spacing">
+                <div>
+                    <h2 class="panel-heading">Amenities</h2>
+                    <p class="panel-desc">Describe what your property has to offer by adding some of these top amenities. You'll be able to add more after publishing your property.</p>
+                </div>
+                <fieldset>
+                    <div class="border-gray-200 divide-y divide-gray-200">
+                        <label class="relative flex items-start py-4">
+                            <div class="flex-1 min-w-0 text-sm">
+                                <div for="person-1" class="font-medium text-gray-700 select-none">Annette Black</div>
+                            </div>
+                            <div class="flex items-center h-5 ml-3">
+                                <input id="person-1" name="person-1" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                            </div>
+                        </label>
+                    </div>
+                </fieldset>
             </div>
         </div>
 
@@ -314,7 +347,7 @@
         <div class="flex flex-row-reverse items-center justify-between">
             <button x-show="nextButton" x-cloak x-on:click="goNext" type="button" class="button button-dark">Continue</button>
             <button x-show="saveButton" x-cloak x-on:click="save" type="button" class="button button-dark">Publish Property</button>
-            <button x-show="backButton" x-cloak x-on:click="goBack" type="button" class="button button-light">Go back</button>
+            <button x-show="backButton" x-cloak x-on:click="goBack" type="button" class="button button-white">Go back</button>
         </div>
     </div>
 

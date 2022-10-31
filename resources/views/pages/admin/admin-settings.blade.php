@@ -1,4 +1,4 @@
-<x-layouts.admin class="container-lg" x-data="app">
+<x-layouts.admin class="container-lg" x-data="adminsettings">
 
     <div>
         @section('sidebar-title', 'Settings')
@@ -30,6 +30,8 @@
                 <h1 class="page-heading">Properties</h1>
 
                 <livewire:pages.admin.settings.properties.property-types />
+
+                <livewire:pages.admin.settings.properties.property-amenities />
             </div>
         </div>
 
@@ -38,7 +40,7 @@
     @push('scripts')
         <script>
             document.addEventListener('alpine:init', () => {
-                Alpine.data('app', () => ({
+                Alpine.data('adminsettings', () => ({
                     activeSection: null,
                     init() {
                         this.setActive('properties')

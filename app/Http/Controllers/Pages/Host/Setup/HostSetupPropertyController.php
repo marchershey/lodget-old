@@ -14,11 +14,6 @@ class HostSetupPropertyController extends Component
     use WireToast;
     public $property;
 
-    // Rooms & Spaces
-    public $bedrooms = [];
-    public $spaces;
-    public $bathrooms;
-
     // Page data
     public $step;
     public $data_property_types = [];
@@ -35,10 +30,13 @@ class HostSetupPropertyController extends Component
             // Property Details
             'property.details.type' => ['required'],
             // Rooms & Spaces
-            'property.bedrooms' => ['required'],
+            'property.bedrooms' => ['required_without:property.areas'],
             'property.bedrooms.*.name' => ['required'],
+            'property.bedrooms.*.beds' => ['required'],
             'property.bedrooms.*.beds.*.bed_type' => ['required'],
+            'property.areas' => ['required_without:property.bedrooms'],
             'property.areas.*.name' => ['required'],
+            'property.areas.*.beds' => ['required'],
             'property.areas.*.beds.*.bed_type' => ['required'],
             'property.bathrooms' => ['required'],
             'property.bathrooms.*.name' => ['required'],
@@ -83,7 +81,7 @@ class HostSetupPropertyController extends Component
 
     public function mount()
     {
-        $this->step = 3;
+        $this->step = 4;
     }
 
     public function load()
@@ -98,7 +96,10 @@ class HostSetupPropertyController extends Component
      */
     public function loadDevData()
     {
-        // Basic Information
+        /**
+         * Basic Information
+         */
+
         $this->property['name'] = "Ohana Burnside";
         $this->property['address'] = [
             'street' => '123 address ave',
@@ -107,9 +108,32 @@ class HostSetupPropertyController extends Component
             'zip' => '10001',
         ];
 
-        // // Property Details
+        /**
+         * Property Details
+         */
+
         $this->property['details'] = [
             'type' => 19,
+        ];
+
+        /**
+         * Rooms & Spaces
+         */
+
+        // Bedrooms
+        $this->property['bedrooms'][] = [
+            'name' => 'Master Bedroom',
+            'beds' => [
+                [
+                    'bed_type' => 'King',
+                ],
+            ],
+        ];
+
+        // Bathrooms
+        $this->property['bathrooms'][] = [
+            'name' => 'Master Bathroom',
+            'bath_type' => 'Full',
         ];
     }
 
@@ -184,19 +208,37 @@ class HostSetupPropertyController extends Component
                     }
                 });
             })->validate([
-                'property.bedrooms' => ['required'],
-                'property.bedrooms.*.beds' => ['required_with:property.bedrooms'],
-
-                'property.bedrooms.*.name' => ['required_with:property.bedrooms.*.beds'],
+                'property.bedrooms' => ['required_without:property.areas'],
+                'property.bedrooms.*.name' => ['required'],
+                'property.bedrooms.*.beds' => ['required'],
                 'property.bedrooms.*.beds.*.bed_type' => ['required'],
 
+                'property.areas' => ['required_without:property.bedrooms'],
                 'property.areas.*.name' => ['required'],
+                'property.areas.*.beds' => ['required'],
                 'property.areas.*.beds.*.bed_type' => ['required'],
+
                 'property.bathrooms' => ['required'],
                 'property.bathrooms.*.name' => ['required'],
                 'property.bathrooms.*.bath_type' => ['required'],
-            ], [], $this->attributes());
+            ], [
+                'property.bedrooms.required_without' => 'At least one bedroom is required unless you have added a common area.',
+                'property.bedrooms.*.name.required' => 'You must name this bedroom.',
+                'property.bedrooms.*.beds.required' => 'Each bedroom must have at least one bed.',
+                'property.bedrooms.*.beds.*.bed_type.required' => 'A bed type is required.',
+
+                'property.areas.required_without' => 'At least one common area is required unless you have added a bedroom.',
+                'property.areas.*.name.required' => 'You must name this area.',
+                'property.areas.*.beds.required' => 'Each area must have at least one bed.',
+                'property.areas.*.beds.*.bed_type.required' => 'A bed type is required.',
+
+                'property.bathrooms.required' => 'At least one bathroom is required.',
+                'property.bathrooms.*.name.required' => 'Bath Name is required.',
+                'property.bathrooms.*.bath_type.required' => 'Bath Type is required.',
+            ], $this->attributes());
         }
+
+        // if()
 
         // Amenities
         // Photos
@@ -223,6 +265,7 @@ class HostSetupPropertyController extends Component
 
     public function addBed($roomType, $roomKey)
     {
+        $this->resetValidation();
         $this->property[$roomType][$roomKey]['beds'][] = [];
     }
 

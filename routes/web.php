@@ -52,13 +52,17 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
         Route::get('/property', App\Http\Controllers\Pages\Host\Setup\HostSetupPropertyController::class)->name('property');
     });
 
-    // Host routes that require active property selected
-    Route::middleware('property')->group(function () {
+    // Host routes after setup
+    Route::middleware('host.setup')->group(function () {
+        // Host dashboard
         Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
+
+        // Host properties
+        // Route::get('/properties/new', )
     });
 });
 
 
-Route::get('/test', function () {
-    dd(auth()->user()->roles());
-});
+// Route::get('/test', function () {
+//     dd(auth()->user()->roles());
+// });

@@ -24,8 +24,8 @@
     {{ $slot }}
     <livewire:scripts />
 
-    @stack('slideovers')
     @stack('modals')
+    @stack('slideovers')
     @stack('scripts')
 </body>
 
