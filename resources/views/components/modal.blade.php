@@ -26,28 +26,21 @@
 </div> --}}
 
 
-<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"></div>
+<div x-on:keydown.escape.prevent.stop="{{ $closeFunction }}" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div x-show="{{ $showFunction }}" x-transition.opacity class="fixed inset-0 transition-opacity bg-gray-800 bg-opacity-75"></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
-            <div class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+            <div x-show="{{ $showFunction }}" x-transition x-on:click.away="{{ $closeFunction }}" class="relative w-full overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-sm padding laptop:p-6">
+                <button x-on:click="{{ $closeFunction }}" class="absolute top-0 right-0 z-30 p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-muted" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
                 <div>
-                    <div class="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
-                        <!-- Heroicon name: outline/check -->
-                        <svg class="w-6 h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </div>
-                    <div class="mt-3 text-center sm:mt-5">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Payment successful</h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-5 sm:mt-6">
-                    <button type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm">Go back to dashboard</button>
+                    {{ $slot }}
                 </div>
             </div>
         </div>

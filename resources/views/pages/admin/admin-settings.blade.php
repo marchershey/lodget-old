@@ -31,7 +31,7 @@
 
                 <livewire:pages.admin.settings.properties.property-types />
 
-                <livewire:pages.admin.settings.properties.property-amenities />
+                <livewire:pages.admin.settings.properties.amenities />
             </div>
         </div>
 

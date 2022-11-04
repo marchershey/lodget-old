@@ -1,4 +1,12 @@
 /**
+ * Utility scripts
+ */
+
+window.addEventListener("scroll", (event) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/**
  * Alpine JS
  * https://alpinejs.dev - version ###
  */

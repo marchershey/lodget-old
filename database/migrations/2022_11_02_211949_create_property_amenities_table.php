@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('property_amenity_groups', function (Blueprint $table) {
+        Schema::create('property_amenities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('property_id');
+            $table->integer('amenity_id');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_amenity_groups');
+        Schema::dropIfExists('property_amenities');
     }
 };

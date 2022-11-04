@@ -155,19 +155,21 @@
 
     <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
         <!-- Mobile top navigation -->
-        <div class="lg:hidden">
-            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 sm:px-6 lg:px-8">
-                <div>
-                    <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="Your Company">
-                </div>
-                <div>
-                    <button x-on:click="mobileMenu = true" type="button" class="inline-flex items-center justify-center w-12 h-12 -mr-3 text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                        <span class="sr-only">Open sidebar</span>
-                        <!-- Heroicon name: outline/bars-3 -->
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
+        <div class="bg-gray-800">
+            <div class="container">
+                <div class="flex items-center justify-between px-4 py-2 sm:px-6 lg:px-8 lg:hidden">
+                    <div>
+                        <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="Your Company">
+                    </div>
+                    <div>
+                        <button x-on:click="mobileMenu = true" type="button" class="inline-flex items-center justify-center w-12 h-12 -mr-3 text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                            <span class="sr-only">Open sidebar</span>
+                            <!-- Heroicon name: outline/bars-3 -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
