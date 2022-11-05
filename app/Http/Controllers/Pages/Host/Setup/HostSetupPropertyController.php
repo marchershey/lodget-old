@@ -62,6 +62,7 @@ class HostSetupPropertyController extends Component
                 break;
             case 5:
                 // Photos
+                $this->emit('loadPhotos');
                 break;
             case 6:
                 // Pricing

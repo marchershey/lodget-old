@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Pages\Host\Setup\Property;
 
 use App\Models\Amenity;
-use App\Models\AmenityGroup;
 use Livewire\Component;
-use Usernotnull\Toast\Concerns\WireToast;
 
 class Amenities extends Component
 {
-    use WireToast;
-
     public $amenities;
-
+    public $selected_amenities = [];
 
     protected $listeners = ['loadAmenities' => 'load'];
 
@@ -24,5 +20,10 @@ class Amenities extends Component
     public function load()
     {
         $this->amenities = Amenity::where('primary', true)->get();
+    }
+
+    public function submit()
+    {
+        $this->emitUp('nextPage', ['amenities' => $this->selected_amenities]);
     }
 }

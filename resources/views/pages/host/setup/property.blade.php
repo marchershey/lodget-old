@@ -132,6 +132,11 @@
         <div x-show="page == 4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
             <livewire:pages.host.setup.property.amenities />
         </div>
+
+        {{-- Photos --}}
+        <div x-show="page == 5" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
+            <livewire:pages.host.setup.property.photos />
+        </div>
     </div>
 
     @push('scripts')
@@ -140,7 +145,7 @@
                 Alpine.data('hostSetupProperty', () => ({
                     page: @entangle('page'),
                     init() {
-                        this.page = 1
+                        this.page = 5
                     },
                     isActive(page) {
                         return this.page == page

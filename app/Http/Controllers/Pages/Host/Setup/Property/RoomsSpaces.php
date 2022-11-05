@@ -132,7 +132,6 @@ class RoomsSpaces extends Component
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {
                     toast()->danger('Please fix the error(s) below.', 'Validation Error')->push();
-                    toast()->danger($validator->errors()->first(), 'Validation Error')->push();
                 }
             });
         })->validate($this->rules(), $this->messages(), $this->attributes());
