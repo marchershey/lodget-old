@@ -12,7 +12,7 @@ class Photos extends Component
     use WithFileUploads, WireToast;
 
     public $photos = [];
-    public $size;
+    public $size = 0;
 
     protected function rules()
     {
@@ -26,7 +26,7 @@ class Photos extends Component
     {
         return [
             'photos.required' => 'You need to add at least one image.',
-            'photos.*.max' => 'Photos cannot exceed 12mb.',
+            'photos.*.max' => 'Size cannot exceed 12mb.',
         ];
     }
 
@@ -42,7 +42,7 @@ class Photos extends Component
         return view('pages.host.setup.property.photos');
     }
 
-    public function updatedPhotos()
+    public function updatedPhotos($value)
     {
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
@@ -66,6 +66,11 @@ class Photos extends Component
         $this->size = round($size /= 1024, 2);
     }
 
+    public function deletePhoto($photo_key)
+    {
+        unset($this->photos[$photo_key]);
+    }
+
     public function submit()
     {
         $this->withValidator(function (Validator $validator) {
@@ -75,5 +80,15 @@ class Photos extends Component
                 }
             });
         })->validate($this->rules(), $this->messages(), $this->attributes());
+
+        // upload photos
+        foreach ($this->photos as $photo) {
+
+
+
+            dd($photo->store('property/images', 'public'));
+
+            // dd($photo);
+        }
     }
 }

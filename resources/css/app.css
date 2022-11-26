@@ -148,7 +148,7 @@
         @apply !text-xs !py-1 px-2;
     }
     .input-dark {
-        @apply border border-gray-200 bg-gray-50;
+        @apply bg-gray-100 border border-gray-200;
     }
     .input-light {
         @apply bg-white border border-gray-200;
@@ -209,7 +209,10 @@
     .button-xs svg {
         @apply w-4 h-4 mb-0.5;
     }
-}
+    
+    .alert {
+        @apply padding-sm rounded border
+    }
 
 @layer utilities {
     [x-cloak] {
