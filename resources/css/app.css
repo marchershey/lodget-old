@@ -209,10 +209,11 @@
     .button-xs svg {
         @apply w-4 h-4 mb-0.5;
     }
-    
+
     .alert {
-        @apply padding-sm rounded border
+        @apply border rounded padding-sm;
     }
+}
 
 @layer utilities {
     [x-cloak] {

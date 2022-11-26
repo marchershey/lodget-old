@@ -5,11 +5,8 @@
             <p class="panel-desc">Let's show off your property by adding some photos.</p>
         </div>
 
-        @if ($errors->any())
-        @endif
-
         <div class="flex flex-col items-center group">
-            <label for="photos" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50">
+            <label for="photos" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 @error('photos') border-red-500 bg-red-50 @enderror">
                 <div class="flex flex-col items-center justify-center padding">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-muted-light" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -27,7 +24,13 @@
                     <div class="mt-3 text-xs text-muted-light">JPG, JPEG, PNG, GIF, or SVG - 20MB max</div>
                 </div>
                 <input wire:model="photos" id="photos" type="file" class="hidden" accept="image/jpg, image/jpeg, image/png, image/gif" multiple />
+                {{-- <input wire:model="photos" id="photos" type="file" class="hidden" multiple /> --}}
             </label>
+            @error('photos')
+                <div class="w-full mt-5 text-left">
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                </div>
+            @enderror
         </div>
 
         <div x-show="isUploading">
@@ -50,15 +53,25 @@
             <div class="spacing-sm">
                 <div>
                     <h3 class="leading-none title">Photos</h3>
-                    <span class="subtitle">Total Size: {{ $this->size }} MB</span>
+                    <span class="subtitle">Total Size: {{ $size }} MB</span>
                 </div>
+
                 <ul role="list" class="grid grid-cols-2 tablet:grid-cols-3 gap">
-                    @foreach ($photos as $photo)
-                        <li class="relative">
-                            <div class="block w-full overflow-hidden bg-gray-100 rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                    @foreach ($photos as $photo_key => $photo)
+                        <li class="relative group">
+                            <button wire:click="deletePhoto({{ $photo_key }})" class="absolute top-0 right-0 z-10 hidden cursor-pointer group-hover:block">
+                                <div class="p-2 bg-white rounded-bl-xl">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="block w-full overflow-hidden bg-gray-100 rounded-lg shadow-xl aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <img src="{{ $photo->temporaryUrl() }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
                             </div>
-                            <p class="block mt-2 text-sm font-medium text-gray-900 truncate pointer-events-none">{{ $photo->getClientOriginalName() }}</p>
+                            <p class="block mt-2 text-sm font-medium text-gray-900 truncate pointer-events-none @error('photos.' . $photo_key) text-red-500 @enderror">{{ $photo->getClientOriginalName() }}</p>
                             <p class="block text-xs font-medium text-gray-500 pointer-events-none">{{ round($photo->getSize() / 1024, 2) }} MB</p>
                         </li>
                     @endforeach
@@ -68,14 +81,17 @@
 
     </div>
 
-    <div>
+    {{-- <div>
         @error('photos')
             <span class="error">Photos: {{ $message }}</span>
         @enderror
         @error('photos.*')
             <span class="error">Photos.*: {{ $message }}</span>
         @enderror
-    </div>
+        @error('photos[5]')
+            <span class="error">Photos 5 error: {{ $message }}</span>
+        @enderror
+    </div> --}}
 
     <div class="flex flex-row-reverse items-center justify-between">
         <button wire:click="submit" type="submit" class="button button-dark">Continue</button>
