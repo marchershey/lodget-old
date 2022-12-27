@@ -7,8 +7,8 @@ use Livewire\Component;
 
 class Amenities extends Component
 {
-    public $amenities;
-    public $selected_amenities = [];
+    public $property;
+    public $primary_amenities = [];
 
     protected $listeners = ['loadAmenities' => 'load'];
 
@@ -19,11 +19,16 @@ class Amenities extends Component
 
     public function load()
     {
-        $this->amenities = Amenity::where('primary', true)->get();
+        // Why do we need this? 
+        $this->property['amenities'] = [];
+
+        $this->primary_amenities = Amenity::where('primary', true)->get();
     }
 
     public function submit()
     {
-        $this->emitUp('nextPage', ['amenities' => $this->selected_amenities]);
+        // No validation required
+
+        $this->emitUp('nextPage', $this->property);
     }
 }

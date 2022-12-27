@@ -17,7 +17,7 @@ class HostSetupPropertyController extends Component
     public $page = 0;
     public $property = [];
 
-    protected $listeners = ['nextPage', 'prevPage'];
+    protected $listeners = ['setPage', 'nextPage', 'prevPage'];
 
     public function render()
     {
@@ -66,9 +66,15 @@ class HostSetupPropertyController extends Component
                 break;
             case 6:
                 // Pricing
+                $this->emit('loadPricing');
                 break;
             case 7:
+                // Options
+                $this->emit('loadOptions');
+                break;
+            case 8:
                 // Publish
+                dd($this->property);
                 break;
         }
 

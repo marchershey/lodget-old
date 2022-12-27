@@ -11,8 +11,8 @@ class Details extends Component
 {
     use WireToast;
 
-    public $default_types;
     public $property;
+    public $default_types;
 
     protected $listeners = ['loadDetails' => 'load'];
 

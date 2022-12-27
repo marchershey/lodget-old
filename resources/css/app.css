@@ -50,7 +50,7 @@
         @apply flex items-center px-4 py-4 space-x-3 border-b cursor-pointer tablet:px-6 laptop:px-8 hover:bg-gray-50;
     }
     .sidebar-menu-item-active {
-        @apply bg-gray-100;
+        @apply bg-gray-50;
     }
     .sidebar-menu-item h1 {
         @apply text-sm font-medium;
@@ -85,6 +85,9 @@
     .spacing-sm {
         @apply space-y-5;
     }
+    .spacing-xs {
+        @apply space-y-3;
+    }
 
     /* Forms */
     .form {
@@ -99,7 +102,7 @@
         @apply bg-white border border-gray-200 rounded;
     }
     .card-dark {
-        @apply bg-gray-100;
+        @apply bg-gray-50;
     }
     .panel {
         @apply -mx-4 bg-white border border-gray-200 tablet:rounded tablet:mx-0;
@@ -139,7 +142,7 @@
 
     /* Inputs */
     .input {
-        @apply block w-full px-4 font-medium rounded bg-gray-50 focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-gray-800 disabled:opacity-40 focus:border-transparent;
+        @apply block w-full px-4 font-medium rounded placeholder:font-normal bg-gray-50 focus:outline-none focus:shadow-xl focus:bg-white focus:ring-2 focus:ring-gray-800 disabled:opacity-40 focus:border-transparent;
     }
     .input-sm {
         @apply !text-sm !py-1.5;
@@ -148,7 +151,7 @@
         @apply !text-xs !py-1 px-2;
     }
     .input-dark {
-        @apply bg-gray-100 border border-gray-200;
+        @apply border border-gray-200 bg-gray-50;
     }
     .input-light {
         @apply bg-white border border-gray-200;
@@ -212,6 +215,12 @@
 
     .alert {
         @apply border rounded padding-sm;
+    }
+    .alert-gray {
+        @apply text-gray-900 border-gray-100 bg-gray-50;
+    }
+    .alert-blue {
+        @apply text-blue-900 border-blue-100 bg-blue-50;
     }
 }
 

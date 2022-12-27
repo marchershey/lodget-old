@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('property_pricing_fees', function (Blueprint $table) {
             $table->id();
+            $table->integer('property_id');
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->integer('type_id');
-            $table->integer('host_id');
+            $table->boolean('fixed');
+            $table->integer('amount');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('property_pricing_fees');
     }
 };

@@ -90,15 +90,29 @@
                     </a>
                 </li>
                 <li class="relative">
+                    <div class="absolute top-5 left-2 -ml-px mt-0.5 h-full w-0.5 bg-gray-300" :class="isCompleted(7) && '!bg-black'" aria-hidden="true"></div>
                     <a href="#" class="group">
                         <div class="flex items-center space-x-5">
-                            <div class="flex items-center justify-center w-4 h-4 rounded-full" :class="isActive(7) || isCompleted(6) ? 'bg-black' : 'bg-gray-300'">
+                            <div class="flex items-center justify-center w-4 h-4 rounded-full" :class="isActive(7) || isCompleted(7) ? 'bg-black' : 'bg-gray-300'">
                                 <svg x-show="isCompleted(7)" x-cloak xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M5 12l5 5l10 -10"></path>
                                 </svg>
                             </div>
-                            <div :class="isActive(7) && 'font-semibold'">Publish</div>
+                            <div :class="isActive(7) && 'font-semibold'">Options</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="relative">
+                    <a href="#" class="group">
+                        <div class="flex items-center space-x-5">
+                            <div class="flex items-center justify-center w-4 h-4 rounded-full" :class="isActive(8) || isCompleted(8) ? 'bg-black' : 'bg-gray-300'">
+                                <svg x-show="isCompleted(8)" x-cloak xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M5 12l5 5l10 -10"></path>
+                                </svg>
+                            </div>
+                            <div :class="isActive(8) && 'font-semibold'">Publish</div>
                         </div>
                     </a>
                 </li>
@@ -137,6 +151,16 @@
         <div x-show="page == 5" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
             <livewire:pages.host.setup.property.photos />
         </div>
+
+        {{-- Pricing --}}
+        <div x-show="page == 6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
+            <livewire:pages.host.setup.property.pricing />
+        </div>
+
+        {{-- Options --}}
+        <div x-show="page == 7" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
+            <livewire:pages.host.setup.property.options />
+        </div>
     </div>
 
     @push('scripts')
@@ -145,7 +169,7 @@
                 Alpine.data('hostSetupProperty', () => ({
                     page: @entangle('page'),
                     init() {
-                        this.page = 5
+                        this.page = 7
                     },
                     isActive(page) {
                         return this.page == page

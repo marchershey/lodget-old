@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages\Host\Setup\Property;
 
+use App\Models\PropertyPhoto;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,8 +12,11 @@ class Photos extends Component
 {
     use WithFileUploads, WireToast;
 
+    public $property;
     public $photos = [];
-    public $size = 0;
+    public $size = 0; // describe this
+
+    protected $listeners = ['loadPhotos' => 'load'];
 
     protected function rules()
     {
@@ -26,7 +30,7 @@ class Photos extends Component
     {
         return [
             'photos.required' => 'You need to add at least one image.',
-            'photos.*.max' => 'Size cannot exceed 12mb.',
+            'photos.*.max' => 'This photo\'s file size is too large. Photo size cannot exceed 12mb.',
         ];
     }
 
@@ -42,6 +46,11 @@ class Photos extends Component
         return view('pages.host.setup.property.photos');
     }
 
+    public function load()
+    {
+        $this->property['photos'] = [];
+    }
+
     public function updatedPhotos($value)
     {
         $this->withValidator(function (Validator $validator) {
@@ -51,6 +60,7 @@ class Photos extends Component
                 }
             });
         })->validate($this->rules(), $this->messages(), $this->attributes());
+
 
         $this->calcTotalSize();
     }
@@ -73,22 +83,22 @@ class Photos extends Component
 
     public function submit()
     {
+        // validate
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {
-                    toast()->danger('Please fix the error(s) below.', 'Validation Error')->push();
+                    toast()->danger('You need to either resolve the invalid photo, or remove it.', 'Validation Error')->push();
                 }
             });
         })->validate($this->rules(), $this->messages(), $this->attributes());
 
         // upload photos
         foreach ($this->photos as $photo) {
+            $path = $photo->store('property/photos', 'public', $this->rules());
 
-
-
-            dd($photo->store('property/images', 'public'));
-
-            // dd($photo);
+            $this->property['photos'][] = $path;
         }
+
+        $this->emitUp('nextPage', $this->property);
     }
 }
