@@ -6,7 +6,7 @@
         </div>
         <div class="form">
             <div class="col-span-full laptop:col-span-4">
-                <x-forms.text label="Minimum Nights" model="property.pricing.tax_rate" placeholder="0" desc="Require the guest stay a minimum number of nights." />
+                <x-forms.text label="Minimum Nights" model="property.options.min_nights" placeholder="0" desc="Require the guest stay a minimum number of nights." />
             </div>
         </div>
     </div>

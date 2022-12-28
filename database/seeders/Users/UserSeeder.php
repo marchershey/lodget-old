@@ -24,6 +24,16 @@ class UserSeeder extends Seeder
 
         $admin->assignRole('admin');
 
+        $host = \App\Models\User::create([
+            'first_name' => 'Host',
+            'last_name' => 'User',
+            'email' => 'host@demo.com',
+            'password' => '$2y$10$Ub07PVNZMtbV3rA04/FOoOnCGdY7wcFxQSE8ifYlRd2CgdtUmbkDC',
+            'registered_ip' => '0.0.0.0',
+        ]);
+
+        $host->assignRole('host');
+
         $numOfHosts = 10;
         $numOfGuests = 10;
 
