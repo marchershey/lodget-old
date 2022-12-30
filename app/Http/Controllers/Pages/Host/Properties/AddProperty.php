@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Pages\Host\Setup;
+namespace App\Http\Controllers\Pages\Host\Properties;
 
-use App\Models\AmenityGroup;
-use App\Models\Property;
-use App\Models\PropertyType;
-use App\Rules\AlphaSpace;
-use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class HostSetupPropertyController extends Component
+class AddProperty extends Component
 {
     use WireToast;
 

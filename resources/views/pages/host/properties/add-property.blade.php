@@ -129,42 +129,42 @@
 
         {{-- Basic Information --}}
         <div x-show="page == 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.basic-information />
+            <livewire:pages.host.properties.components.basic-information />
         </div>
 
         {{-- Property Details --}}
         <div x-show="page == 2" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.details />
+            <livewire:pages.host.properties.components.details />
         </div>
 
         {{-- Rooms & Spaces --}}
         <div x-show="page == 3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.rooms-spaces />
+            <livewire:pages.host.properties.components.rooms-spaces />
         </div>
 
         {{-- Amenities --}}
         <div x-show="page == 4" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.amenities />
+            <livewire:pages.host.properties.components.amenities />
         </div>
 
         {{-- Photos --}}
         <div x-show="page == 5" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.photos />
+            <livewire:pages.host.properties.components.photos />
         </div>
 
         {{-- Pricing --}}
         <div x-show="page == 6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.pricing />
+            <livewire:pages.host.properties.components.pricing />
         </div>
 
         {{-- Options --}}
         <div x-show="page == 7" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.options />
+            <livewire:pages.host.properties.components.options />
         </div>
 
         {{-- Publish --}}
         <div x-show="page == 8" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.setup.property.publish />
+            <livewire:pages.host.properties.components.publish />
         </div>
     </div>
 

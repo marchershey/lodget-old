@@ -1,31 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\Pages\Host\Setup\Property;
+namespace App\Http\Controllers\Pages\Host\Properties\Components;
 
+use App\Models\PropertyType;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class Options extends Component
+class Details extends Component
 {
     use WireToast;
 
     public $property;
+    public $selected_property_type;
+    public $default_types;
 
-    protected $listeners = ['loadOptions' => 'load'];
+    protected $listeners = ['loadDetails' => 'load'];
 
     protected function rules()
     {
         return [
-            'property.options.min_nights' => ['required', 'integer'],
+            'selected_property_type' => ['required', 'integer'],
         ];
     }
 
     protected function messages()
     {
         return [
-            'property.options.min_nights.required' => 'Minimum nights is required.',
-            'property.options.min_nights.integer' => 'Minimum nights is invalid.',
+            'selected_property_type.required' => 'Property Type is required.',
+            'selected_property_type.integer' => 'Property Type is invalid.',
         ];
     }
 
@@ -38,7 +41,7 @@ class Options extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.options');
+        return view('pages.host.setup.property.details');
     }
 
     public function load()
@@ -46,11 +49,23 @@ class Options extends Component
         if (app()->environment() == 'local') {
             $this->loadDevData();
         }
+
+        foreach (PropertyType::all()->sortBy('name') as $type) {
+            $this->default_types[$type->id] = ucFirst($type->name);
+        }
     }
 
     public function loadDevData()
     {
-        $this->property['options']['min_nights'] = 3;
+        $this->selected_property_type = 19;
+        $this->updatedSelectedPropertyType(19);
+    }
+
+    public function updatedSelectedPropertyType($propertyTypeId)
+    {
+        // when user selects a property type, update the TYPE property to refect the model.
+        $type = PropertyType::find($propertyTypeId);
+        $this->property['type'] = $type;
     }
 
     public function submit()

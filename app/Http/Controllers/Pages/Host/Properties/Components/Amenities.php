@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pages\Host\Setup\Property;
+namespace App\Http\Controllers\Pages\Host\Properties\Components;
 
 use App\Models\Amenity;
 use Livewire\Component;

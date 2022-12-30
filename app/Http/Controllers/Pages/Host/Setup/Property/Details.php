@@ -46,7 +46,9 @@ class Details extends Component
 
     public function load()
     {
-        $this->loadDevData();
+        if (app()->environment() == 'local') {
+            $this->loadDevData();
+        }
 
         foreach (PropertyType::all()->sortBy('name') as $type) {
             $this->default_types[$type->id] = ucFirst($type->name);
@@ -55,14 +57,13 @@ class Details extends Component
 
     public function loadDevData()
     {
-        // 
+        $this->selected_property_type = 19;
+        $this->updatedSelectedPropertyType(19);
     }
 
     public function updatedSelectedPropertyType($propertyTypeId)
     {
         // when user selects a property type, update the TYPE property to refect the model.
-        toast()->debug($propertyTypeId)->push();
-
         $type = PropertyType::find($propertyTypeId);
         $this->property['type'] = $type;
     }

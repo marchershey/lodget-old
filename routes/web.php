@@ -49,7 +49,7 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
 
     // Host setup routes
     Route::name('setup.')->prefix('/setup')->group(function () {
-        Route::get('/property', App\Http\Controllers\Pages\Host\Setup\HostSetupPropertyController::class)->name('property');
+        Route::get('/property', App\Http\Controllers\Pages\Host\Properties\AddProperty::class)->name('property');
     });
 
     // Host routes after setup
@@ -58,11 +58,6 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
         Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
 
         // Host properties
-        // Route::get('/properties/new', )
+        Route::get('/properties/add', App\Http\Controllers\Pages\Host\Properties\AddProperty::class)->name('property');
     });
 });
-
-
-// Route::get('/test', function () {
-//     dd(auth()->user()->roles());
-// });
