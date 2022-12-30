@@ -7,7 +7,7 @@ use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class RoomsSpaces extends Component
+class Rooms extends Component
 {
     use WireToast;
 
@@ -57,7 +57,7 @@ class RoomsSpaces extends Component
             'property.rooms.bethrooms.*.bath_type' => 'Bath Type is required.',
 
 
-            // Active Room
+            // Active room
             'active_room.name.required' => 'Room name is required.',
             'active_room.beds.required_if' => 'Each room must have at least one bed.',
             'active_room.bath_type.required_if' => 'Bath type is required.',
@@ -73,7 +73,7 @@ class RoomsSpaces extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.rooms-spaces');
+        return view('pages.host.properties.components.rooms');
     }
 
     public function updated($field, $value)
@@ -100,13 +100,13 @@ class RoomsSpaces extends Component
                 [
                     'name' => 'Master Bedroom',
                     'beds' => [
-                        ['bed_type' => 'King',]
+                        'King',
                     ],
                 ], [
                     'name' => 'Guest Bedroom',
                     'beds' => [
-                        ['bed_type' => 'Queen',],
-                        ['bed_type' => 'King',],
+                        'Queen',
+                        'King',
                     ],
                 ],
             ],
@@ -114,7 +114,7 @@ class RoomsSpaces extends Component
                 [
                     'name' => 'Living room',
                     'beds' => [
-                        ['bed_type' => 'Sleeper Sofa'],
+                        'Sleeper Sofa',
                     ]
                 ]
             ],
@@ -148,9 +148,7 @@ class RoomsSpaces extends Component
 
     public function addBed($bed_type)
     {
-        $this->active_room['beds'][] = [
-            'bed_type' => $bed_type
-        ];
+        $this->active_room['beds'][] = $bed_type;
     }
 
     public function removeBed($bed_key)

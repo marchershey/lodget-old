@@ -98,7 +98,7 @@
                                     <div class="flex flex-wrap gap-2">
                                         @if (isset($room['beds']))
                                             @foreach ($room['beds'] as $bed)
-                                                <div class="bg-gray-100 button button-xs">{{ $bed['bed_type'] }}</div>
+                                                <div class="bg-gray-100 button button-xs">{{ $bed }}</div>
                                             @endforeach
                                         @endif
                                     </div>
@@ -131,7 +131,7 @@
                                     <div class="flex flex-wrap gap-2">
                                         @if (isset($room['beds']))
                                             @foreach ($room['beds'] as $bed)
-                                                <div class="bg-gray-100 button button-xs">{{ $bed['bed_type'] }}</div>
+                                                <div class="bg-gray-100 button button-xs">{{ $bed }}</div>
                                             @endforeach
                                         @endif
                                     </div>

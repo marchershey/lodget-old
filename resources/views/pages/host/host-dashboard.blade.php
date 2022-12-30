@@ -1,7 +1,8 @@
 <x-layouts.host>
+
     <div class="flex flex-col">
         <div class="w-full h-full bg-black">
-            {{ session('test') }}
+            asdf
         </div>
     </div>
 </x-layouts.host>

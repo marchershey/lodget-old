@@ -44,7 +44,7 @@ class Photos extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.photos');
+        return view('pages.host.properties.components.photos');
     }
 
     public function load()

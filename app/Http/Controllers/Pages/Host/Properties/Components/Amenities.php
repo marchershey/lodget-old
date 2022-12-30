@@ -18,11 +18,13 @@ class Amenities extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.amenities');
+        return view('pages.host.properties.components.amenities');
     }
 
     public function load()
     {
+        $this->property['amenities'] = [];
+
         if (app()->environment() == 'local') {
             $this->loadDevData();
         }

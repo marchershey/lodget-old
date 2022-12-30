@@ -58,6 +58,7 @@ Route::name('host.')->prefix('/host')->middleware('auth')->group(function () {
         Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
 
         // Host properties
-        Route::get('/properties/add', App\Http\Controllers\Pages\Host\Properties\AddProperty::class)->name('property');
+        Route::get('/properties', App\Http\Controllers\Pages\Host\Properties\PropertiesList::class)->name('property.index');
+        Route::get('/properties/add', App\Http\Controllers\Pages\Host\Properties\AddProperty::class)->name('property.add');
     });
 });

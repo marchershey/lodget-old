@@ -137,9 +137,9 @@
             <livewire:pages.host.properties.components.details />
         </div>
 
-        {{-- Rooms & Spaces --}}
+        {{-- Rooms --}}
         <div x-show="page == 3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="hidden" x-cloak>
-            <livewire:pages.host.properties.components.rooms-spaces />
+            <livewire:pages.host.properties.components.rooms />
         </div>
 
         {{-- Amenities --}}
@@ -174,7 +174,7 @@
                 Alpine.data('hostSetupProperty', () => ({
                     page: @entangle('page'),
                     init() {
-                        this.page = 1
+                        this.page = 8
                     },
                     isActive(page) {
                         return this.page == page

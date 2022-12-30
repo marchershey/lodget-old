@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('property_id');
             $table->integer('base_rate');
             $table->integer('tax_rate');
+            $table->json('fees');
             $table->timestamps();
         });
     }

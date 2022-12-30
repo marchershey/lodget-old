@@ -62,7 +62,7 @@ class BasicInformation extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.basic-information');
+        return view('pages.host.properties.components.basic-information');
     }
 
     public function load()

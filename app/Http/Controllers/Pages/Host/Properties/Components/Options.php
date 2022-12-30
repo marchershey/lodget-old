@@ -38,7 +38,7 @@ class Options extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.options');
+        return view('pages.host.properties.components.options');
     }
 
     public function load()

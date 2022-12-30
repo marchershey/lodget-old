@@ -34,7 +34,7 @@
                                             <div class="flex flex-wrap gap-2">
                                                 @if (isset($room['beds']))
                                                     @foreach ($room['beds'] as $bed)
-                                                        <div class="bg-gray-100 button button-xs">{{ $bed['bed_type'] }}</div>
+                                                        <div class="bg-gray-100 button button-xs">{{ $bed }}</div>
                                                     @endforeach
                                                 @endif
                                             </div>
@@ -119,7 +119,7 @@
                                             <div class="flex flex-wrap gap-2">
                                                 @if (isset($room['beds']))
                                                     @foreach ($room['beds'] as $bed)
-                                                        <div class="bg-gray-100 button button-xs">{{ $bed['bed_type'] }}</div>
+                                                        <div class="bg-gray-100 button button-xs">{{ $bed }}</div>
                                                     @endforeach
                                                 @endif
                                             </div>
@@ -280,7 +280,7 @@
                             <div class="flex flex-wrap gap-2">
                                 @if (isset($active_room['beds']))
                                     @foreach ($active_room['beds'] as $bed_key => $bed)
-                                        <button type="button" wire:click="removeBed({{ $bed_key }})" class="cursor-pointer button button-sm button-light">{{ $bed['bed_type'] }}</button>
+                                        <button type="button" wire:click="removeBed({{ $bed_key }})" class="cursor-pointer button button-sm button-light">{{ $bed }}</button>
                                     @endforeach
                                 @endif
                                 <div x-data="{ open: false }" wire:key="add_bed">

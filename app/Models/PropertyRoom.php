@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PropertyPricing extends Model
+class PropertyRoom extends Model
 {
     use HasFactory;
 
     protected $casts = [
-        'fees' => 'array', // Will convarted to (Array)
+        'beds' => 'array', // Will convarted to (Array)
     ];
 }

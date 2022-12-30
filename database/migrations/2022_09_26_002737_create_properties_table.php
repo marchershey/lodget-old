@@ -22,6 +22,11 @@ return new class extends Migration
             $table->string('zip');
             $table->integer('type_id');
             $table->integer('host_id');
+
+            // options
+            $table->integer('min_nights');
+            $table->boolean('enabled')->default(true);
+
             $table->timestamps();
         });
     }

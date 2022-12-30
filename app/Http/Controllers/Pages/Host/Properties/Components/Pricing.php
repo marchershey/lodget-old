@@ -58,7 +58,7 @@ class Pricing extends Component
 
     public function render()
     {
-        return view('pages.host.setup.property.pricing');
+        return view('pages.host.properties.components.pricing');
     }
 
     public function load()
