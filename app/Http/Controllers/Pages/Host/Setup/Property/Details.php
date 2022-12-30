@@ -12,6 +12,7 @@ class Details extends Component
     use WireToast;
 
     public $property;
+    public $selected_property_type;
     public $default_types;
 
     protected $listeners = ['loadDetails' => 'load'];
@@ -19,15 +20,15 @@ class Details extends Component
     protected function rules()
     {
         return [
-            'property.type' => ['required', 'integer'],
+            'selected_property_type' => ['required', 'integer'],
         ];
     }
 
     protected function messages()
     {
         return [
-            'property.type.required' => 'Property Type is required.',
-            'property.type.integer' => 'Property Type is invalid.',
+            'selected_property_type.required' => 'Property Type is required.',
+            'selected_property_type.integer' => 'Property Type is invalid.',
         ];
     }
 
@@ -54,7 +55,16 @@ class Details extends Component
 
     public function loadDevData()
     {
-        $this->property['type'] = 1;
+        // 
+    }
+
+    public function updatedSelectedPropertyType($propertyTypeId)
+    {
+        // when user selects a property type, update the TYPE property to refect the model.
+        toast()->debug($propertyTypeId)->push();
+
+        $type = PropertyType::find($propertyTypeId);
+        $this->property['type'] = $type;
     }
 
     public function submit()

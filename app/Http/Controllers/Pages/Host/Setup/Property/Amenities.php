@@ -9,6 +9,7 @@ class Amenities extends Component
 {
     public $property;
     public $primary_amenities = [];
+    public $selected_amenities = [];
 
     protected $listeners = ['loadAmenities' => 'load'];
 
@@ -28,6 +29,11 @@ class Amenities extends Component
     public function submit()
     {
         // No validation required
+
+        // Load the actual amenity model
+        foreach ($this->selected_amenities as $key => $amenity) {
+            $this->property['amenities'][$key] = Amenity::find($amenity);
+        }
 
         $this->emitUp('nextPage', $this->property);
     }

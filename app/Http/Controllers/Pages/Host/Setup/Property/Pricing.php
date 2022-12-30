@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages\Host\Setup\Property;
 
+use Cknow\Money\Money;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -21,7 +22,7 @@ class Pricing extends Component
             'property.pricing.tax_rate' => ['required', 'integer', 'max:99', 'min:0'],
             'property.pricing.fees' => [''],
             'property.pricing.fees.*.name' => ['required'],
-            'property.pricing.fees.*.amount' => ['required', 'numeric', 'regex:/^(?!0,00|0)(?:\d{1,3}(?:[,]\d{3})*|(?:\d+))(?:[.,]\d{2})?$/'],
+            'property.pricing.fees.*.amount' => ['required', 'numeric'],
             'property.pricing.fees.*.type' => ['required'],
         ];
     }
@@ -72,6 +73,69 @@ class Pricing extends Component
         // 
     }
 
+    public function updatedProperty($value, $property)
+    {
+        $property = explode('.', $property);
+
+        // toast()->debug($value)->push();
+        // toast()->debug($property)->push();
+
+        // Format the Nightly Base Rate
+        if ($property[1] == 'base_rate') {
+            if (is_numeric($value)) {
+                $money = Money::USD($value);
+                $this->property['pricing']['base_rate'] = $money->formatByDecimal();
+            } else {
+                $this->property['pricing']['base_rate'] = null;
+            }
+            return;
+        }
+
+        // Fees
+        if ($property[1] == 'fees') {
+            // Set the Fee Key
+            $key = $property[2];
+
+            // If the Fee Type is changed, clear the amount if it's set
+            if ($property[3] == 'type' && isset($this->property['pricing']['fees'][$key]['amount'])) {
+                $this->property['pricing']['fees'][$key]['amount'] = null;
+                return;
+            }
+
+            // Format fixed fees
+            // Grab the fee
+            $fee = $this->property['pricing']['fees'][$key];
+            if ($property[3] == 'amount' && $fee['type'] == 'fixed') {
+                if (is_numeric($value)) {
+                    $this->property['pricing']['fees'][$key]['amount'] = Money::USD($value)->formatByDecimal();
+                } else {
+                    $this->property['pricing']['fees'][$key]['amount'] = null;
+                }
+                return;
+            }
+        }
+
+
+        // Format the Fee's Amount based on if it's a percentage or fixed amount.
+
+        // if ($property[1] == 'fees' && $property[3] == 'amount') {
+        //     $fee = $this->property['pricing']['fees'][$key];
+
+        //     // Is the Fee type "fixed" or "percentage"
+        //     if ($fee['type'] == 'fixed') {
+        //         $money = Money::USD($value);
+        //         $this->property['pricing']['fees'][$key]['amount'] = $money->formatByDecimal();
+        //         return;
+        //     }
+        // }
+    }
+
+    // public function updatedPropertyPricingBaseRate($value)
+    // {
+    //     $money = Money::USD($value);
+    //     $this->property['pricing']['base_rate'] = $money->formatByDecimal();
+    // }
+
     public function addFee()
     {
         $this->property['pricing']['fees'][] = [];
@@ -92,10 +156,7 @@ class Pricing extends Component
             });
         })->validate($this->rules(), $this->messages(), $this->attributes());
 
-        // Format properties
-        $property['base_rate'] = 0;
-
-
+        dd($this->property);
 
 
         $this->emitUp('nextPage', $this->property);

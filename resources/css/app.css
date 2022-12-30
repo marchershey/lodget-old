@@ -139,6 +139,9 @@
     .table tbody tr td {
         @apply p-4 whitespace-nowrap;
     }
+    .table-no-x-padding tbody tr td {
+        @apply px-0 !important;
+    }
 
     /* Inputs */
     .input {
@@ -221,6 +224,16 @@
     }
     .alert-blue {
         @apply text-blue-900 border-blue-100 bg-blue-50;
+    }
+    .alert-yellow {
+        @apply text-yellow-900 border-yellow-100 bg-yellow-50;
+    }
+
+    .badge {
+        @apply px-2 py-1 text-sm border rounded;
+    }
+    .badge-gray {
+        @apply text-gray-800 bg-gray-100;
     }
 }
 

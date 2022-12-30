@@ -6,7 +6,7 @@
         </div>
         <div class="form">
             <div class="col-span-full laptop:col-span-4">
-                <x-forms.text class="money" label="Nightly Base Rate" model="property.pricing.base_rate" placeholder="0.00" desc="How much do you to charge guests per night, excluding any extra taxes or fees?" />
+                <x-forms.text x-mask:dynamic="$money($input)" type="number" class="money" label="Nightly Base Rate" model="property.pricing.base_rate" placeholder="0.00" desc="How much do you to charge guests per night, excluding any extra taxes or fees?" />
             </div>
             {{-- <div class="col-span-full laptop:col-span-4">
                 <x-forms.text label="Minimum Nights" model="property.pricing.min_nights" placeholder="0" desc="Require your guests to stay a minimum number of nights." />
@@ -21,7 +21,7 @@
         </div>
         <div class="form">
             <div class="col-span-full laptop:col-span-4">
-                <x-forms.text label="Tax Rate (%)" model="property.pricing.tax_rate" placeholder="0" desc="The tax percentage is calculated on the entire total after fees. " />
+                <x-forms.text x-mask="99" label="Tax Rate (%)" model="property.pricing.tax_rate" placeholder="0" desc="The tax percentage is calculated on the entire total after fees. " />
             </div>
         </div>
     </div>
@@ -53,10 +53,18 @@
                                 <x-forms.text label="Fee Name" model="property.pricing.fees.{{ $fee_key }}.name" placeholder="Name" desc="" class="input-light" />
                             </div>
                             <div class="col-span-3">
-                                <x-forms.text label="Amount" model="property.pricing.fees.{{ $fee_key }}.amount" placeholder="0" desc="" class="input-light" />
+                                <x-forms.select label="Fee Type" model="property.pricing.fees.{{ $fee_key }}.type" :options="['fixed' => 'Fixed', 'percent' => 'Percentage']" class="input-light" />
                             </div>
                             <div class="col-span-3">
-                                <x-forms.select label="Fee Type" model="property.pricing.fees.{{ $fee_key }}.type" :options="['fixed' => 'Fixed', 'percent' => 'Percentage']" class="input-light" />
+                                @if (isset($property['pricing']['fees'][$fee_key]['type']))
+                                    @if ($property['pricing']['fees'][$fee_key]['type'] == 'fixed')
+                                        <x-forms.text x-mask:dynamic="$money($input)" :wire:key="'fee-fixed-'.$fee_key" label="Amount" model="property.pricing.fees.{{ $fee_key }}.amount" placeholder="0.00" desc="" class="input-light" />
+                                    @else
+                                        <x-forms.text x-mask="99" :wire:key="'fee-percentage-'.$fee_key" label="Amount" model="property.pricing.fees.{{ $fee_key }}.amount" placeholder="0%" desc="" class="input-light" />
+                                    @endif
+                                @else
+                                    <x-forms.text label="Amount" model="property.pricing.fees.{{ $fee_key }}.amount" desc="" class="input-light" disabled />
+                                @endif
                             </div>
                             <div class="flex items-center justify-center mt-7 @error('property.pricing.fees.' . $fee_key . '.*') mb-4 @enderror">
                                 <button wire:click="removeFee({{ $fee_key }})" class="cursor-pointer text-muted hover:text-red-500">
@@ -79,3 +87,11 @@
         <button wire:click="$emit('prevPage')" type="submit" class="button button-light">Go back</button>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        function maskMoney(input) {
+            return
+        }
+    </script>
+@endpush

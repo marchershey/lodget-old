@@ -14,7 +14,7 @@
                                 <div class="font-medium text-gray-700 select-none">{{ $amenity->name }}</div>
                             </div>
                             <div class="flex items-center h-5 ml-3">
-                                <input wire:model="property.amenities" id="amenity-{{ $amenity->id }}" type="checkbox" class="checkbox" value="{{ $amenity->id }}">
+                                <input wire:model="selected_amenities" name="amenities" id="amenity-{{ $amenity->id }}" type="checkbox" class="checkbox" value="{{ $amenity->id }}">
                             </div>
                         </label>
                     @endforeach

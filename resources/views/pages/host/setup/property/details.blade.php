@@ -7,7 +7,7 @@
         <div class="form">
             <div class="col-span-full laptop:col-span-3">
                 @if ($default_types)
-                    <x-forms.select label="Property Type" model="property.type" :options="$default_types" />
+                    <x-forms.select label="Property Type" model="selected_property_type" :options="$default_types" />
                 @endif
             </div>
         </div>
