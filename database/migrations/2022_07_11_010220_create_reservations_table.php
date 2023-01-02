@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('guests');
             $table->string('status')->default('nopayment'); // nopayment, pending, cancelled, rejected, approved, active, completed
             $table->string('status_by')->nullable(); // who caused the status change
+            $table->string('status_reason')->nullable(); // desc on why status was changed.
             $table->timestamps();
         });
     }

@@ -265,6 +265,7 @@ class CheckoutComponent extends Component
                 'amount' => $this->pricing['total'],
                 'currency' => 'usd',
                 'off_session' => true,
+                'capture_method' => 'manual',
                 'confirm' => true,
                 'description' => $this->reservation->property->name . ' -- ' . $this->reservation->checkin . '/' . $this->reservation->checkout,
                 'statement_descriptor_suffix' => Str::upper(Str::limit($this->reservation->property->name, 22, '')),

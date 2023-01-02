@@ -4,12 +4,16 @@
             <table>
                 <tbody class="text-xs divide-y divide-gray-200">
                     <tr>
+                        <td class="p-2"><span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full whitespace-nowrap">No Payment</span></td>
+                        <td class="p-2">Awaiting payment from guest</td>
+                    </tr>
+                    <tr>
                         <td class="p-2"><span class="px-2 py-1 text-xs font-medium text-yellow-900 bg-yellow-100 rounded-full">Pending</span></td>
                         <td class="p-2">Awaiting approval from the host</td>
                     </tr>
                     <tr>
-                        <td class="p-2"><span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-200 rounded-full">Cancelled</span></td>
-                        <td class="p-2">The guest cancelled the reservation</td>
+                        <td class="p-2"><span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-200 rounded-full">Canceled</span></td>
+                        <td class="p-2">The guest canceled the reservation</td>
                     </tr>
                     <tr>
                         <td class="p-2"><span class="px-2 py-1 text-xs font-medium text-red-900 bg-red-100 rounded-full">Rejected</span></td>

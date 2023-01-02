@@ -1,4 +1,19 @@
-@if ($type === 'info')
+@if ($type === 'success')
+    <div class="p-4 bg-green-100 border border-green-400 rounded-md">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M9 12l2 2l4 -4"></path>
+                </svg>
+            </div>
+            <div class="flex flex-col my-1 ml-3 space-y-2 text-green-800">
+                {{ $slot }}
+            </div>
+        </div>
+    </div>
+@elseif ($type === 'info')
     <div class="p-4 rounded-md bg-blue-50">
         <div class="flex">
             <div class="flex-shrink-0">

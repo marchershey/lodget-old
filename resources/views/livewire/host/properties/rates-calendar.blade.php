@@ -80,7 +80,7 @@
                 async init() {
                     this.setupCalendar()
                     this.loading = false
-                    this.openCalendar()
+                    // this.openCalendar()
                 },
                 async setupCalendar() {
                     this.calendar = new Calendar(this.$refs.calendar, {

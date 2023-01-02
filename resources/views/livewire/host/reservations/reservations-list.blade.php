@@ -62,8 +62,8 @@
                                         <span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full">No Payment</span>
                                     @elseif ($reservation->status === 'pending')
                                         <span class="px-2 py-1 text-xs font-medium text-yellow-900 bg-yellow-100 rounded-full">Pending</span>
-                                    @elseif($reservation->status === 'cancelled')
-                                        <span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full">Cancelled</span>
+                                    @elseif($reservation->status === 'canceled')
+                                        <span class="px-2 py-1 text-xs font-medium text-gray-900 bg-gray-100 rounded-full">Canceled</span>
                                     @elseif ($reservation->status === 'rejected')
                                         <span class="px-2 py-1 text-xs font-medium text-red-900 bg-red-100 rounded-full">Rejected</span>
                                     @elseif ($reservation->status === 'approved')

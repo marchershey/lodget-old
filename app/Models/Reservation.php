@@ -21,6 +21,11 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function status_change_user()
+    {
+        return $this->belongsTo(User::class, 'status_by');
+    }
+
     public function payment()
     {
         return $this->hasOne(Payment::class);

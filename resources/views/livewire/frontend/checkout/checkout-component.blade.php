@@ -425,7 +425,6 @@
                             await @this.addedNewPaymentMethod(setupIntent.payment_method);
                             await @this.clearPaymentMethods();
                             this.close_newPaymentMethodModal();
-                            this.open_paymentMethodsModal();
                         }
                     }
 

@@ -6,17 +6,19 @@
         <div class="relative flex items-end justify-center min-h-screen sm:items-center">
             <div class="w-full max-w-lg m-0">
                 <div class="panel">
-                    <h1 class="panel-heading">hello</h1>
+                    @if ($title)
+                        <h1 class="panel-heading">{{ $title }}</h1>
+                    @endif
 
                     <div class="panel-body">
                         <div>
-                            hello
+                            {{ $slot }}
                         </div>
-                        <div>
+                        <div class="flex gap-5">
                             @if (isset($buttons))
                                 {{ $buttons }}
                             @else
-                                <button class="button button-light">Close</button>
+                                <button x-on:click="{{ $closeFunction }}" class="button button-light">Close</button>
                             @endif
                         </div>
                     </div>

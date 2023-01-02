@@ -103,7 +103,7 @@ class EditPropertyForm extends Component
         }
 
         // rates & fees
-        $this->default_rate = Money::USD($this->property->default_rate)->formatByDecimal();
+        $this->default_rate = Money::USD(($this->property->default_rate))->formatByDecimal();
         $this->default_tax = $this->property->default_tax;
 
         foreach ($this->property->fees as $fee) {
