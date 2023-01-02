@@ -29,15 +29,15 @@ window.DateTime = DateTime;
 
 // Full calendar
 import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interaction from "@fullcalendar/interaction";
 window.Calendar = Calendar;
+import dayGridPlugin from "@fullcalendar/daygrid";
 window.dayGridPlugin = dayGridPlugin;
+import interaction from "@fullcalendar/interaction";
 window.interaction = interaction;
 
 // Alpinejs & Tall Toasts
 import Alpine from "alpinejs";
-import ToastComponent from "../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts";
+import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
 Alpine.data("ToastComponent", ToastComponent);
 window.Alpine = Alpine;
 Alpine.start();
