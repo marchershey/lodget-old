@@ -86,7 +86,7 @@ class NewPropertyForm extends Component
 
         if ($property->save()) {
             toast()->success('Next, click on the property to add more details, such as photos and aminities!', ucwords($this->name) . ' was successfully added!')->pushOnNextPage();
-            return redirect()->route('host.properties');
+            return redirect()->route('host.properties.edit', $property->slug);
         } else {
             toast()->danger('Oops, something went wrong on our end. Refresh the page and try again.', 'Server Error')->push();
         }
