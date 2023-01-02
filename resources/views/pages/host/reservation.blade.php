@@ -18,7 +18,7 @@
                             </x-alert>
                         </div>
                     @elseif ($reservation->status === 'pending')
-                        <div class="flex flex-col gap-5 col-span-full">
+                        <div class="col-span-full flex flex-col gap-5">
                             <x-alert type="info">
                                 <span class="font-medium">Reservation Pending</span>
                                 <span>Your reservation request is currently pending.</span>
@@ -54,7 +54,7 @@
 
                     @elseif ($reservation->status === 'completed')
                     @endif
-                    <hr class="-mx-5 col-span-full">
+                    <hr class="col-span-full -mx-5">
                     <div class="flex flex-col">
                         <span class="font-medium">Check-in</span>
                         <span class="">{{ Carbon\Carbon::parse($reservation->checkin)->format('D, M jS, Y') }}</span>
@@ -79,20 +79,20 @@
             <div class="panel-body">
                 <div class="grid grid-cols-2 gap-5">
                     <div class="flex flex-col">
-                        <span class="text-sm text-muted">Name</span>
+                        <span class="text-muted text-sm">Name</span>
                         <span>{{ $reservation->user->fullName() }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-sm text-muted">Email Address</span>
+                        <span class="text-muted text-sm">Email Address</span>
                         <span class="truncate">{{ $reservation->user->email }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-sm text-muted">Birthdate</span>
+                        <span class="text-muted text-sm">Birthdate</span>
                         <span class="truncate">Not available</span>
                         {{-- <span class="truncate">{{ $reservation->user->birthdate }} (39)</span> --}}
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-sm text-muted">Created Account</span>
+                        <span class="text-muted text-sm">Created Account</span>
                         <span class="truncate">{{ Carbon\Carbon::parse($reservation->user->created_at)->format('M jS, Y \a\t g:i A') }}</span>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
         <div class="panel-spacing">
 
             <a href="{{ route('host.reservations') }}" class="button button-light">
-                <svg class="w-6 h-6 text-muted" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg class="text-muted h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
                 <span>

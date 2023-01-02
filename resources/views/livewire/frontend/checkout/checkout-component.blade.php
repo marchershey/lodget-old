@@ -4,14 +4,14 @@
         <div class="panel panel-body">
             <div class="grid grid-cols-3 gap-5">
                 <div class="col-span-1">
-                    <div class="block w-full overflow-hidden bg-gray-100 rounded-lg group aspect-w-10 aspect-h-7">
-                        <img src="/storage/{{ $reservation->property->photos()->first()->path }}" alt="" class="object-cover pointer-events-none">
+                    <div class="aspect-w-10 aspect-h-7 group block w-full overflow-hidden rounded-lg bg-gray-100">
+                        <img src="/storage/{{ $reservation->property->photos()->first()->path }}" alt="" class="pointer-events-none object-cover">
                     </div>
                 </div>
-                <div class="flex flex-col justify-between col-span-2">
+                <div class="col-span-2 flex flex-col justify-between">
                     <div class="flex flex-col">
-                        <h1 class="text-xl font-semibold truncate">{{ $reservation->property->name }}</h1>
-                        <p class="text-sm line-clamp-2 text-muted">{{ $reservation->property->headline }}</p>
+                        <h1 class="truncate text-xl font-semibold">{{ $reservation->property->name }}</h1>
+                        <p class="line-clamp-2 text-muted text-sm">{{ $reservation->property->headline }}</p>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                         <span class="text-sm">{{ Carbon\Carbon::parse($reservation->checkin)->format('M jS') }} - {{ Carbon\Carbon::parse($reservation->checkout)->format('M jS') }}</span>
                     </div>
                     <div>
-                        <span class="text-sm link">Change</span>
+                        <span class="link text-sm">Change</span>
                     </div>
                 </div>
                 {{-- Guests --}}
@@ -37,7 +37,7 @@
                         <span class="text-sm">{{ $reservation->guests }} {{ Illuminate\Support\Str::plural('guest', $reservation->guests) }}</span>
                     </div>
                     <div>
-                        <span class="text-sm link">Change</span>
+                        <span class="link text-sm">Change</span>
                     </div>
                 </div>
             </div>
@@ -54,8 +54,8 @@
             <h1 class="panel-heading">Payment Method</h1>
             <div class="panel-body">
                 <div>
-                    <div class="items-center justify-center mb-5" wire:loading.flex wire:target="initPaymentMethods">
-                        <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <div class="mb-5 items-center justify-center" wire:loading.flex wire:target="initPaymentMethods">
+                        <svg class="text-muted h-10 w-10 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -64,7 +64,7 @@
                     <div x-data="paymentMethods">
                         {{-- Default/Active Payment Method --}}
                         @if ($default_payment_method)
-                            <div x-on:click="open_paymentMethodsModal" class="flex items-center justify-between px-4 py-2 mb-5 border border-gray-300 rounded cursor-pointer bg-gray-50">
+                            <div x-on:click="open_paymentMethodsModal" class="mb-5 flex cursor-pointer items-center justify-between rounded border border-gray-300 bg-gray-50 px-4 py-2">
                                 <div class="flex items-center space-x-5">
                                     <div class="">
                                         @if ($default_payment_method['card']['brand'] == 'visa' || $default_payment_method['card']['brand'] == 'mastercard' || $default_payment_method['card']['brand'] == 'amex' || $default_payment_method['card']['brand'] == 'discover')
@@ -75,12 +75,12 @@
                                     </div>
                                     <div class="flex flex-col text-sm">
                                         <span class="text-sm">Ending with {{ $default_payment_method['card']['last4'] }}</span>
-                                        <span class="text-xs text-muted">Expires {{ $default_payment_method['card']['exp_month'] }}/{{ $default_payment_method['card']['exp_year'] }}</span>
+                                        <span class="text-muted text-xs">Expires {{ $default_payment_method['card']['exp_month'] }}/{{ $default_payment_method['card']['exp_year'] }}</span>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <button type="button" class="p-2 text-xs text-primary">Change</button>
+                                    <button type="button" class="text-primary p-2 text-xs">Change</button>
                                 </div>
                             </div>
                         @endif
@@ -92,12 +92,12 @@
                         {{-- Payment method modal --}}
                         <div x-show="paymentMethodsModal" style="display: none" x-on:keydown.escape.prevent.stop="close_paymentMethodsModal" @close.window="close_paymentMethodsModal" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
                             <div x-show="paymentMethodsModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
-                            <div x-show="paymentMethodsModal" x-transition.opacity x-on:click="close_paymentMethodsModal" class="relative flex items-end justify-center min-h-screen sm:items-center">
+                            <div x-show="paymentMethodsModal" x-transition.opacity x-on:click="close_paymentMethodsModal" class="relative flex min-h-screen items-end justify-center sm:items-center">
                                 <div x-on:click.stop class="relative w-full max-w-lg">
 
                                     {{-- Close button --}}
                                     <div class="absolute top-0 right-0 mx-3 my-5 cursor-pointer">
-                                        <svg x-on:click="close_paymentMethodsModal" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-muted" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg x-on:click="close_paymentMethodsModal" xmlns="http://www.w3.org/2000/svg" class="text-muted h-6 w-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <line x1="18" y1="6" x2="6" y2="18"></line>
                                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -109,7 +109,7 @@
                                         <div class="panel-body">
 
                                             <div class="items-center justify-center" wire:loading.flex wire:target="loadPaymentMethods">
-                                                <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <svg class="text-muted h-10 w-10 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
@@ -119,7 +119,7 @@
                                                 <div class="flex flex-col gap-y-3">
                                                     @foreach ($payment_methods as $key => $payment_method)
                                                         <div wire:key="pm-{{ $key }}-{{ rand() }}" class="flex items-center justify-between cursor-pointer border border-gray-300 rounded bg-gray-50 @if ($payment_method['id'] == $default_payment_method['id']) ring-2 ring-primary bg-blue-50 cursor-default @endif">
-                                                            <div wire:key="pm-update-{{ $key }}-{{ rand() }}" @if ($payment_method['id'] != $default_payment_method['id']) wire:click="updateDefaultPaymentMethod('{{ $payment_method['id'] }}')" @endif class="flex items-center w-full px-4 py-2 space-x-5">
+                                                            <div wire:key="pm-update-{{ $key }}-{{ rand() }}" @if ($payment_method['id'] != $default_payment_method['id']) wire:click="updateDefaultPaymentMethod('{{ $payment_method['id'] }}')" @endif class="flex w-full items-center space-x-5 px-4 py-2">
                                                                 <div class="">
                                                                     @if ($payment_method['card']['brand'] === 'visa' || $payment_method['card']['brand'] == 'mastercard' || $payment_method['card']['brand'] == 'amex' || $payment_method['card']['brand'] == 'discover')
                                                                         <img src="/img/{{ $payment_method['card']['brand'] }}.svg" class="w-12">
@@ -131,14 +131,14 @@
                                                                     <div class="flex">
                                                                         <span class="text-sm">Ending with {{ $payment_method['card']['last4'] }}</span>
                                                                     </div>
-                                                                    <span class="text-xs text-muted">Expires {{ $payment_method['card']['exp_month'] }}/{{ $payment_method['card']['exp_year'] }}</span>
+                                                                    <span class="text-muted text-xs">Expires {{ $payment_method['card']['exp_month'] }}/{{ $payment_method['card']['exp_year'] }}</span>
                                                                 </div>
                                                             </div>
 
                                                             <div class="flex items-center px-2 py-2">
                                                                 {{-- update loader --}}
                                                                 <div wire:loading wire:target="updateDefaultPaymentMethod('{{ $payment_method['id'] }}')">
-                                                                    <svg class="w-6 h-6 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                    <svg class="text-muted h-6 w-6 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                                     </svg>
@@ -147,14 +147,14 @@
                                                                 {{-- Delete button --}}
                                                                 <div class="" wire:key="pm-delete-{{ $key }}-{{ rand() }}" wire:click="deletePaymentMethod('{{ $payment_method['id'] }}')">
                                                                     <div wire:loading wire:target="deletePaymentMethod('{{ $payment_method['id'] }}')">
-                                                                        <svg class="w-6 h-6 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                        <svg class="text-muted h-6 w-6 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                                         </svg>
                                                                     </div>
                                                                     <div wire:loading.remove wire:target="deletePaymentMethod('{{ $payment_method['id'] }}')">
                                                                         <button type="button" class="p-2 text-xs text-red-500">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                                                 <line x1="4" y1="7" x2="20" y2="7"></line>
                                                                                 <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -182,8 +182,8 @@
                             <div x-show="newPaymentMethodModal" style="display: none" x-on:keydown.escape.prevent.stop="close_newPaymentMethodModal" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
                                 <div x-show="newPaymentMethodModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
-                                <div x-show="newPaymentMethodModal" x-transition.opacity x-on:click="close_newPaymentMethodModal" class="relative flex items-end justify-center min-h-screen sm:items-center">
-                                    <div x-on:click.stop class="w-full max-w-lg m-0">
+                                <div x-show="newPaymentMethodModal" x-transition.opacity x-on:click="close_newPaymentMethodModal" class="relative flex min-h-screen items-end justify-center sm:items-center">
+                                    <div x-on:click.stop class="m-0 w-full max-w-lg">
 
                                         <form class="panel" @submit.prevent="submit_newPaymentMethod">
                                             <h1 class="panel-heading">Add Payment Method</h1>
@@ -195,11 +195,11 @@
                                                     <div class="grid grid-cols-2 gap-x-3">
                                                         <label class="label col-span-full">Full Name</label>
                                                         <div>
-                                                            {{-- <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" wire:loading.attr="disabled" wire:target="initNewPaymentMethod"> --}}
-                                                            <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" :disabled="newPaymentMethodLoading">
+                                                            {{-- <input wire:model.debounce.500ms="first_name" type="text" class="input capitalize" placeholder="First name" wire:loading.attr="disabled" wire:target="initNewPaymentMethod"> --}}
+                                                            <input wire:model.debounce.500ms="first_name" type="text" class="input capitalize" placeholder="First name" :disabled="newPaymentMethodLoading">
                                                         </div>
                                                         <div>
-                                                            <input wire:model.debounce.500ms="last_name" type="text" class="capitalize input" placeholder="Last name" :disabled="newPaymentMethodLoading">
+                                                            <input wire:model.debounce.500ms="last_name" type="text" class="input capitalize" placeholder="Last name" :disabled="newPaymentMethodLoading">
                                                         </div>
                                                     </div>
                                                     <div>
@@ -283,12 +283,12 @@
                                                     </div>
 
                                                     @if ($default_payment_method)
-                                                        <div x-data="{ value: @entangle('setDefaultPaymentMethod') }" class="flex items-center justify-between cursor-pointer">
-                                                            <span @click="$refs.toggle.click(); $refs.toggle.focus()" class="flex flex-col flex-grow">
+                                                        <div x-data="{ value: @entangle('setDefaultPaymentMethod') }" class="flex cursor-pointer items-center justify-between">
+                                                            <span @click="$refs.toggle.click(); $refs.toggle.focus()" class="flex flex-grow flex-col">
                                                                 <span class="label" id="availability-label">Set as default payment method</span>
                                                             </span>
-                                                            <button x-ref="toggle" @click="value = ! value" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description" :class="value ? 'bg-primary' : 'bg-gray-200'">
-                                                                <span aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0" :class="value ? 'translate-x-5' : 'translate-x-0'"></span>
+                                                            <button x-ref="toggle" @click="value = ! value" type="button" class="focus:ring-primary relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description" :class="value ? 'bg-primary' : 'bg-gray-200'">
+                                                                <span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out" :class="value ? 'translate-x-5' : 'translate-x-0'"></span>
                                                             </button>
                                                         </div>
                                                     @endif
@@ -296,15 +296,15 @@
                                                 <div>
 
                                                     <div class="flex justify-between">
-                                                        <button x-on:click="close_newPaymentMethodModal" type="button" class="w-auto button button-light">Cancel</button>
+                                                        <button x-on:click="close_newPaymentMethodModal" type="button" class="button button-light w-auto">Cancel</button>
                                                         <div>
                                                             <div x-show="newPaymentMethodLoading" class="items-center">
-                                                                <svg class="w-8 h-8 mr-8 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                <svg class="text-muted mr-8 h-8 w-8 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                                 </svg>
                                                             </div>
-                                                            <button x-show="!newPaymentMethodLoading" type="submit" class="w-auto button">Add payment method</button>
+                                                            <button x-show="!newPaymentMethodLoading" type="submit" class="button w-auto">Add payment method</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -320,17 +320,17 @@
         </div>
 
         @if ($default_payment_method)
-            <div class="flex flex-col space-y-5 bg-transparent border-none panel">
+            <div class="panel flex flex-col space-y-5 border-none bg-transparent">
                 <div class="relative flex items-start">
-                    <div class="flex items-center h-7">
-                        <input wire:model="agree" id="agree" type="checkbox" class="w-5 h-5 border-gray-300 rounded text-primary focus:ring-primary">
+                    <div class="flex h-7 items-center">
+                        <input wire:model="agree" id="agree" type="checkbox" class="text-primary focus:ring-primary h-5 w-5 rounded border-gray-300">
                     </div>
                     <div class="ml-3">
                         <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a @money($pricing['total']) hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>
                     </div>
                 </div>
                 <div>
-                    <button wire:click="finalize" class="w-full button">Submit Reservation</button>
+                    <button wire:click="finalize" class="button w-full">Submit Reservation</button>
                 </div>
             </div>
         @endif

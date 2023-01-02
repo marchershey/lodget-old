@@ -1,7 +1,7 @@
 <div class="flex flex-col space-y-5" wire:init="loadProperty()">
 
     @if ($noPhotoWarning)
-        <div class="p-5 text-yellow-800 border border-yellow-200 rounded-lg bg-yellow-50">
+        <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-5 text-yellow-800">
             <span class="font-semibold">Warning!</span> Your property is hidden because you have not added any photos.
         </div>
     @endif
@@ -128,15 +128,15 @@
                     <label for="guests">
                         <span class="text-sm font-medium text-gray-700 @error('guests') text-red-500 @enderror">Guests</span>
                         <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden group rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('guests') border-red-500 @enderror">
-                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary mr-px border-r border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
                             <input x-model.value="value" type="text" id="guests" class="w-full border-none px-3 py-1.5 text-center focus:outline-none bg-gray-50 group-focus-within:bg-white focus:ring-0 @error('guests') bg-red-50 @enderror" tabindex="-1" readonly />
-                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary border-l border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -158,15 +158,15 @@
                     <label for="beds">
                         <span class="text-sm font-medium text-gray-700 @error('beds') text-red-500 @enderror">Beds</span>
                         <div class="focus-within:ring-primary group focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('beds') border-red-500 @enderror">
-                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary mr-px border-r border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="beds" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
-                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <input x-model.value="value" type="text" id="beds" class="w-full border-none bg-gray-50 px-3 py-1.5 text-center focus:outline-none focus:ring-0 group-focus-within:bg-white" tabindex="-1" readonly />
+                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary border-l border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -188,15 +188,15 @@
                     <label for="bedrooms">
                         <span class="text-sm font-medium text-gray-700 @error('bedrooms') text-red-500 @enderror">Bedrooms</span>
                         <div class="focus-within:ring-primary focus-within:border-primary group mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bedrooms') border-red-500 @enderror">
-                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary mr-px border-r border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="bedrooms" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
-                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <input x-model.value="value" type="text" id="bedrooms" class="w-full border-none bg-gray-50 px-3 py-1.5 text-center focus:outline-none focus:ring-0 group-focus-within:bg-white" tabindex="-1" readonly />
+                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary border-l border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -218,15 +218,15 @@
                     <label for="bathrooms">
                         <span class="text-sm font-medium text-gray-700 @error('bathrooms') text-red-500 @enderror">Bathrooms</span>
                         <div class="focus-within:ring-primary focus-within:border-primary mt-1 flex group w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('bathrooms') border-red-500 @enderror">
-                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary mr-px border-r border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
-                            <input x-model.value="value" type="text" id="bathrooms" class="w-full border-none bg-gray-50 group-focus-within:bg-white px-3 py-1.5 text-center focus:outline-none focus:ring-0" tabindex="-1" readonly />
-                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <input x-model.value="value" type="text" id="bathrooms" class="w-full border-none bg-gray-50 px-3 py-1.5 text-center focus:outline-none focus:ring-0 group-focus-within:bg-white" tabindex="-1" readonly />
+                            <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary border-l border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -253,11 +253,11 @@
             </div>
 
             @if ($stagedPhotos)
-                <div class="p-5 space-y-5 bg-gray-100 border border-gray-200 rounded-lg">
+                <div class="space-y-5 rounded-lg border border-gray-200 bg-gray-100 p-5">
                     <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($stagedPhotos as $key => $photo)
-                            <div wire:key="staged-photo-{{ $key }}" wire:click="deleteStagedPhoto({{ $key }})" class="block w-full overflow-hidden bg-gray-100 rounded-lg cursor-pointer group aspect-w-10 aspect-h-7">
-                                <img src="{{ $photo->temporaryUrl() }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
+                            <div wire:key="staged-photo-{{ $key }}" wire:click="deleteStagedPhoto({{ $key }})" class="aspect-w-10 aspect-h-7 group block w-full cursor-pointer overflow-hidden rounded-lg bg-gray-100">
+                                <img src="{{ $photo->temporaryUrl() }}" alt="" class="pointer-events-none object-cover group-hover:opacity-75">
                             </div>
                         @endforeach
                     </div>
@@ -265,20 +265,20 @@
             @endif
 
             @if ($uploadedPhotos)
-                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 focus-visible:outline-none">
+                <div class="grid grid-cols-2 gap-3 focus-visible:outline-none sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
                     @foreach ($uploadedPhotos as $key => $photo)
-                        <div wire:key="uploaded-photo-{{ $key }}" class="relative bg-gray-100 border border-gray-200 rounded-lg focus-visible:outline-none" data-photo-id="{{ $photo['id'] }}">
-                            <div class="block w-full overflow-hidden bg-gray-100 rounded-t-lg group aspect-w-10 aspect-h-7">
-                                <img src="/storage/{{ $photo['path'] }}" alt="" class="object-cover pointer-events-none group-hover:opacity-75">
+                        <div wire:key="uploaded-photo-{{ $key }}" class="relative rounded-lg border border-gray-200 bg-gray-100 focus-visible:outline-none" data-photo-id="{{ $photo['id'] }}">
+                            <div class="aspect-w-10 aspect-h-7 group block w-full overflow-hidden rounded-t-lg bg-gray-100">
+                                <img src="/storage/{{ $photo['path'] }}" alt="" class="pointer-events-none object-cover group-hover:opacity-75">
                             </div>
                             <div x-data="{ open: false }" class="flex items-center justify-between p-2">
-                                <div class="font-medium truncate pointer-events-none">
-                                    <p class="block text-sm truncate">{{ $photo['name'] }}</p>
-                                    <p class="block text-xs text-muted">{{ number_format($photo['size'] / 1e6, 2) }}MB</p>
+                                <div class="pointer-events-none truncate font-medium">
+                                    <p class="block truncate text-sm">{{ $photo['name'] }}</p>
+                                    <p class="text-muted block text-xs">{{ number_format($photo['size'] / 1e6, 2) }}MB</p>
                                 </div>
                                 <div class="relative inline-block text-left">
                                     <div x-on:click="open = !open">
-                                        <button type="button" class="flex items-center text-muted-light hover:text-red-500 focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <button type="button" class="text-muted-light flex items-center hover:text-red-500 focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
                                             <span class="sr-only">Open options</span>
                                             <!-- Heroicon name: solid/dots-vertical -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -291,9 +291,9 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <div x-show="open" x-cloak x-on:click="open = false" x-on:click.away="open = false" class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div x-show="open" x-cloak x-on:click="open = false" x-on:click.away="open = false" class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                        <div wire:click="deleteUploadedPhoto({{ $key }}, {{ $photo['id'] }})" class="flex items-center px-4 py-2 space-x-2 text-sm text-red-500 cursor-pointer select-none">
+                                        <div wire:click="deleteUploadedPhoto({{ $key }}, {{ $photo['id'] }})" class="flex cursor-pointer select-none items-center space-x-2 px-4 py-2 text-sm text-red-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -310,7 +310,7 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="text-xs text-muted">
+                <div class="text-muted text-xs">
                     <strong>Note:</strong> To reorder the photos, simply drag the photo to a new position.
                 </div>
             @endif
@@ -323,21 +323,21 @@
         <div class="panel-body">
             <form wire:submit.prevent="addAmenity" class="grid grid-cols-2 gap-5">
                 <div class="w-full">
-                    <input wire:model="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
+                    <input wire:model="amenity" type="text" class="input mt-0" placeholder="Type amenities name here...">
                 </div>
-                <button type="submit" class="w-auto button whitespace-nowrap button-light">Add Amenities</button>
+                <button type="submit" class="button button-light w-auto whitespace-nowrap">Add Amenities</button>
             </form>
 
             @if ($amenities)
                 <div class="flex flex-col space-y-3">
                     <div class="flex items-center space-x-3">
                         @foreach ($amenities as $key => $amenity)
-                            <div wire:click="removeAmenity({{ $key }})" class="inline-flex items-center px-2 py-1 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-red-50 hover:border-red-200">
+                            <div wire:click="removeAmenity({{ $key }})" class="inline-flex cursor-pointer items-center rounded-lg border border-gray-200 bg-gray-50 px-2 py-1 hover:border-red-200 hover:bg-red-50">
                                 <span class="mt-px">{{ $amenity }}</span>
                             </div>
                         @endforeach
                     </div>
-                    <span class="text-sm text-muted"><span class="font-medium">Note:</span> Click on an amenity to remove it.</span>
+                    <span class="text-muted text-sm"><span class="font-medium">Note:</span> Click on an amenity to remove it.</span>
                 </div>
             @endif
         </div>
@@ -351,11 +351,11 @@
                 <div>
                     <label for="rate" class="input-label">Base Rate</label>
                     <div class="relative mt-1">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <span class="text-gray-500 sm:text-sm"> $ </span>
                         </div>
-                        <input wire:model="default_rate" type="text" name="rate" id="rate" class="pl-6 input" placeholder="0.00">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <input wire:model="default_rate" type="text" name="rate" id="rate" class="input pl-6" placeholder="0.00">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                             <span class="text-gray-500 sm:text-sm"> USD </span>
                         </div>
                     </div>
@@ -363,15 +363,15 @@
                 <div>
                     <label for="tax" class="input-label">Tax Rate</label>
                     <div class="relative mt-1">
-                        <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 input" placeholder="0">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <input wire:model="default_tax" type="text" name="tax" id="tax" class="input pr-6" placeholder="0">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                             <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
                         </div>
                     </div>
                 </div>
-                <div class="flex col-span-2 mt-8 space-x-2">
-                    {{-- <a href="" class="items-center space-x-2 button button-light">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <div class="col-span-2 mt-8 flex space-x-2">
+                    {{-- <a href="" class="button button-light items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <rect x="4" y="5" width="16" height="16" rx="2"></rect>
                             <line x1="16" y1="3" x2="16" y2="7"></line>
@@ -395,7 +395,7 @@
                         <div><span class="font-medium">Warning.</span> Percentage fees are applied towards the total base rate only.</div>
                     </x-alert>
                     @foreach ($fees as $key => $fee)
-                        <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
+                        <div class="mb-2 grid grid-cols-4 gap-x-5" wire:key="fees-{{ $key }}">
                             <div>
                                 <label for="fees-{{ $key }}-name" class="input-label">Name</label>
                                 <input wire:model="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input" placeholder="Fee name">
@@ -404,17 +404,17 @@
                                 <label for="fees-{{ $key }}-amount" class="input-label">Amount</label>
                                 <div class="relative mt-1">
                                     @if ($fees[$key]['type'] == 'fixed')
-                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                             <span class="text-gray-500 sm:text-sm"> $ </span>
                                         </div>
-                                        <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
-                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="input pl-6" placeholder="0.00">
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                             <span class="text-gray-500 sm:text-sm"> USD </span>
                                         </div>
                                     @else
                                         <div class="relative mt-1">
-                                            <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pr-6 input" placeholder="0">
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="input pr-6" placeholder="0">
+                                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                                 <span class="text-gray-500 sm:text-sm"> % </span>
                                             </div>
                                         </div>
@@ -423,21 +423,21 @@
                             </div>
                             <div>
                                 <label for="fees-{{ $key }}-type" class="input-label">Type</label>
-                                <div class="flex mt-4 space-x-4">
+                                <div class="mt-4 flex space-x-4">
                                     <div class="flex items-center">
-                                        <input wire:model="fees.{{ $key }}.type" value="fixed" id="fees-{{ $key }}-type-fixed" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
-                                        <label for="fees-{{ $key }}-type-fixed" class="block ml-3 text-sm font-medium text-gray-700"> Fixed </label>
+                                        <input wire:model="fees.{{ $key }}.type" value="fixed" id="fees-{{ $key }}-type-fixed" name="fees-{{ $key }}-type" type="radio" class="text-primary focus:ring-primary h-4 w-4 border-gray-300">
+                                        <label for="fees-{{ $key }}-type-fixed" class="ml-3 block text-sm font-medium text-gray-700"> Fixed </label>
                                     </div>
 
                                     <div class="flex items-center">
-                                        <input wire:model="fees.{{ $key }}.type" value="percentage" id="fees-{{ $key }}-type-percentage" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
-                                        <label for="fees-{{ $key }}-type-percentage" class="block ml-3 text-sm font-medium text-gray-700"> Percentage </label>
+                                        <input wire:model="fees.{{ $key }}.type" value="percentage" id="fees-{{ $key }}-type-percentage" name="fees-{{ $key }}-type" type="radio" class="text-primary focus:ring-primary h-4 w-4 border-gray-300">
+                                        <label for="fees-{{ $key }}-type-percentage" class="ml-3 block text-sm font-medium text-gray-700"> Percentage </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-end mt-7">
+                            <div class="mt-7 flex items-center justify-end">
                                 <button wire:click="removeFee({{ $key }})">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                     </svg>
                                 </button>
@@ -469,17 +469,17 @@
         <h3 class="panel-heading">Options</h3>
         <div class="panel-body">
             <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
-                <span class="flex flex-col flex-grow">
+                <span class="flex flex-grow flex-col">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Active</span>
                     <span class="text-sm text-gray-500" id="availability-description">Choose whether this property is visible to guests or not.</span>
                 </span>
-                <button x-on:click="active = !active" :class="active ? 'bg-primary' : 'bg-gray-200'" type="button" class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description">
-                    <span :class="active ? 'translate-x-5' : 'translate-x-0'" aria-hidden="true" class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"></span>
+                <button x-on:click="active = !active" :class="active ? 'bg-primary' : 'bg-gray-200'" type="button" class="focus:ring-primary relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2" role="switch" aria-checked="false" aria-labelledby="availability-label" aria-describedby="availability-description">
+                    <span :class="active ? 'translate-x-5' : 'translate-x-0'" aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
                 </button>
             </div>
             <hr>
             <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
-                <span class="flex flex-col flex-grow w-full">
+                <span class="flex w-full flex-grow flex-col">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Property Slug</span>
                     <span class="text-sm text-gray-500" id="availability-description">Change the property's URL slug</span>
                 </span>
@@ -497,20 +497,20 @@
                 subtractDisabled() { return this.value <= this.min }
             }">
                 <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
-                    <span class="flex flex-col flex-grow w-full">
+                    <span class="flex w-full flex-grow flex-col">
                         <span class="text-sm font-medium text-gray-900" id="availability-label">Minimum Nights</span>
                         <span class="text-sm text-gray-500" id="availability-description">Require guests to stay a certain number of nights</span>
                     </span>
                     <div class="focus-within:ring-primary group focus-within:border-primary mt-1 flex w-full max-w-[200px] overflow-hidden rounded-md border border-gray-300 focus-within:ring-1 sm:text-sm @error('beds') border-red-500 @enderror">
-                        <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="px-3 mr-px text-gray-600 bg-gray-100 border-r border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <button type="button" x-on:click="subtract()" x-bind:disabled="subtractDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary mr-px border-r border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                        <input x-model.value="value" type="text" id="beds" class="w-full border-none px-3 py-1.5 text-center bg-gray-50 group-focus-within:bg-white focus:outline-none focus:ring-0" tabindex="-1" readonly />
-                        <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="px-3 text-gray-600 bg-gray-100 border-l border-gray-300 focus-within:ring-1 focus:ring-0 focus-visible:border-primary focus-visible:bg-primary focus-visible:text-white focus-visible:outline-none focus-visible:ring-primary active:bg-primary active:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <input x-model.value="value" type="text" id="beds" class="w-full border-none bg-gray-50 px-3 py-1.5 text-center focus:outline-none focus:ring-0 group-focus-within:bg-white" tabindex="-1" readonly />
+                        <button type="button" x-on:click="add()" x-bind:disabled="addDisabled" class="focus-visible:border-primary focus-visible:bg-primary focus-visible:ring-primary active:bg-primary border-l border-gray-300 bg-gray-100 px-3 text-gray-600 focus-within:ring-1 focus:ring-0 focus-visible:text-white focus-visible:outline-none active:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -523,7 +523,7 @@
     </div>
 
     <div class="flex justify-between">
-        <a href="{{ route('host.properties') }}" class="w-auto button button-light" wire:click="submit">Cancel</a>
-        <button class="w-auto button" wire:click="submit">Update Property</button>
+        <a href="{{ route('host.properties') }}" class="button button-light w-auto" wire:click="submit">Cancel</a>
+        <button class="button w-auto" wire:click="submit">Update Property</button>
     </div>
 </div>

@@ -1,8 +1,8 @@
 <div x-data="ratesCalendar" class="w-full" @update="updateCalendar">
 
     <div x-show="!loading">
-        <button x-on:click="openCalendar" class="w-full space-x-2 button button-light">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <button x-on:click="openCalendar" class="button button-light w-full space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <rect x="4" y="5" width="16" height="16" rx="2"></rect>
                 <line x1="16" y1="3" x2="16" y2="7"></line>
@@ -20,31 +20,31 @@
 
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div x-show="open" x-cloak class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 transition-opacity bg-black/50"></div>
+        <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
-                <div x-on:click.away="closeCalendar" class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div x-on:click.away="closeCalendar" class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
                     {{-- Calendar --}}
                     <div class="min-h-full" x-ref="calendar" wire:ignore></div>
-                    <div id="newRateForm" class="flex items-center justify-between pt-5 space-x-10" :class="newRateActive ? 'opacity-100' : 'opacity-30'">
-                        <span class="flex flex-col flex-grow">
+                    <div id="newRateForm" class="flex items-center justify-between space-x-10 pt-5" :class="newRateActive ? 'opacity-100' : 'opacity-30'">
+                        <span class="flex flex-grow flex-col">
                             <span class="text-sm font-medium text-gray-900">New Rate</span>
                             <span class="text-xs text-gray-500">Enter the new rate for the selected days. Leave blank to reset to default</span>
                         </span>
                         <div class="flex items-center space-x-2">
                             <div>
                                 <div class="relative mt-1">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                         <span class="text-gray-500 sm:text-sm"> $ </span>
                                     </div>
-                                    <input wire:model="new_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00" x-bind:disabled="!newRateActive">
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <input wire:model="new_rate" type="text" name="rate" id="rate" class="input mt-0 pl-6" placeholder="0.00" x-bind:disabled="!newRateActive">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                         <span class="text-gray-500 sm:text-sm"> USD </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-center flex-none w-[68px] mt-1">
+                            <div class="mt-1 flex w-[68px] flex-none items-center justify-center">
                                 <div wire:loading.remove wire:target="updateRate">
                                     <button wire:click="updateRate" class="button">Save</button>
                                 </div>
@@ -55,8 +55,8 @@
                         </div>
                     </div>
 
-                    {{-- <div class="flex justify-end mt-5 mb-0">
-                        <span class="text-sm link">View all modified rates </span>
+                    {{-- <div class="mt-5 mb-0 flex justify-end">
+                        <span class="link text-sm">View all modified rates </span>
                     </div> --}}
                 </div>
             </div>

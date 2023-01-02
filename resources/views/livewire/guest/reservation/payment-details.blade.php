@@ -1,7 +1,7 @@
 <div class="panel" wire:init="load">
     <h1 class="panel-heading">Payment Details</h1>
     <div class="panel-body">
-        {{-- <div class="flex items-center justify-between px-4 py-2 mb-5 border border-gray-300 rounded cursor-pointer bg-gray-50">
+        {{-- <div class="mb-5 flex cursor-pointer items-center justify-between rounded border border-gray-300 bg-gray-50 px-4 py-2">
             <div class="flex items-center space-x-5">
                 <div class="">
                     @if ($default_payment_method['card']['brand'] == 'visa' || $default_payment_method['card']['brand'] == 'mastercard' || $default_payment_method['card']['brand'] == 'amex' || $default_payment_method['card']['brand'] == 'discover')
@@ -12,18 +12,18 @@
                 </div>
                 <div class="flex flex-col text-sm">
                     <span class="text-sm">Ending with {{ $default_payment_method['card']['last4'] }}</span>
-                    <span class="text-xs text-muted">Expires {{ $default_payment_method['card']['exp_month'] }}/{{ $default_payment_method['card']['exp_year'] }}</span>
+                    <span class="text-muted text-xs">Expires {{ $default_payment_method['card']['exp_month'] }}/{{ $default_payment_method['card']['exp_year'] }}</span>
                 </div>
             </div>
 
             <div>
-                <button type="button" class="p-2 text-xs text-primary">Change</button>
+                <button type="button" class="text-primary p-2 text-xs">Change</button>
             </div>
         </div> --}}
 
 
         @if ($total != 0)
-            <div class="flex flex-col space-y-1 text-sm text-muted" wire:loading.remove wire:target="calcPricing">
+            <div class="text-muted flex flex-col space-y-1 text-sm" wire:loading.remove wire:target="calcPricing">
                 <div class="flex justify-between">
                     <span>${{ $reservation->property->default_rate }} x {{ $reservation->nights }} nights</span>
                     <span>${{ number_format($base_rate, 2) }}</span>
@@ -46,18 +46,18 @@
                 </div>
             </div>
         @else
-            <div class="flex flex-col space-y-2 animate-pulse">
+            <div class="flex animate-pulse flex-col space-y-2">
                 <div class="flex justify-between">
-                    <div class="w-[100px] h-4 bg-gray-200 rounded"></div>
-                    <div class="w-[80px] h-4 bg-gray-200 rounded"></div>
+                    <div class="h-4 w-[100px] rounded bg-gray-200"></div>
+                    <div class="h-4 w-[80px] rounded bg-gray-200"></div>
                 </div>
                 <div class="flex justify-between">
-                    <div class="w-[50px] h-4 bg-gray-200 rounded"></div>
-                    <div class="w-[70px] h-4 bg-gray-200 rounded"></div>
+                    <div class="h-4 w-[50px] rounded bg-gray-200"></div>
+                    <div class="h-4 w-[70px] rounded bg-gray-200"></div>
                 </div>
                 <div class="flex justify-between">
-                    <div class="w-[80px] h-4 bg-gray-200 rounded"></div>
-                    <div class="w-[110px] h-4 bg-gray-200 rounded"></div>
+                    <div class="h-4 w-[80px] rounded bg-gray-200"></div>
+                    <div class="h-4 w-[110px] rounded bg-gray-200"></div>
                 </div>
             </div>
         @endif

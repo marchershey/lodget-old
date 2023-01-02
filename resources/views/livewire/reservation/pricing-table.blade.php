@@ -1,20 +1,20 @@
 <div wire:init="load">
     <div class="items-center justify-center" wire:loading.flex wire:target="load">
-        <svg class="w-10 h-10 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg class="text-muted h-10 w-10 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
     </div>
     @if ($pricing)
-        <div x-data="{ datesVisible: false }" class="flex flex-col space-y-3 text-muted">
+        <div x-data="{ datesVisible: false }" class="text-muted flex flex-col space-y-3">
             <div class="flex justify-between">
                 <div class="flex space-x-2">
                     <span>@money($pricing['average_rate']) x {{ count($pricing['nights']) }} nights</span>
-                    <button x-on:click="datesVisible = !datesVisible" x-text="datesVisible ? 'View less' : 'View more'" class="text-xs link"></button>
+                    <button x-on:click="datesVisible = !datesVisible" x-text="datesVisible ? 'View less' : 'View more'" class="link text-xs"></button>
                 </div>
                 <span>@money($pricing['base_rate'])</span>
             </div>
-            <div class="flex flex-col text-sm bg-gray-100 rounded" x-show="datesVisible">
+            <div class="flex flex-col rounded bg-gray-100 text-sm" x-show="datesVisible">
                 @foreach ($pricing['nights'] as $rate)
                     <div class="flex justify-between px-3 py-1">
                         <span>{{ Carbon\Carbon::parse($rate['date'])->format('M jS') }}</span>

@@ -33,11 +33,11 @@
                     Support Messages
                 </span>
             </h1>
-            <div class="text-center panel-body">
+            <div class="panel-body text-center">
                 <h3 class="font-medium text-gray-900">We're here for you!</h3>
                 <p class="mt-1 text-sm text-gray-500">If at any time you have any questions, concerns, or feedback about your stay, please reach out to us!</p>
                 <div class="mt-6">
-                    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <button type="button" class="bg-primary hover:bg-primary-dark focus:ring-primary inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2">
                         Send a Message
                     </button>
                 </div>

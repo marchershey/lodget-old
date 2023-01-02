@@ -3,8 +3,8 @@
     <div role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
         <div class="fixed inset-0 bg-black bg-opacity-50"></div>
 
-        <div class="relative flex items-end justify-center min-h-screen sm:items-center">
-            <div class="w-full max-w-lg m-0">
+        <div class="relative flex min-h-screen items-end justify-center sm:items-center">
+            <div class="m-0 w-full max-w-lg">
                 <div class="panel">
                     @if ($title)
                         <h1 class="panel-heading">{{ $title }}</h1>

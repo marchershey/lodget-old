@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between">
             <div class="flex flex-col">
                 <h1 class="text-2xl font-semibold">{{ $reservation->property->name }}</h1>
-                <span class="text-sm text-muted">ID: {{ $reservation->slug }}</span>
+                <span class="text-muted text-sm">ID: {{ $reservation->slug }}</span>
             </div>
             <div class="flex space-x-5">
                 @if ($reservation->status == 'nopayment')
@@ -26,7 +26,7 @@
         </div>
 
         <div class="grid grid-cols-3 gap-5">
-            <div class="col-span-2 panel-spacing">
+            <div class="panel-spacing col-span-2">
                 <div class="panel">
                     <h1 class="panel-heading">Reservation Details</h1>
                     <div class="panel-body">
@@ -39,7 +39,7 @@
                                     </x-alert>
                                 </div>
                             @elseif ($reservation->status === 'pending')
-                                <div class="flex flex-col gap-5 col-span-full">
+                                <div class="col-span-full flex flex-col gap-5">
                                     <x-alert type="info">
                                         <span class="font-medium">Reservation Pending</span>
                                         <span>Your reservation request is currently pending.</span>
@@ -75,7 +75,7 @@
 
                             @elseif ($reservation->status === 'completed')
                             @endif
-                            <hr class="-mx-5 col-span-full">
+                            <hr class="col-span-full -mx-5">
                             <div class="flex flex-col">
                                 <span class="font-medium">Check-in</span>
                                 <span class="">{{ Carbon\Carbon::parse($reservation->checkin)->format('D, M jS, Y') }}</span>
@@ -100,9 +100,9 @@
                     <div class="panel-body">
                         <div>
                             <div class="mb-2 text-sm italic">
-                                <span class="font-semibold text-primary">Rob Serrate</span> said:
+                                <span class="text-primary font-semibold">Rob Serrate</span> said:
                             </div>
-                            <div class="p-3 bg-gray-100 rounded-lg">
+                            <div class="rounded-lg bg-gray-100 p-3">
                                 Hey! If you need anything, please feel free to reach out at any time!
                             </div>
                         </div>
@@ -110,17 +110,17 @@
                             <div class="mb-2 text-sm italic">
                                 <span class="font-semibold">You</span> said:
                             </div>
-                            <div class="p-3 bg-gray-100 rounded-lg">
+                            <div class="rounded-lg bg-gray-100 p-3">
                                 Yeah, can you call me really quick?
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 panel-body">
+                    <div class="panel-body bg-gray-50">
                         <div class="mt-1">
-                            <textarea rows="4" name="comment" id="comment" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" placeholder="Type your message here..."></textarea>
+                            <textarea rows="4" name="comment" id="comment" class="focus:ring-primary focus:border-primary block w-full rounded-md border-gray-300 shadow-sm sm:text-sm" placeholder="Type your message here..."></textarea>
                         </div>
                         <div class="flex justify-end">
-                            <button class="w-auto button">Send</button>
+                            <button class="button w-auto">Send</button>
                         </div>
                     </div>
                 </div>
