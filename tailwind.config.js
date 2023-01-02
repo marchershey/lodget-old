@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
+const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-    content: ["./resources/**/*.blade.php", "./resources/css/**/*.css"],
+    content: ['./resources/**/*.blade.php', './resources/css/**/*.css'],
     theme: {
         extend: {
             colors: {
@@ -27,12 +27,8 @@ module.exports = {
     },
     variants: {
         extend: {
-            lineClamp: ["focus"],
+            lineClamp: ['focus'],
         },
     },
-    plugins: [
-        require("@tailwindcss/forms"),
-        require("@tailwindcss/aspect-ratio"),
-        require("@tailwindcss/line-clamp"),
-    ],
-};
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio'), require('@tailwindcss/line-clamp')],
+}
