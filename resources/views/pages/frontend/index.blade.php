@@ -17,7 +17,7 @@
     </section>
 
     {{-- Newsletter --}}
-    <section class="frontend-section">
+    <section id="newsletter" class="frontend-section">
         <div class="bg-white">
             <div class="relative sm:py-16">
                 <div aria-hidden="true" class="hidden sm:block">
@@ -61,7 +61,7 @@
     </section>
 
     {{-- meet your hosts --}}
-    <section class="frontend-section">
+    <section id="about" class="frontend-section">
         <div class="frontend-section-heading">
             <h1 class="mb-2 text-4xl font-bold text-gray-800">Meet your hosts</h1>
             <span class="text-lg text-muted">Let us introduce ourselves</span>
@@ -101,7 +101,7 @@
     </section>
 
     {{-- Properties --}}
-    <section class="frontend-section" id="properties">
+    <section id="properties" class="frontend-section" id="properties">
         <div class="frontend-section-heading">
             <h1 class="mb-2 text-4xl font-bold text-gray-800">Our Properties</h1>
             <span class="text-lg text-muted">Check out some of our most popular properties</span>
@@ -143,7 +143,7 @@
     </section>
 
     {{-- contact form --}}
-    <section class="frontend-section">
+    <section id="contact" class="frontend-section">
         <div class="bg-white">
             <div class="relative sm:py-16">
                 <div aria-hidden="true" class="hidden sm:block">
