@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="panel">
+                {{-- <div class="panel">
                     <h1 class="panel-heading">Messages</h1>
                     <div class="panel-body">
                         <div>
@@ -123,7 +123,7 @@
                             <button class="w-auto button">Send</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="panel-spacing">
