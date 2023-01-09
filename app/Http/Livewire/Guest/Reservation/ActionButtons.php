@@ -40,7 +40,7 @@ class ActionButtons extends Component
             // if the payment is on hold, reverse it
             if ($status == 'hold') {
                 try {
-                    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+                    $stripe = new \Stripe\StripeClient(config('stripe.secret'));
                     $stripe->paymentIntents->cancel(
                         $this->reservation->payment->stripe_payment_id,
                         []

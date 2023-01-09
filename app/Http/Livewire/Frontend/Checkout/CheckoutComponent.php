@@ -258,7 +258,7 @@ class CheckoutComponent extends Component
 
         // Create payment hold
         try {
-            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+            $stripe = new \Stripe\StripeClient(config('stripe.secret'));
             $payment_intent = $stripe->paymentIntents->create([
                 'customer' => $this->default_payment_method['customer'],
                 'payment_method' => $this->default_payment_method['id'],

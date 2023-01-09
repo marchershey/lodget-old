@@ -364,7 +364,7 @@
                     this.newPaymentMethodLoading = false;
                 },
                 async initStripeElement() {
-                    window.stripe = Stripe('{{ env('STRIPE_KEY') }}');
+                    window.stripe = Stripe("{{ config('stripe.key') }}");
                     window.cardElement = await stripe.elements({
                         fonts: [{
                             cssSrc: 'https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'
@@ -426,7 +426,7 @@
         })
 
         window.addEventListener('initStripeCardElement', event => {
-            window.stripe = Stripe('{{ env('STRIPE_KEY') }}');
+            window.stripe = Stripe("{{ config('stripe.key') }}");
             window.cardElement = stripe.elements({
                 fonts: [{
                     cssSrc: 'https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'

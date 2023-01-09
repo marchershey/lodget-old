@@ -36,7 +36,7 @@ class ActionButtons extends Component
 
             // Capture the payment
             try {
-                \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                \Stripe\Stripe::setApiKey(config('stripe.secret'));
                 $intent = \Stripe\PaymentIntent::retrieve($payment->stripe_payment_id);
                 $intent->capture(['amount_to_capture' => $payment->total]);
             } catch (\Laravel\Cashier\Exceptions\IncompletePayment $e) {
@@ -125,7 +125,7 @@ class ActionButtons extends Component
             // if the payment is on hold, reverse it
             if ($status == 'hold') {
                 try {
-                    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+                    $stripe = new \Stripe\StripeClient(config('stripe.secret'));
                     $stripe->paymentIntents->cancel(
                         $this->reservation->payment->stripe_payment_id,
                         []
@@ -175,7 +175,7 @@ class ActionButtons extends Component
             // If the payment is captured, let's deal with that later.
             if ($status == 'captured') {
                 try {
-                    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+                    $stripe = new \Stripe\StripeClient(config('stripe.secret'));
 
                     $stripe->refunds->create([
                         'payment_intent' => $this->reservation->payment->stripe_payment_id
