@@ -8,7 +8,7 @@
 
         {{-- Approve Modal --}}
         <div x-show="pendingApproveModal" x-cloak>
-            <x-modal title="Are you sure?" showFunction="pendingApproveModal" closeFunction="closePendingApproveModal()">
+            <x-modal title="Are you sure?" show="pendingApproveModal" close="closePendingApproveModal()">
                 <div>
                     You are about to approve this reservation, which will capture the <span class="font-semibold">@money($reservation->payment->total ?? 0)</span> hold on the customer's card.
                 </div>
@@ -34,9 +34,12 @@
         <div>
             <button x-on:click="openCancelModal" class="w-full text-red-500">Cancel Reservation</button>
         </div>
+        <div>
+            Does grammarly work here?
+        </div>
         {{-- Cancel Modal --}}
         <div x-show="cancelModal" x-cloak>
-            <x-modal title="Cancel Reservation" showFunction="cancelModal" closeFunction="closeCancelModal()">
+            <x-modal title="Cancel Reservation" show="cancelModal" close="closeCancelModal()">
                 <div>
                     You are about to cancel this reservation for <span class="font-semibold">{{ $reservation->user->fullName() }}</span>, which will release the <span class="font-semibold">@money($reservation->payment->total ?? 0)</span> hold on {{ $reservation->user->first_name }}'s card.
                 </div>

@@ -8,7 +8,7 @@
         </div>
         {{-- Cancel Modal --}}
         <div x-show="cancelModal" x-cloak>
-            <x-modal title="Cancel Reservation" showFunction="cancelModal" closeFunction="closeCancelModal()">
+            <x-modal title="Cancel Reservation" show="cancelModal" close="closeCancelModal()">
                 <div>
                     You are about to cancel your reservation for <span class="font-semibold">{{ $reservation->property->name }}</span>. If you cancel, the dates you reserved may not be available in the future.
                 </div>
