@@ -1,3 +1,3 @@
 <x-layouts.host>
-    test
+    Nothing to see here... yet.
 </x-layouts.host>
