@@ -7,19 +7,19 @@ use Illuminate\View\Component;
 class Modal extends Component
 {
     public $title;
-    public $showFunction;
-    public $closeFunction;
+    public $show;
+    public $close;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($showFunction, $closeFunction, $title = "")
+    public function __construct($show, $close, $title = "")
     {
         $this->title = $title;
-        $this->showFunction = $showFunction;
-        $this->closeFunction = $closeFunction;
+        $this->show = $show;
+        $this->close = $close;
     }
 
     /**
