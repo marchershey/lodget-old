@@ -29,7 +29,7 @@
                     <div class="hidden space-x-10 lg:flex lg:ml-20">
                         <a href="#properties" class="text-base font-medium text-gray-500 hover:text-gray-900">Properties</a>
 
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Get in touch</a>
+                        <a href="#contact" class="text-base font-medium text-gray-500 hover:text-gray-900">Get in touch</a>
                     </div>
                 </div>
                 <div class="hidden lg:flex lg:items-center lg:space-x-6">
