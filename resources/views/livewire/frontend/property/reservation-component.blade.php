@@ -77,12 +77,6 @@
 @push('scripts')
     <script>
         window.addEventListener('calendar-init', async event => {
-            // console.log(event.detail.checkins);
-            // console.log(event.detail.checkouts);
-            // console.log(event.detail.disabled);
-
-            console.log(event.detail.disabled);
-
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
                 selectForward: false,
@@ -100,88 +94,6 @@
                     @this.updateDates(this.getValue())
                 }
             });
-
-            // const defaultRate = await @this.getDefaultRate()
-            // const rates = await @this.getRates()
-
-            // const bookedDates = event.detail.disabled.map(d => {
-            //     if (d instanceof Array) {
-            //         const start = new DateTime(d[0], 'YYYY-MM-DD');
-            //         const end = new DateTime(d[1], 'YYYY-MM-DD');
-
-            //         return [start, end];
-            //     }
-
-            //     return new DateTime(d, 'YYYY-MM-DD');
-            // });
-            // console.log(bookedDates);
-
-
-            // const picker = new easepick.create({
-            //     element: "#datepicker",
-            //     css: [
-            //         "/css/easepick.css"
-            //     ],
-            //     zIndex: 10,
-            //     inline: true,
-            //     firstDay: 0,
-            //     readony: true,
-
-            //     RangePlugin: {
-            //         tooltipNumber(num) {
-            //             return num - 1;
-            //         },
-            //         locale: {
-            //             one: 'night',
-            //             other: 'nights',
-            //         },
-            //     },
-            //     LockPlugin: {
-            //         minDate: new Date,
-            //         minDays: {{ $property->min_nights + 1 }},
-            //         inseparable: true,
-            //         filter(date, picked) {
-            //             if (picked.length === 1) {
-            //                 const incl = date.isBefore(picked[0]) ? '[)' : '(]';
-            //                 return !picked[0].isSame(date, 'day') && date.inArray(bookedDates, incl);
-            //             }
-
-            //             return date.inArray(bookedDates, '[)');
-            //         },
-            //     },
-            //     plugins: [RangePlugin, LockPlugin],
-            //     setup(picker) { // add price to day element
-            //         picker.on('view', async (event) => {
-            //             var {
-            //                 view,
-            //                 date,
-            //                 target
-            //             } = event.detail
-
-            //             var d = date ? date.format('YYYY-MM-DD') : null;
-
-            //             if (view === 'CalendarDay') {
-            //                 const span = target.querySelector('.day-price') || document.createElement('span');
-            //                 span.className = 'day-price';
-            //                 span.textContent = '$' + defaultRate
-            //                 rates.forEach(rate => {
-            //                     if (d == rate.date) {
-            //                         if (rate.amount < defaultRate) {
-            //                             span.classList.add('day-price-adjusted')
-            //                         }
-            //                         span.textContent = '$' + rate.amount;
-            //                     }
-            //                 });
-
-            //                 target.append(span);
-            //             }
-            //         });
-            //         picker.on('select', async (event) => {
-            //             @this.updateDates(this.getDate())
-            //         })
-            //     }
-
-            // })
         })
     </script>
 @endpush
