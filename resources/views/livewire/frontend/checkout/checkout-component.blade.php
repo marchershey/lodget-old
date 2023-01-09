@@ -20,26 +20,17 @@
         <div class="panel">
             <h1 class="panel-heading">Your Trip</h1>
             <div class="panel-body">
-                {{-- Dates --}}
-                <div class="flex items-center justify-between">
+                <div class="grid grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <span class="font-medium">Dates</span>
                         <span class="text-sm">{{ Carbon\Carbon::parse($reservation->checkin)->format('M jS') }} - {{ Carbon\Carbon::parse($reservation->checkout)->format('M jS') }}</span>
                     </div>
-                    <div>
-                        <span class="text-sm link">Change</span>
-                    </div>
-                </div>
-                {{-- Guests --}}
-                <div class="flex items-center justify-between">
                     <div class="flex flex-col">
                         <span class="font-medium">Guests</span>
                         <span class="text-sm">{{ $reservation->guests }} {{ Illuminate\Support\Str::plural('guest', $reservation->guests) }}</span>
                     </div>
-                    <div>
-                        <span class="text-sm link">Change</span>
-                    </div>
                 </div>
+                <livewire:frontend.checkout.change-dates-component :reservation="$reservation" />
             </div>
         </div>
 
