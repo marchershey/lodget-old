@@ -34,9 +34,6 @@
         <div>
             <button x-on:click="openCancelModal" class="w-full text-red-500">Cancel Reservation</button>
         </div>
-        <div>
-            Does grammarly work here?
-        </div>
         {{-- Cancel Modal --}}
         <div x-show="cancelModal" x-cloak>
             <x-modal title="Cancel Reservation" show="cancelModal" close="closeCancelModal()">

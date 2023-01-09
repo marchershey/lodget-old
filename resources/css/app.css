@@ -11,6 +11,12 @@
         font-family: "Montserrat", system-ui, sans-serif;
     }
 
+    .padding {
+        @apply px-4 sm:px-0;
+    }
+}
+
+@layer components {
     .frontend-container {
         @apply w-full px-6 py-6 mx-auto max-w-7xl sm:px-6 md:justify-start md:space-x-10 lg:px-8;
     }
@@ -29,9 +35,7 @@
     .frontend-spacing {
         @apply w-full p-5 lg:mx-auto lg:max-w-7xl lg:px-8;
     }
-}
 
-@layer components {
     .link {
         @apply cursor-pointer text-primary hover:text-primary-dark;
     }
