@@ -13,8 +13,8 @@
                             <div class="flex items-baseline ml-10 space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                 <a href="{{ route('guest.dashboard') }}" class="px-3 py-2 text-sm font-medium {{ request()->is('guest/dashboard') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}" aria-current="page">Dashboard</a>
-                                <a href="#" class="px-3 py-2 text-sm font-medium {{ request()->is('guest/reservations') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Reservations</a>
-                                <a href="#" class="px-3 py-2 text-sm font-medium {{ request()->is('guest/support') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Support</a>
+                                {{-- <a href="#" class="px-3 py-2 text-sm font-medium {{ request()->is('guest/reservations') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Reservations</a>
+                                <a href="#" class="px-3 py-2 text-sm font-medium {{ request()->is('guest/support') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Support</a> --}}
                             </div>
                         </div>
                     </div>
