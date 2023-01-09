@@ -5,7 +5,7 @@
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <a href="{{ route('dashboard') }}">
+                            <a href="{{ route('frontend.index') }}">
                                 <x-logo theme="dark" :showName="true" iconSize="w-6 h-6" />
                             </a>
                         </div>
@@ -64,8 +64,8 @@
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a href="{{ route('guest.dashboard') }}" class="block px-3 py-2 text-base font-medium {{ request()->is('guest/dashboard') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}" aria-current="page">Dashboard</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium {{ request()->is('guest/reservations') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Reservations</a>
-                    <a href="#" class="block px-3 py-2 text-base font-medium {{ request()->is('guest/support') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Support</a>
+                    {{-- <a href="#" class="block px-3 py-2 text-base font-medium {{ request()->is('guest/reservations') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Reservations</a>
+                    <a href="#" class="block px-3 py-2 text-base font-medium {{ request()->is('guest/support') ? 'text-white bg-gray-900 rounded-md' : 'text-gray-300 rounded-md hover:bg-gray-700 hover:text-white' }}">Support</a> --}}
                 </div>
                 <div class="pt-4 pb-3 border-t border-gray-700">
                     <div class="flex items-center px-5">
