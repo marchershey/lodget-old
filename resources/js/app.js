@@ -44,5 +44,5 @@ Alpine.start();
 
 // Splidejs
 import Splide from "@splidejs/splide";
-import splideCss from "@splidejs/splide/dist/css/themes/splide-default.min.css?inline";
+// import splideCss from "@splidejs/splide/dist/css/themes/splide-default.min.css";
 window.Splide = Splide;
