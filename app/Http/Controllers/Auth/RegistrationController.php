@@ -36,6 +36,9 @@ class RegistrationController extends Controller
             'last_name' => 'required|string|min:3|max:100|alpha_dash',
             'email' => 'required|string|min:3|max:100|unique:users,email|email:filter,rfc,spoof,dns',
             'password' => ['required', Password::min(8)],
+            'birthdate' => 'required|date|before:-25 years',
+        ], [
+            'birthdate.before' => 'You must be at least 25 years old.',
         ]);
 
         // create and save user
@@ -44,6 +47,7 @@ class RegistrationController extends Controller
         $user->last_name = ucfirst($validated['last_name']);
         $user->email = strtolower($validated['email']);
         $user->password = Hash::make($validated['password']);
+        $user->birthdate = $validated['birthdate'];
         $user->save();
 
         // create stripe customer

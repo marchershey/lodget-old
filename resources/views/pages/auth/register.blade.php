@@ -62,6 +62,14 @@
                     </div>
                     <span class="input-desc">Must have at least 8 characters</span>
                 </div>
+                {{-- Birthdate --}}
+                <div>
+                    <label for="birthdate" class="input-label @error('birthdate') input-label-error @enderror">Birthdate</label>
+                    <div class="mt-1">
+                        <input type="date" name="birthdate" id="birthdate" class="input" value="{{ old('birthdate') }}">
+                    </div>
+                    <span class="input-desc">To create an account, you need to be at least 25 years old.</span>
+                </div>
                 {{-- Sumbit button --}}
                 <div>
                     <button type="submit" class="w-full button ">Register</button>
