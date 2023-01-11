@@ -96,9 +96,9 @@
             <nav class="lg:hidden" aria-label="Global" x-show="mobileMenu" x-cloak x-on:click.away="mobileMenu = false">
                 <div class="max-w-3xl px-2 pt-2 pb-3 mx-auto space-y-1 sm:px-4">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
-                    <a href="{{ route('host.dashboard') }}" aria-current="page" class="block px-3 py-2 text-base font-medium text-gray-900 bg-gray-100 rounded-md">Dashboard</a>
-                    <a href="{{ route('host.reservations') }}" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Reservations</a>
-                    <a href="{{ route('host.properties') }}" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Properties</a>
+                    <a href="{{ route('host.dashboard') }}" aria-current="page" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('host.dashboard') ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50' }}">Dashboard</a>
+                    <a href="{{ route('host.reservations') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('host.reservations') ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50' }}">Reservations</a>
+                    <a href="{{ route('host.properties') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('host.properties') ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50' }}">Properties</a>
                     <a href="#" class="block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-50">Settings</a>
                 </div>
                 <div class="pt-4 border-t border-gray-200">
@@ -134,18 +134,18 @@
                     <nav aria-label="Sidebar" class="sticky divide-y divide-gray-300 top-4">
                         <div class="pb-8 space-y-1">
                             <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-600 hover:bg-gray-50" -->
-                            <a href="{{ route('host.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium text-gray-900 rounded-md group" aria-current="page">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <a href="{{ route('host.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('host.dashboard') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50' }} group" aria-current="page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M4 4h6v8h-6z"></path>
                                     <path d="M4 16h6v4h-6z"></path>
                                     <path d="M14 12h6v8h-6z"></path>
                                     <path d="M14 4h6v4h-6z"></path>
                                 </svg>
-                                <span class="font-bold truncate"> Dashboard </span>
+                                <span class="truncate"> Dashboard </span>
                             </a>
 
-                            <a href="{{ route('host.reservations') }}" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
+                            <a href="{{ route('host.reservations') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('host.reservations') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50' }} group">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
@@ -158,7 +158,7 @@
                                 <span class="truncate"> Reservations </span>
                             </a>
 
-                            <a href="{{ route('host.properties') }}" class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 group">
+                            <a href="{{ route('host.properties') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('host.properties') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50' }} group">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <line x1="3" y1="21" x2="21" y2="21"></line>
