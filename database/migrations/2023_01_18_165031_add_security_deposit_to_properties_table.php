@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->integer('min_nights')->default(0)->after('slug');
+            $table->integer('deposit')->default(0)->after('default_tax');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->dropColumn('min_nights');
+            $table->dropColumn('deposit');
         });
     }
 };

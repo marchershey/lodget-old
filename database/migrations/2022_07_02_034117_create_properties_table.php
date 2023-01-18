@@ -33,6 +33,7 @@ return new class extends Migration
             // rates
             $table->integer('default_rate')->default(100);
             $table->integer('default_tax')->default(1);
+            // 'deposit'
 
             // options
             $table->boolean('active')->default(false);

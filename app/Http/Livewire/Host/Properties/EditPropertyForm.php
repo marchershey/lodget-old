@@ -44,6 +44,7 @@ class EditPropertyForm extends Component
     // rates & fees
     public $default_rate;
     public $default_tax;
+    public $deposit;
     public $fees = [];
 
     // Listing Details
@@ -105,6 +106,7 @@ class EditPropertyForm extends Component
         // rates & fees
         $this->default_rate = Money::USD(($this->property->default_rate))->formatByDecimal();
         $this->default_tax = $this->property->default_tax;
+        $this->deposit = Money::USD(($this->property->deposit))->formatByDecimal();
 
         foreach ($this->property->fees as $fee) {
             $this->fees[$fee['id']] = [
@@ -253,6 +255,7 @@ class EditPropertyForm extends Component
         // default base and tax rate
         $property->default_rate = money($this->default_rate, 'USD', true)->getAmount();
         $property->default_tax = $this->default_tax;
+        $property->deposit = money($this->deposit, 'USD', true)->getAmount();
 
         // additional fees 
         // delete existing fees
