@@ -347,47 +347,68 @@
     <div class="panel">
         <h3 class="panel-heading">Rates & Fees</h3>
         <div class="panel-body">
-            <div class="grid grid-cols-4 gap-5">
-                <div>
-                    <label for="rate" class="input-label">Base Rate</label>
-                    <div class="relative mt-1">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm"> $ </span>
-                        </div>
-                        <input wire:model="default_rate" type="text" name="rate" id="rate" class="pl-6 input" placeholder="0.00">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm"> USD </span>
-                        </div>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Nightly Rate</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Amount to charge per night</span>
+                </span>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm"> $ </span>
                     </div>
-                </div>
-                <div>
-                    <label for="tax" class="input-label">Tax Rate</label>
-                    <div class="relative mt-1">
-                        <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 input" placeholder="0">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
-                        </div>
+                    <input wire:model="default_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm"> USD </span>
                     </div>
-                </div>
-                <div class="flex col-span-2 mt-8 space-x-2">
-                    {{-- <a href="" class="items-center space-x-2 button button-light">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-                            <line x1="16" y1="3" x2="16" y2="7"></line>
-                            <line x1="8" y1="3" x2="8" y2="7"></line>
-                            <line x1="4" y1="11" x2="20" y2="11"></line>
-                            <rect x="8" y="15" width="2" height="2"></rect>
-                        </svg>
-                        <span>Rates Calendar</span>
-                    </a> --}}
-                    <livewire:host.properties.rates-calendar :property="$property" />
-                </div>
-                <div class="col-span-full">
-                    <button class="button button-light" wire:click="addFee">Add additional fees</button>
                 </div>
             </div>
-
+            <hr>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Tax Rate</span>
+                    <span class="text-sm text-gray-500" id="availability-description">The percentage to charge for tax</span>
+                </span>
+                <div class="relative">
+                    <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 mt-0 text-right input" placeholder="0">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Security Deposit</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Amount to charge for security deposit</span>
+                </span>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm"> $ </span>
+                    </div>
+                    <input wire:model="deposit" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm"> USD </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Rates Calendar</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Edit the rates on specific days</span>
+                </span>
+                <livewire:host.properties.rates-calendar :property="$property" />
+            </div>
+            <hr>
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <span class="flex flex-col flex-grow w-full">
+                    <span class="text-sm font-medium text-gray-900" id="availability-label">Additonal Fees</span>
+                    <span class="text-sm text-gray-500" id="availability-description">Add any additional fees to charge the guest</span>
+                </span>
+                <div>
+                    <button class="button whitespace-nowrap button-light" wire:click="addFee">Add additional fees</button>
+                </div>
+            </div>
             @if (count($fees) > 0)
                 <div class="flex flex-col space-y-3">
                     <hr>
