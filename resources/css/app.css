@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "Inter";
+        src: url(../../public/fonts/Inter.ttf) format("truetype");
+    }
+}
+
+@layer components {
+    .link {
+        @apply text-primary hover:text-primary-light;
+    }
+}

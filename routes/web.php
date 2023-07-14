@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::name('auth.')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Pages\Auth\AuthenticationController::class, 'view'])->name('login');
+    Route::get('/sign-up', [App\Http\Controllers\Pages\Auth\RegistrationController::class, 'view'])->name('register');
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::view('/', 'pages.frontend.frontend-index');
 });
