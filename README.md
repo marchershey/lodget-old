@@ -1,6 +1,18 @@
-### Models
+## Installation
 
-#### Reservation
+-   _To be completed_
+
+## Notes
+
+### Error Codes
+
+#### Stripe
+
+-   Generic error (2) -
+
+## Models
+
+### Reservation
 
 -   **Table Structure:**
     -   `id` -
