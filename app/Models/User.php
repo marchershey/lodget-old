@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +59,16 @@ class User extends Authenticatable
     public function fullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Return the users age
+     * 
+     * @return int
+     */
+    function age(): int
+    {
+        return Carbon::parse($this->birthdate)->diffInYears(Carbon::now());
     }
 
     public function transactions()
