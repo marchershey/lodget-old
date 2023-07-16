@@ -10,7 +10,41 @@
 }
 
 @layer components {
+    /* Typography */
     .link {
-        @apply text-primary hover:text-primary-light;
+        /* @apply text-primary hover:text-primary-dark focus:underline focus:underline-offset-2 focus:decoration-primary focus:outline-none; */
+        @apply text-primary hover:text-primary-dark focus-visible:outline-primary-dark;
+    }
+
+    /* Form elements */
+    .input-label {
+        @apply block text-sm font-medium leading-6 text-gray-900;
+    }
+    .input-desc {
+        @apply text-muted text-xs leading-5 block;
+    }
+    .input-text {
+        @apply block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-50;
+    }
+    .input-checkbox {
+        @apply w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary;
+    }
+    .input-checkbox-label {
+        @apply block ml-3 text-sm leading-5 text-gray-700;
+    }
+    .button {
+        @apply flex justify-center w-full px-3 py-3 text-sm font-medium leading-6 focus-visible:outline-none;
+    }
+    .button-link {
+        @apply text-primary hover:text-primary-dark focus-visible:ring-2 focus-visible:text-primary-dark focus-visible:ring-primary-dark rounded-md;
+    }
+    .button-primary {
+        @apply text-white rounded-md shadow-sm bg-primary hover:bg-primary-dark focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-dark;
+    }
+}
+
+@layer utilities {
+    [x-cloak] {
+        display: none !important;
     }
 }
