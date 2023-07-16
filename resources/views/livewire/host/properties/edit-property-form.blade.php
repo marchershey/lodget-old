@@ -510,7 +510,7 @@
             <div x-data="{
                 value: $wire.entangle('min_nights'),
                 step: 1,
-                min: 0,
+                min: 1,
                 max: 99,
                 add() { this.value = (this.addDisabled) ? (this.value + this.step) : this.value },
                 subtract() { this.value = (this.subtractDisabled) ? (this.value - this.step) : this.value },
