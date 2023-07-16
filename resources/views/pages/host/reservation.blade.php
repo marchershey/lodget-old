@@ -88,7 +88,7 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="text-sm text-muted">Birthdate</span>
-                        <span class="truncate">{{ Carbon\Carbon::parse($reservation->user->birthdate)->format('M jS, Y') }} ({{ Carbon\Carbon::parse($reservation->user->birthdate)->age }})</span>
+                        <span class="truncate">{{ Carbon\Carbon::parse($reservation->user->birthdate)->format('M jS, Y') }} ({{ $reservation->user->age() }})</span>
                     </div>
                     <div class="flex flex-col">
                         <span class="text-sm text-muted">Created Account</span>
