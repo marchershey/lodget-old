@@ -70,7 +70,7 @@ class EditPropertyForm extends Component
         'bathrooms' => 'required|min:0',
         'headline' => 'required|string|max:100',
         'description' => 'required|string|max:65500',
-        'min_nights' => 'required|min:0',
+        'min_nights' => 'required|min:1',
     ];
 
     public function render()

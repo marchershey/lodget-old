@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->integer('min_nights')->default(0)->after('slug');
+            $table->integer('min_nights')->default(1)->after('slug');
         });
     }
 
