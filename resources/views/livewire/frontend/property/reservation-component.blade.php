@@ -77,18 +77,23 @@
 @push('scripts')
     <script>
         window.addEventListener('calendar-init', async event => {
+            console.log(event.detail.checkins);
+            console.log(event.detail.disabled);
+            console.log(event.detail.checkouts);
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
                 selectForward: false,
                 minNights: {{ $property->min_nights }},
+                // minNights: 1,
                 showTopbar: false,
                 startDate: new Date(),
                 noCheckInDates: event.detail.checkins,
                 noCheckOutDates: event.detail.checkouts,
                 disabledDates: event.detail.disabled,
-                enableCheckout: true,
+                enableCheckout: false,
                 hoveringTooltip: function(nights, startTime, hoverTime) {
-                    return false;
+                    // return false;
+                    return nights + ' nights';
                 },
                 onSelectRange: function(a) {
                     @this.updateDates(this.getValue())

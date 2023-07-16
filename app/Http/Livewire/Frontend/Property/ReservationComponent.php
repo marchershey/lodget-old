@@ -76,13 +76,13 @@ class ReservationComponent extends Component
         $matches = Arr::flatten(array_intersect($checkins, $checkouts));
 
         foreach ($matches as $match) {
-            toast()->debug($match)->push();
             if (($key = array_search($match, $checkins)) !== false) {
                 unset($checkins[$key]);
             }
             if (($key = array_search($match, $checkouts)) !== false) {
                 unset($checkouts[$key]);
             }
+            $disabled[] = $match;
         }
 
         $this->dispatchBrowserEvent('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
