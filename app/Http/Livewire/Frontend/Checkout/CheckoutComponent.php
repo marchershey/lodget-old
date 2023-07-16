@@ -200,6 +200,13 @@ class CheckoutComponent extends Component
 
         $this->setDefaultPaymentMethod = true;
 
+        // CHECK IF CUSTOMER EXISTS, IF NOT CREATE ONE
+        // DO NOT USE "CREATEORGETSTRIPECUSTOMER()!! 
+        // IT DOESN'T CREATE A PROPER STRIPE CUSTOMER
+        // SHOULDN'T REALLY MATTER, BECAUSE STRIPE CUSTOMER
+        // GETS CREATED WHEN YOU REGISTER, AND THIS 
+        // ISSUE ONLY HAPPENS WHEN YOU USE DEMO ACCOUNT,
+        // BUT IT NEEDS TO BE ADDRESSED EVENTUALLY
         $this->user->createOrGetStripeCustomer();
 
         // Create Setup intent & get client secret
@@ -278,10 +285,8 @@ class CheckoutComponent extends Component
                 ],
 
                 'metadata' => [
-                    'reservation_id' => $this->reservation->id,
+                    'reservation_id' => $this->reservation->slug,
                 ],
-            ], [
-                'idempotency_key' => $this->reservation->slug,
             ]);
         } catch (\Laravel\Cashier\Exceptions\IncompletePayment $e) {
             if ($e->payment->requiresPaymentMethod()) {
