@@ -14,10 +14,8 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
 import fecha from "fecha";
 window.fecha = fecha;
 // Hotel datepicker
-// import HotelDatepicker from "./hotel-datepicker copy";
 import HotelDatepicker from "hotel-datepicker";
 window.HotelDatepicker = HotelDatepicker;
-// import "hotel-datepicker/dist/css/hotel-datepicker.css";
 
 // easepick - date range picker
 import { easepick } from "@easepick/core";

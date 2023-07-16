@@ -84,7 +84,6 @@
                 inline: true,
                 selectForward: false,
                 minNights: {{ $property->min_nights }},
-                // minNights: 1,
                 showTopbar: false,
                 startDate: new Date(),
                 noCheckInDates: event.detail.checkins,
