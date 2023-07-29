@@ -1,123 +1,235 @@
-@php
-    $mainMenuItems = [
-        'Dashboard' => 'host.dashboard',
-        'Reservations' => 'host.reservations',
-        'Guests' => 'host.test',
-    ];
-    
-    $profileMenuItems = [
-        'Your Profile' => 'host.test',
-        'Settings' => 'host.test',
-    ];
-@endphp
+@props(['title'])
 
-<div class="min-h-full" x-data="{ mobileMenuOpen: false }">
-    <nav class="bg-gray-800">
-        <div class="px-4 mx-auto max-w-screen-laptop sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <h1 class="font-semibold tracking-wider text-white uppercase">
-                            {{ config('app.name') }}
-                        </h1>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="flex items-baseline ml-10 space-x-4">
-                            @foreach ($mainMenuItems as $text => $route)
-                                <a href="{{ route($route) }}" class="px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-700 {{ request()->routeIs($route) ? 'bg-gray-900 text-white' : 'text-muted hover:text-white ' }}" aria-current="page">{{ $text }}</a>
-                            @endforeach
-                        </div>
+{{-- Page --}}
+<div class="flex h-screen text-white">
+    {{-- Sidebar --}}
+    <div class="h-full bg-gray-100 border-r w-72">
+
+    </div>
+
+    {{-- Content --}}
+
+    <div class="">
+        <ul role="list" class="divide-y divide-gray-100">
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Leslie Alexander</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">leslie.alexander@example.com</p>
                     </div>
                 </div>
-
-                <div class="flex items-center justify-end flex-shrink-0 space-x-2">
-                    {{-- Notifications button --}}
-                    <div>
-                        <button type="button" class="p-2 rounded-full text-muted hover:text-white hover:bg-gray-700 hover:ring-2 hover:ring-gray-600">
-                            <span class="sr-only">View notifications</span>
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                            </svg>
-                        </button>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
+                    <p class="mt-1 text-xs leading-5 text-gray-500">Last seen <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+                </div>
+            </li>
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Michael Foster</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">michael.foster@example.com</p>
                     </div>
-
-                    {{-- Profile button (desktop) --}}
-                    <div x-data="{ profileMenuOpen: false }" class="relative hidden laptop:block">
-                        <div class="flex items-center">
-                            <button x-on:click="profileMenuOpen = !profileMenuOpen" type="button" class="rounded-full hover:ring-2 hover:ring-white">
-                                <img class="rounded-full w-9 h-9" src="https://ui-avatars.com/api/?name={{ auth()->user()->first_name }}+{{ auth()->user()->last_name }}&background=1d4ed8&color=fff&rounded=true&format=svg&bold=true" alt="">
-                            </button>
+                </div>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Co-Founder / CTO</p>
+                    <p class="mt-1 text-xs leading-5 text-gray-500">Last seen <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+                </div>
+            </li>
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Dries Vincent</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">dries.vincent@example.com</p>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Business Relations</p>
+                    <div class="mt-1 flex items-center gap-x-1.5">
+                        <div class="flex-none p-1 rounded-full bg-emerald-500/20">
+                            <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
                         </div>
+                        <p class="text-xs leading-5 text-gray-500">Online</p>
+                    </div>
+                </div>
+            </li>
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Lindsay Walton</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">lindsay.walton@example.com</p>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Front-end Developer</p>
+                    <p class="mt-1 text-xs leading-5 text-gray-500">Last seen <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+                </div>
+            </li>
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Courtney Henry</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">courtney.henry@example.com</p>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Designer</p>
+                    <p class="mt-1 text-xs leading-5 text-gray-500">Last seen <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+                </div>
+            </li>
+            <li class="flex justify-between py-5 gap-x-6">
+                <div class="flex gap-x-4">
+                    <img class="flex-none w-12 h-12 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <div class="flex-auto min-w-0">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">Tom Cook</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500 truncate">tom.cook@example.com</p>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                    <p class="text-sm leading-6 text-gray-900">Director of Product</p>
+                    <div class="mt-1 flex items-center gap-x-1.5">
+                        <div class="flex-none p-1 rounded-full bg-emerald-500/20">
+                            <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                        </div>
+                        <p class="text-xs leading-5 text-gray-500">Online</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
 
-                        <div x-show="profileMenuOpen" x-cloak class="absolute right-0 z-10 w-56 mt-2 origin-top-right">
-                            <div class="overflow-hidden text-sm bg-white divide-y rounded-lg shadow-lg ring-1 ring-gray-300">
-                                <div class="px-4 py-2 text-xs">
-                                    Signed in as
-                                    <span class="font-medium">{{ auth()->user()->fullName() }}</span>
-                                    <span>({{ auth()->user()->email }})</span>
-                                </div>
-                                <div class="">
-                                    @foreach ($profileMenuItems as $text => $route)
-                                        <a href="{{ route($route) }}" class="block px-4 py-2 focus-visible:outline-none focus-visible:bg-gray-100 {{ request()->routeIs($route) ? 'bg-gray-100' : 'hover:bg-gray-100' }}">{{ $text }}</a>
-                                    @endforeach
-                                    <a href="{{ route('auth.logout') }}" class="block px-4 py-2 text-red-500 hover:bg-gray-100 focus-visible:outline-none focus-visible:bg-gray-100">Sign out</a>
+    </div>
+
+</div>
+
+<div x-data="{ sidebarVisible: false, asideVisible: false }" class="flex hidden h-full">
+
+    {{-- Content --}}
+    <div class="relative flex flex-col flex-1 min-w-0 overflow-hidden laptop:flex-row">
+
+        {{-- Topbar --}}
+        <div class="flex flex-col">
+
+            <div class="flex items-center justify-between px-4 bg-gray-900">
+
+                {{-- Left (mobile menu button) --}}
+                <div class="flex items-center laptop:hidden">
+                    <button x-show="!sidebarVisible" x-on:click="sidebarVisible = true" type="button" class="-m-2.5 p-2.5 text-muted">
+                        <span class="sr-only">Open sidebar</span>
+                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                    <button x-show="sidebarVisible" x-cloak x-on:click="sidebarVisible = false" type="button" class="-m-2.5 p-2.5 text-muted">
+                        <span class="sr-only">Close sidebar</span>
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M18 6l-12 12"></path>
+                            <path d="M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                {{-- Center (logo) --}}
+                <div class="flex items-center justify-center w-64 lg:bg-gray-900 lg:-mx-4 h-14">
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="p-1.5 text-white rounded-full bg-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"></path>
+                                <path d="M15 9h.01"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-1 space-x-4">
+                            <div class="flex items-center space-x-2">
+                                <h1 class="text-2xl font-bold tracking-wider text-white uppercase">
+                                    {{ config('app.name') }}
+                                </h1>
+                                <div class="px-2 py-0.5 text-xs rounded-lg bg-primary">
+                                    <span class="font-medium text-white">{{ config('app.build') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    {{-- Mobile menu button (mobile) --}}
-                    <div class="md:hidden">
-                        <button x-on:click="mobileMenuOpen = !mobileMenuOpen" type="button" class="p-2 text-muted">
-                            <span class="sr-only">Open main menu</span>
-                            <svg x-show="!mobileMenuOpen" class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                {{-- Right side (notifications) --}}
+                <div class="flex items-center laptop:hidden">
+                    <button type="button" class="p-3 -m-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-muted" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                        </svg>
+                    </button>
+                    {{-- <button type="button" class="p-3 -m-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-500" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M17.451 2.344a1 1 0 0 1 1.41 -.099a12.05 12.05 0 0 1 3.048 4.064a1 1 0 1 1 -1.818 .836a10.05 10.05 0 0 0 -2.54 -3.39a1 1 0 0 1 -.1 -1.41z" stroke-width="0" fill="currentColor"></path>
+                            <path d="M5.136 2.245a1 1 0 0 1 1.312 1.51a10.05 10.05 0 0 0 -2.54 3.39a1 1 0 1 1 -1.817 -.835a12.05 12.05 0 0 1 3.045 -4.065z" stroke-width="0" fill="currentColor"></path>
+                            <path d="M14.235 19c.865 0 1.322 1.024 .745 1.668a3.992 3.992 0 0 1 -2.98 1.332a3.992 3.992 0 0 1 -2.98 -1.332c-.552 -.616 -.158 -1.579 .634 -1.661l.11 -.006h4.471z" stroke-width="0" fill="currentColor"></path>
+                            <path d="M12 2c1.358 0 2.506 .903 2.875 2.141l.046 .171l.008 .043a8.013 8.013 0 0 1 4.024 6.069l.028 .287l.019 .289v2.931l.021 .136a3 3 0 0 0 1.143 1.847l.167 .117l.162 .099c.86 .487 .56 1.766 -.377 1.864l-.116 .006h-16c-1.028 0 -1.387 -1.364 -.493 -1.87a3 3 0 0 0 1.472 -2.063l.021 -.143l.001 -2.97a8 8 0 0 1 3.821 -6.454l.248 -.146l.01 -.043a3.003 3.003 0 0 1 2.562 -2.29l.182 -.017l.176 -.004z" stroke-width="0" fill="currentColor"></path>
+                        </svg>
+                    </button> --}}
+                </div>
+            </div>
+
+            {{-- Sidebar --}}
+            <div :class="sidebarVisible ? '!flex lg:static' : 'hidden lg:flex'" class="absolute inset-0 z-10 hidden w-full pt-4 bg-gray-900 lg:w-64 lg:static lg:flex lg:flex-1 mt-14 lg:mt-0">
+                <x-layouts.host-sidebar-menu />
+            </div>
+        </div>
+
+        {{-- Main content --}}
+        <div x-data="{ asideVisible: false }" class="relative flex flex-col flex-1">
+
+            <div class="w-full bg-white page-padding-x">
+                <h1 class="text-xl font-semibold">
+                    {{ $title }}
+                </h1>
+            </div>
+            <main class="page-padding">
+                {{ $slot }}
+            </main>
+
+
+            {{-- @hasSection('aside')
+                <div class="flex py-3 bg-white border-b page-padding-x laptop:hidden">
+                    <div x-show="!asideVisible">
+                        <button x-on:click="asideVisible = true" type="button" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-muted" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 12l14 0"></path>
+                                <path d="M5 12l6 6"></path>
+                                <path d="M5 12l6 -6"></path>
                             </svg>
-                            <svg x-show="mobileMenuOpen" x-cloak class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <span class="font-medium">Settings Menu</span>
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
+            @endif --}}
 
-        <!-- Mobile menu, show/hide based on menu state. -->
-        <div x-show="mobileMenuOpen" x-cloak class="md:hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                @foreach ($mainMenuItems as $text => $route)
-                    <a href="{{ route($route) }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs($route) ? 'bg-gray-900 text-white' : 'text-muted' }}" aria-current="page">{{ $text }}</a>
-                @endforeach
-            </div>
-            <div class="pt-4 pb-3 border-t border-gray-700">
-                <div class="flex items-center px-5">
-                    <div class="flex-shrink-0">
-                        <img class="w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->first_name }}+{{ auth()->user()->last_name }}&background=1d4ed8&color=fff&rounded=true&format=svg&bold=true" alt="">
 
+
+            {{-- <div class="flex h-full laptop:relative">
+                @hasSection('aside')
+                    <div :class="asideVisible ? '!block !w-full' : 'hidden laptop:block'" class="absolute inset-0 hidden w-56 h-full bg-white border-r laptop:block">
+                        <div class="page-padding">
+                            @yield('aside')
+                        </div>
                     </div>
-                    <div class="ml-3">
-                        <div class="text-base font-medium text-white">{{ auth()->user()->fullName() }}</div>
-                        <div class="text-sm font-medium text-muted">{{ auth()->user()->email }}</div>
-                    </div>
-                </div>
-                <div class="px-2 mt-3 space-y-1">
-                    @foreach ($profileMenuItems as $text => $route)
-                        <a href="{{ route($route) }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs($route) ? 'bg-gray-900 text-white' : 'text-muted hover:text-white ' }}">{{ $text }}</a>
-                    @endforeach
-                    <a href="#" class="block px-3 py-2 text-base font-medium text-red-500 rounded-md hover:bg-gray-700 hover:text-white">Sign out</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+                @endif
 
-    <header class="bg-white shadow-sm">
-        <div class="px-4 py-4 mx-auto max-w-screen-laptop sm:px-6 lg:px-8">
-            <h1 class="text-lg font-semibold leading-6 text-gray-900">Dashboard</h1>
+                <main>
+                    {{ $slot }}
+                </main>
+
+            </div> --}}
+
+
         </div>
-    </header>
-    <main>
-        <div class="py-6 mx-auto max-w-screen-laptop sm:px-6 lg:px-8">
-            {{ $slot }}
-        </div>
-    </main>
+    </div>
 </div>

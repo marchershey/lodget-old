@@ -14,6 +14,6 @@ class HostDashboardController extends Component
      */
     public function render(): View
     {
-        return view('pages.host.dashboard');
+        return view('pages.host.host-dashboard');
     }
 }

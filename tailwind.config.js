@@ -24,7 +24,10 @@ export default {
                     dark: colors.blue[800],
                 },
                 muted: {
+                    lighter: colors.gray[100],
+                    light: colors.gray[200],
                     DEFAULT: colors.gray[400],
+                    dark: colors.gray[600],
                 },
                 gray: colors.gray,
             },

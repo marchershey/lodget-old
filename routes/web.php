@@ -42,8 +42,17 @@ Route::name('auth.')->group(function () {
 /**
  * Host Routes
  */
-Route::name('host.')->prefix('/host')->group(function () {
+Route::name('host.')->middleware('auth')->prefix('/host')->group(function () {
     Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
+
+    // Settings
+    Route::name('settings.')->prefix('/settings')->group(function () {
+        Route::get('/general', App\Http\Controllers\Pages\Host\Settings\HostGeneralSettingsController::class)->name('general');
+    });
+
+    Route::get('/rentals', App\Http\Controllers\Pages\Host\HostRentalsController::class)->name('rentals');
     Route::get('/reservations', App\Http\Controllers\Pages\Host\HostReservationsController::class)->name('reservations');
     Route::get('/test', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('test');
 });
+
+Route::view('/blank', 'blank');

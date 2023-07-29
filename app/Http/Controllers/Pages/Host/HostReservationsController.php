@@ -8,6 +8,6 @@ class HostReservationsController extends Component
 {
     public function render()
     {
-        return view('pages.host.reservations');
+        return view('pages.host.host-reservations');
     }
 }

@@ -7,6 +7,30 @@
         font-family: "Inter";
         src: url(../../public/fonts/Inter.ttf) format("truetype");
     }
+
+    /* Padding and Spacing */
+    .page-padding {
+        @apply px-4 py-8 sm:px-6 lg:px-8;
+    }
+    .page-padding-y {
+        @apply py-8;
+    }
+    .page-padding-x {
+        @apply px-4 sm:px-6 lg:px-8;
+    }
+    .-page-padding {
+        @apply -mx-4 -my-8 sm:-mx-6 lg:-mx-8;
+    }
+
+    .size-tablet {
+        @apply w-full max-w-screen-tablet mx-auto;
+    }
+    .size-laptop {
+        @apply w-full max-w-screen-laptop mx-auto;
+    }
+    .size-desktop {
+        @apply w-full max-w-screen-desktop mx-auto;
+    }
 }
 
 @layer components {
@@ -33,7 +57,10 @@
         @apply block ml-3 text-sm leading-5 text-gray-700;
     }
     .button {
-        @apply flex justify-center w-full px-3 py-3 text-sm font-medium leading-6 focus-visible:outline-none;
+        @apply flex justify-center w-full px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+    }
+    .button-muted {
+        @apply rounded-md shadow-sm bg-muted-light hover:bg-muted focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary;
     }
     .button-link {
         @apply text-primary hover:text-primary-dark focus-visible:ring-2 focus-visible:text-primary-dark focus-visible:ring-primary-dark rounded-md;
@@ -46,5 +73,19 @@
 @layer utilities {
     [x-cloak] {
         display: none !important;
+    }
+
+    /* WIP */
+    .ios-padding {
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+            env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
