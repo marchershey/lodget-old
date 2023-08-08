@@ -14,16 +14,12 @@
     <form class="space-y-6" wire:submit.prevent="submitAuthentication">
         <div>
             <label for="email" class="input-label">Email address</label>
-            <div class="mt-2">
-                <input wire:model="email" id="email" name="email" type="email" autocomplete="email" required class="input-text">
-            </div>
+            <input wire:model="email" id="email" name="email" type="email" autocomplete="email" required class="input-text">
         </div>
 
         <div>
             <label for="password" class="input-label">Password</label>
-            <div class="mt-2">
-                <input wire:model='password' id="password" name="password" type="password" autocomplete="current-password" required class="input-text">
-            </div>
+            <input wire:model='password' id="password" name="password" type="password" autocomplete="current-password" required class="input-text">
         </div>
 
         <div class="flex items-center justify-between">

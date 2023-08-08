@@ -21,6 +21,8 @@ export default {
                 primary: {
                     DEFAULT: colors.blue[700],
                     light: colors.blue[500],
+                    lighter: colors.blue[300],
+                    lightest: colors.blue[100],
                     dark: colors.blue[800],
                 },
                 muted: {

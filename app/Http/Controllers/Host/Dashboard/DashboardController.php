@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Pages\Host;
+namespace App\Http\Controllers\Host\Dashboard;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class HostDashboardController extends Component
+class DashboardController extends Component
 {
     /**
      * Return the Host Dashboard view
@@ -14,6 +14,6 @@ class HostDashboardController extends Component
      */
     public function render(): View
     {
-        return view('pages.host.host-dashboard');
+        return view('pages.host.dashboard.host-dashboard-page');
     }
 }

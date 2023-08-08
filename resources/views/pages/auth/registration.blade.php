@@ -14,43 +14,31 @@
         <div class="flex space-x-3">
             <div>
                 <label for="first_name" class="input-label">First name</label>
-                <div class="mt-2">
-                    <input wire:model="first_name" id="first_name" name="first_name" type="text" autocomplete="first_name" class="capitalize input-text" required>
-                </div>
+                <input wire:model="first_name" id="first_name" name="first_name" type="text" autocomplete="first_name" class="capitalize input-text" required>
             </div>
             <div>
                 <label for="last_name" class="input-label">Last name</label>
-                <div class="mt-2">
-                    <input wire:model="last_name" id="last_name" name="last_name" type="text" autocomplete="last_name" class="capitalize input-text" required>
-                </div>
+                <input wire:model="last_name" id="last_name" name="last_name" type="text" autocomplete="last_name" class="capitalize input-text" required>
             </div>
         </div>
 
         <div>
             <label for="email" class="input-label">Email address</label>
-            <div class="mt-2">
-                <input wire:model="email" id="email" name="email" type="email" autocomplete="email" class="input-text" required>
-            </div>
+            <input wire:model="email" id="email" name="email" type="email" autocomplete="email" class="input-text" required>
         </div>
 
         <div>
             <label for="password" class="input-label">Password</label>
-            <div class="mt-2">
-                <input wire:model="password" id="password" name="password" type="password" autocomplete="current-password" class="input-text" required>
-            </div>
+            <input wire:model="password" id="password" name="password" type="password" autocomplete="current-password" class="input-text" required>
         </div>
         <div>
             <label for="password" class="input-label">Confirm password</label>
-            <div class="mt-2">
-                <input wire:model="password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" class="input-text" required>
-            </div>
+            <input wire:model="password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" class="input-text" required>
         </div>
 
         <div>
             <label for="birthdate" class="input-label">Birthdate</label>
-            <div class="mt-2">
-                <input wire:model="birthdate" id="birthdate" name="birthdate" type="date" autocomplete="birthdate" class="input-text" required>
-            </div>
+            <input wire:model="birthdate" id="birthdate" name="birthdate" type="date" autocomplete="birthdate" class="input-text" required>
         </div>
 
         <div>

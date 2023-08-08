@@ -28,8 +28,8 @@ Route::get('/dashboard', function () {
  */
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::get('/login', App\Http\Controllers\Pages\Auth\AuthenticationController::class)->name('login');
-        Route::get('/sign-up', App\Http\Controllers\Pages\Auth\RegistrationController::class)->name('register');
+        Route::get('/login', App\Http\Controllers\Auth\AuthenticationController::class)->name('login');
+        Route::get('/sign-up', App\Http\Controllers\Auth\RegistrationController::class)->name('register');
     });
     Route::get('/logout', function () {
         Auth::logout();
@@ -43,16 +43,17 @@ Route::name('auth.')->group(function () {
  * Host Routes
  */
 Route::name('host.')->middleware('auth')->prefix('/host')->group(function () {
-    Route::get('/dashboard', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('dashboard');
+    Route::get('/dashboard', App\Http\Controllers\Host\Dashboard\DashboardController::class)->name('dashboard');
+    Route::get('/settings', App\Http\Controllers\Host\Settings\SettingsController::class)->name('settings');
 
-    // Settings
-    Route::name('settings.')->prefix('/settings')->group(function () {
-        Route::get('/general', App\Http\Controllers\Pages\Host\Settings\HostGeneralSettingsController::class)->name('general');
+    // Rentals
+    Route::name('rentals.')->prefix('/rentals')->group(function () {
+        Route::get('/', App\Http\Controllers\Host\Rentals\HostRentalsIndexController::class)->name('index');
+        Route::get('/{id}', App\Http\Controllers\Host\Rentals\HostRentalsSingleController::class)->name('single');
     });
 
-    Route::get('/rentals', App\Http\Controllers\Pages\Host\HostRentalsController::class)->name('rentals');
-    Route::get('/reservations', App\Http\Controllers\Pages\Host\HostReservationsController::class)->name('reservations');
-    Route::get('/test', App\Http\Controllers\Pages\Host\HostDashboardController::class)->name('test');
+    // 
+    Route::view('/test', 'test.blade.php')->name('test');
 });
 
 Route::view('/blank', 'blank');

@@ -10,16 +10,54 @@
 
     /* Padding and Spacing */
     .page-padding {
-        @apply px-4 py-8 sm:px-6 lg:px-8;
-    }
-    .page-padding-y {
-        @apply py-8;
-    }
-    .page-padding-x {
-        @apply px-4 sm:px-6 lg:px-8;
+        @apply p-4 tablet:p-6 laptop:p-8;
     }
     .-page-padding {
-        @apply -mx-4 -my-8 sm:-mx-6 lg:-mx-8;
+        @apply -m-4 tablet:-m-6 laptop:-m-8;
+    }
+    .page-padding-sm {
+        @apply px-4 py-4 tablet:px-6 tablet:py-4 laptop:px-8 laptop:py-4 desktop:py-4;
+    }
+    .page-padding-y {
+        @apply py-4 tablet:py-6 laptop:py-8;
+    }
+    .-page-padding-y {
+        @apply -my-4 tablet:-my-6 laptop:-my-8;
+    }
+    .page-padding-x {
+        @apply px-4 tablet:px-6 laptop:px-8;
+    }
+    .-page-padding-x {
+        @apply -mx-4 tablet:-mx-6 laptop:-mx-8;
+    }
+    .page-padding-x-only-mobile {
+        @apply page-padding-x laptop:-page-padding-x;
+    }
+    .page-padding-x-only-laptop {
+        @apply -page-padding-x laptop:page-padding-x;
+    }
+
+    /* Containers */
+    .page-container {
+        @apply flex flex-col space-y-12;
+    }
+    .page-heading {
+        @apply flex flex-col space-y-2;
+    }
+    .page-title {
+        @apply text-3xl font-bold tracking-tighter;
+    }
+    .page-submenu-container {
+        @apply -page-padding-x laptop:page-padding-x;
+    }
+    .page-submenu {
+        @apply bg-white border-y flex -mb-px space-x-6 overflow-x-auto page-padding-x laptop:px-4 hide-scrollbar laptop:rounded-lg laptop:border;
+    }
+    .page-content-container {
+        @apply -page-padding-x laptop:page-padding-x;
+    }
+    .page-content {
+        @apply flex flex-col space-y-12;
     }
 
     .size-tablet {
@@ -34,6 +72,62 @@
 }
 
 @layer components {
+    /* Menus */
+    .menu-item {
+        @apply px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap;
+    }
+    .menu-item-active {
+        @apply !text-primary !border-primary;
+    }
+
+    /* Cards */
+    .card {
+        @apply flex flex-col space-y-5 bg-white laptop:rounded-lg border page-padding;
+    }
+    .card-sm {
+        @apply flex flex-col space-y-5 bg-white border page-padding -page-padding-x;
+    }
+    .card-heading {
+        @apply flex items-center pb-3 justify-between border-b border-gray-200;
+    }
+    .card-title {
+        @apply text-xl font-bold tracking-tighter;
+    }
+    .card-desc {
+        @apply text-xs laptop:text-sm text-muted;
+    }
+
+    /* Tables */
+    .table-container {
+        @apply overflow-x-auto rounded-lg ring-1 ring-gray-200;
+    }
+    .table {
+        @apply w-full desktop:text-base;
+    }
+    .table thead {
+        @apply bg-gray-100 font-semibold border-b;
+    }
+    .table tbody {
+        @apply bg-white divide-y;
+    }
+    .table tbody tr {
+        @apply even:bg-gray-50 text-sm laptop:text-base;
+    }
+    .table td {
+        @apply page-padding-sm;
+    }
+
+    /* Labels */
+    .label {
+        @apply px-2 py-0.5 border rounded-full;
+    }
+    .label-gray {
+        @apply bg-gray-100;
+    }
+    .label-green {
+        @apply border-green-700 bg-green-600 text-white;
+    }
+
     /* Typography */
     .link {
         /* @apply text-primary hover:text-primary-dark focus:underline focus:underline-offset-2 focus:decoration-primary focus:outline-none; */
@@ -41,14 +135,35 @@
     }
 
     /* Form elements */
+    .form {
+        @apply flex flex-col space-y-6;
+    }
+    .form-section {
+        @apply grid grid-cols-12 gap-3 bg-white -page-padding-x page-padding border-y;
+    }
+    .form-section-heading {
+        @apply pb-3 border-b border-gray-200 col-span-full;
+    }
+    .form-section-title {
+        @apply text-xl font-semibold tracking-tight;
+    }
+    .form-section-desc {
+        @apply text-muted text-sm;
+    }
     .input-label {
-        @apply block text-sm font-medium leading-6 text-gray-900;
+        @apply block text-sm font-medium leading-6;
     }
     .input-desc {
         @apply text-muted text-xs leading-5 block;
     }
     .input-text {
-        @apply block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-50;
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-50;
+    }
+    .input-textarea {
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300;
+    }
+    .input-select {
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white ring-1 ring-inset shadow-sm ring-gray-300 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6;
     }
     .input-checkbox {
         @apply w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary;
@@ -56,17 +171,22 @@
     .input-checkbox-label {
         @apply block ml-3 text-sm leading-5 text-gray-700;
     }
+
+    /* Buttons */
     .button {
-        @apply flex justify-center w-full px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+        @apply inline-flex justify-center w-auto px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+    }
+    .button-sm {
+        @apply inline-flex justify-center w-auto px-3 py-1 text-xs font-medium leading-6 focus-visible:outline-none;
     }
     .button-muted {
-        @apply rounded-md shadow-sm bg-muted-light hover:bg-muted focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary;
+        @apply rounded-md border bg-muted-lighter hover:bg-muted-light focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary;
     }
     .button-link {
         @apply text-primary hover:text-primary-dark focus-visible:ring-2 focus-visible:text-primary-dark focus-visible:ring-primary-dark rounded-md;
     }
     .button-primary {
-        @apply text-white rounded-md shadow-sm bg-primary hover:bg-primary-dark focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-dark;
+        @apply text-white rounded-md bg-primary hover:bg-primary-dark focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-dark;
     }
 }
 
@@ -80,7 +200,6 @@
         padding: env(safe-area-inset-top) env(safe-area-inset-right)
             env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
-
     .hide-scrollbar::-webkit-scrollbar {
         display: none;
     }
