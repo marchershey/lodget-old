@@ -17,9 +17,4 @@ class HostRentalsIndexController extends Component
     {
         $this->title = "Loading...";
     }
-
-    function blah(): void
-    {
-        dd('test');
-    }
 }

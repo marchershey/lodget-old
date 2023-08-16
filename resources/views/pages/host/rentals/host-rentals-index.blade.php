@@ -52,9 +52,6 @@
         </div>
     </div>
 
-    <x-slideover title="Add Rental" desc="Fill out the form below to add a new rental. Please note that all fields are required." alpineId="addRentalSlideoverVisible" action="blah">
-        <livewire:host.rentals.components.add-rental-component />
-    </x-slideover>
-
+    <livewire:host.rentals.components.add-rental-component />
 
 </x-layouts.host>

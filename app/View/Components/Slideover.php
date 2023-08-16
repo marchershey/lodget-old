@@ -12,16 +12,18 @@ class SlideOver extends Component
     public $desc;
     public $alpineId;
     public $action;
+    public $actionText;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $title, string $desc = "", string $alpineId, string $action)
+    public function __construct(string $title, string $desc = "", string $alpineId, string $action, string $actionText)
     {
         $this->title = $title;
         $this->desc = $desc;
         $this->alpineId = $alpineId;
         $this->action = $action;
+        $this->actionText = $actionText;
     }
 
     /**

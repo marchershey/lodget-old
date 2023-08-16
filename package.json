@@ -20,6 +20,7 @@
     "dependencies": {
         "@alpinejs/focus": "^3.12.3",
         "@alpinejs/ui": "^3.12.3-beta.0",
-        "alpinejs": "^3.12.3"
+        "alpinejs": "^3.12.3",
+        "inputmask": "^5.0.8"
     }
 }

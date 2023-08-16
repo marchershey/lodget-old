@@ -13,10 +13,9 @@
 <body x-data="{ slideoverVisible: false }" class="h-full overflow-hidden font-inter">
     <livewire:toasts />
 
-    {{ $slot }}
-
-    @stack('slideover')
-
+    <div>
+        {{ $slot }}
+    </div>
 
     <div class="fixed top-0 z-50 w-full">
         <div class="flex justify-center">
@@ -36,6 +35,7 @@
     </div>
 
     @stack('modals')
+    @stack('slideover')
     @stack('scripts')
 
     <script>

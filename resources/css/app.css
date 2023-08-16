@@ -154,30 +154,51 @@
         @apply block text-sm font-medium leading-6;
     }
     .input-desc {
-        @apply text-muted text-xs leading-5 block;
+        @apply text-muted text-xs leading-5 mt-1 block;
+    }
+    .input-plain {
+        @apply block w-full border-0 py-1.5 focus:ring-0 focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-30;
     }
     .input-text {
-        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-50;
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-30;
     }
     .input-textarea {
-        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-50;
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 read-only:opacity-30;
     }
     .input-select {
-        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white ring-1 ring-inset shadow-sm ring-gray-300 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6;
+        @apply block w-full mt-1 rounded-md border-0 py-1.5 bg-white ring-1 ring-inset shadow-sm ring-gray-300 focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:text-sm sm:leading-6 disabled:opacity-30;
     }
     .input-checkbox {
-        @apply w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary;
+        @apply w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary read-only:opacity-30;
     }
     .input-checkbox-label {
         @apply block ml-3 text-sm leading-5 text-gray-700;
     }
+    .input-counter-container {
+        @apply flex items-center mt-1 space-x-2;
+    }
+    .input-counter-button {
+        @apply p-2 bg-gray-100 rounded-full hover:bg-primary hover:text-white border focus-within:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    }
+    .input-counter-button:disabled {
+        @apply opacity-30 hover:bg-gray-100 hover:text-black;
+    }
+    .input-counter-button svg {
+        @apply w-5 h-5;
+    }
 
     /* Buttons */
     .button {
-        @apply inline-flex justify-center w-auto px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+        @apply inline-flex items-center justify-center w-auto px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+    }
+    .button:disabled {
+        @apply opacity-50 cursor-not-allowed;
     }
     .button-sm {
-        @apply inline-flex justify-center w-auto px-3 py-1 text-xs font-medium leading-6 focus-visible:outline-none;
+        @apply inline-flex items-center justify-center w-auto px-3 py-1 text-xs font-medium leading-6 focus-visible:outline-none;
+    }
+    .button-sm:disabled {
+        @apply opacity-50 cursor-not-allowed;
     }
     .button-muted {
         @apply rounded-md border bg-muted-lighter hover:bg-muted-light focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary;

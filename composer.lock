@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d625d05b4e4f9e894c256e99c194219",
+    "content-hash": "6b0b4897efddfc281391f22e0ed4bd03",
     "packages": [
         {
             "name": "brick/math",
@@ -60,6 +60,74 @@
                 }
             ],
             "time": "2023-01-15T23:15:59+00:00"
+        },
+        {
+            "name": "cknow/laravel-money",
+            "version": "v7.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cknow/laravel-money.git",
+                "reference": "a98ca18f72abb864a39530d81f869494ff22fd83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cknow/laravel-money/zipball/a98ca18f72abb864a39530d81f869494ff22fd83",
+                "reference": "a98ca18f72abb864a39530d81f869494ff22fd83",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-json": "*",
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0",
+                "illuminate/view": "^7.0|^8.0|^9.0|^10.0",
+                "moneyphp/money": "^3.3|^4.0.3",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "^5.7",
+                "illuminate/filesystem": "^7.0|^8.0|^9.0|^10.0",
+                "mockery/mockery": "^1.5",
+                "phpunit/phpunit": "^8.5|^9.5.10|^10.0",
+                "spatie/phpunit-watcher": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Cknow\\Money\\MoneyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Cknow\\Money\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ricardo Gobbo de Souza",
+                    "email": "ricardogobbosouza@yahoo.com.br"
+                }
+            ],
+            "description": "Laravel Money",
+            "homepage": "https://github.com/cknow/laravel-money",
+            "keywords": [
+                "currency",
+                "laravel",
+                "money"
+            ],
+            "support": {
+                "issues": "https://github.com/cknow/laravel-money/issues",
+                "source": "https://github.com/cknow/laravel-money/tree/v7.1.0"
+            },
+            "time": "2023-02-18T14:33:06+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

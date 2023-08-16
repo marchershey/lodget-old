@@ -9,7 +9,7 @@ return [
     /*
      * How long to wait before displaying the toasts after page loads, in ms
      */
-    'load_delay' => 400,
+    'load_delay' => 500,
 
     /*
      * Session keys used.
