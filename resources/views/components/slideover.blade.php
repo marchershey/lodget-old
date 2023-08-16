@@ -9,13 +9,13 @@
                     <div class="flex flex-col h-full bg-gray-100 shadow-2xl">
                         <div class="flex flex-col flex-1 min-h-0 overflow-y-scroll overscroll-none">
                             {{-- Slideover Heading --}}
-                            <div class="page-heading page-padding">
+                            <div class="page-heading page-padding bg-primary">
                                 {{-- Title / Close Button --}}
                                 <div class="flex items-center justify-between">
-                                    <h1 class="page-title">
+                                    <h1 class="text-white page-title">
                                         {{ $title }}
                                     </h1>
-                                    <button x-on:click="{{ $alpineId }} = false" class="text-muted hover:text-muted-dark">
+                                    <button x-on:click="{{ $alpineId }} = false" class="text-primary-lighter hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M18 6l-12 12"></path>
@@ -25,7 +25,7 @@
                                 </div>
                                 {{-- Desc --}}
                                 @if ($desc)
-                                    <p class="text-sm text-muted">{{ $desc }}</p>
+                                    <p class="text-sm text-primary-lighter">{{ $desc }}</p>
                                 @endif
                             </div>
 

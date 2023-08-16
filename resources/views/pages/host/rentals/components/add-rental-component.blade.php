@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-3 ">
+        <div class="grid grid-cols-12 gap-3">
             <div class="col-span-full">
                 <span class="input-label">Name</span>
                 <input type="text" name="" id="" class="input-text">
