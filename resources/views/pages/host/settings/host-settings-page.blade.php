@@ -9,7 +9,7 @@
                 Settings
             </h1>
 
-            {{-- Page Tabs --}}
+            {{-- Page Submenu --}}
             <div class="page-submenu-container">
                 <nav x-tabs:list class="page-submenu" aria-label="Tabs">
                     <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->

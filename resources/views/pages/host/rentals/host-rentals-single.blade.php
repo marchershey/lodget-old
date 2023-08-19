@@ -1,59 +1,68 @@
-<x-layouts.host>
+<x-layouts.host class="relative">
+    <div wire:init="load" class="h-full">
+        @if ($rental)
+            <div x-data x-tabs default-index="0" class="page-container">
 
-    <div x-data x-tabs default-index="1" class="page-container">
+                {{-- Page Heading --}}
+                <div class="page-heading">
+                    {{-- Page Title --}}
+                    <h1 class="page-title">
+                        {{ $rental->name ?? '' }}
+                    </h1>
 
-        {{-- Page Heading --}}
-        <div class="page-heading">
-            {{-- Page Title --}}
-            <h1 class="page-title">
-                Settings
-            </h1>
+                    {{-- Page Tabs --}}
+                    <div class="page-submenu-container">
+                        <nav x-tabs:list class="page-submenu" aria-label="Tabs">
+                            <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Overview</button>
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Photos</button>
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Rates</button>
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Reservations</button>
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Instructions</button>
+                            <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Settings</button>
+                        </nav>
+                    </div>
+                </div>
 
-            {{-- Page Tabs --}}
-            <div class="page-submenu-container">
-                <nav x-tabs:list class="page-submenu" aria-label="Tabs">
-                    <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-                    <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">General</button>
-                    <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Rentals</button>
-                    <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Messaging</button>
-                    <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Billing</button>
-                    <button x-tabs:tab type="button" :class="$tab.isSelected && 'menu-item-active'" class="menu-item">Guests</button>
-                </nav>
+                {{-- Content (tabs) --}}
+                <div x-tabs:panels class="page-content-container">
+
+                    {{-- General --}}
+                    <div x-tabs:panel class="page-content">
+                        hello
+                    </div>
+
+                    {{-- Rentals --}}
+                    <div x-tabs:panel x-cloak class="page-content">
+                        {{-- Rental Policies --}}
+                        <livewire:host.settings.components.rentals.rental-policies-component />
+                        <livewire:host.settings.components.rentals.rental-fees-component />
+                    </div>
+
+                    {{-- Messaging --}}
+                    <div x-tabs:panel x-cloak>
+                        Messaging
+                    </div>
+
+                    {{-- Billing --}}
+                    <div x-tabs:panel x-cloak>
+                        Billing
+                    </div>
+
+                    {{-- Guests --}}
+                    <div x-tabs:panel x-cloak>
+                        Guests
+                    </div>
+                </div>
             </div>
-        </div>
-
-
-
-        {{-- Content (tabs) --}}
-        <div x-tabs:panels class="page-content-container">
-
-            {{-- General --}}
-            <div x-tabs:panel class="page-content">
-                hello
+        @else
+            <div class="flex items-center justify-center h-full">
+                <svg class="w-12 h-12 text-muted animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
             </div>
-
-            {{-- Rentals --}}
-            <div x-tabs:panel x-cloak class="page-content">
-                {{-- Rental Policies --}}
-                <livewire:host.settings.components.rentals.rental-policies-component />
-                <livewire:host.settings.components.rentals.rental-fees-component />
-            </div>
-
-            {{-- Messaging --}}
-            <div x-tabs:panel x-cloak>
-                Messaging
-            </div>
-
-            {{-- Billing --}}
-            <div x-tabs:panel x-cloak>
-                Billing
-            </div>
-
-            {{-- Guests --}}
-            <div x-tabs:panel x-cloak>
-                Guests
-            </div>
-        </div>
+        @endif
     </div>
 
     @push('scripts')

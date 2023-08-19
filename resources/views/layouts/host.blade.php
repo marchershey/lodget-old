@@ -80,7 +80,7 @@
         {{-- Main content --}}
         <div class="flex flex-col flex-1 h-full overflow-hidden">
             <div class="w-full h-full overflow-y-auto page-padding">
-                <div class="max-w-screen-xl mx-auto mb-96" {{ $attributes }}>
+                <div {{ $attributes->merge(['class' => 'max-w-screen-xl mx-auto mb-96 h-full']) }}>
                     {{ $slot }}
                 </div>
             </div>

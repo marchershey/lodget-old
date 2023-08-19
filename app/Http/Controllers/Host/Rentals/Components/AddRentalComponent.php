@@ -31,10 +31,14 @@ class AddRentalComponent extends Component
     public $base_rate = 0;
     public $minimum_nights = 0;
 
+    // Need to have this for the slideover buttons to work
+    protected $listeners = ['submit', 'cancel'];
+
+
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', new AlphaSpace],
+            'name' => ['required', 'string', 'max:60', new AlphaSpace],
             'summary' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string'],
             'capacity' => ['required', 'integer', 'min:1', 'max:99'],
@@ -69,7 +73,7 @@ class AddRentalComponent extends Component
                 'address_city' => 'City Name',
                 'address_state' => 'KY',
                 'address_zip' => '10001',
-                'base_rate' => "",
+                'base_rate' => money(35000)->format(),
                 'minimum_nights' => 3,
             ]);
         }
@@ -87,14 +91,15 @@ class AddRentalComponent extends Component
         if ($value) {
             $this->validateOnly($property);
         } else {
-            // Since the value is null, clear the property from the errorbag
-            $this->resetValidation($property);
+            // Since the value is null, clear the property's validation
+            // $this->resetValidation($property);
             return;
         }
     }
 
     public function submit(): Redirector|null
     {
+
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {

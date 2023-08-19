@@ -14,11 +14,12 @@ class Text extends Component
     public $desc;
     public $type;
     public $class;
+    public $max;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiretarget, string $label, string $desc = "", string $type = "text", string $class = "")
+    public function __construct(string $wiremodel, string $wiretarget, string $label, string $desc = "", string $type = "text", string $class = "", int $max = 0)
     {
         $this->wiremodel = $wiremodel;
         $this->wiretarget = $wiretarget;
@@ -26,6 +27,7 @@ class Text extends Component
         $this->desc = $desc;
         $this->type = $type;
         $this->class = $class;
+        $this->max = $max;
     }
 
     /**

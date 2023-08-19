@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class HostRentalsSingleController extends Component
 {
+    public $slug;
     public $rental;
 
     public function render()
@@ -16,6 +17,11 @@ class HostRentalsSingleController extends Component
 
     public function mount($slug): void
     {
-        $this->rental = Rental::find($slug);
+        $this->slug = $slug;
+    }
+
+    public function load(): void
+    {
+        $this->rental = Rental::where('slug', $this->slug)->first();
     }
 }

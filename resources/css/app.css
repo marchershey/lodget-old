@@ -42,7 +42,7 @@
         @apply flex flex-col space-y-12;
     }
     .page-heading {
-        @apply flex flex-col space-y-2;
+        @apply flex flex-col space-y-5;
     }
     .page-title {
         @apply text-3xl font-bold tracking-tighter;
