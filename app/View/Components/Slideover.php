@@ -17,7 +17,7 @@ class SlideOver extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(string $title, string $desc = "", string $alpineId, string $action, string $actionText)
+    public function __construct(string $title, string $alpineId, string $action, string $actionText, string $desc = "")
     {
         $this->title = $title;
         $this->desc = $desc;

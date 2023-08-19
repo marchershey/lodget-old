@@ -10,7 +10,7 @@
     <livewire:styles />
 </head>
 
-<body x-data="{ slideoverVisible: false }" class="h-full overflow-hidden font-inter">
+<body class="h-full overflow-hidden font-inter">
     <livewire:toasts />
 
     <div>
@@ -34,8 +34,6 @@
         </div>
     </div>
 
-    @stack('modals')
-    @stack('slideover')
     @stack('scripts')
 
     <script>

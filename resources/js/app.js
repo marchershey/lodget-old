@@ -24,10 +24,20 @@ import Inputmask from "inputmask";
 Inputmask("currency", {
     prefix: "$",
     digits: 2,
+    positionCaretOnClick: "select",
+    digitsOptional: false,
+    rightAlign: false,
+    clearMaskOnLostFocus: true,
+    unmaskAsNumber: true,
+}).mask(document.getElementsByClassName("mask-currency"));
+
+// Zip Code
+Inputmask("99999", {
+    digits: 5,
     enforceDigitsOnBlur: true,
     positionCaretOnClick: "select",
     digitsOptional: true,
     rightAlign: false,
     clearMaskOnLostFocus: true,
     unmaskAsNumber: true,
-}).mask(document.getElementsByClassName("mask-currency"));
+}).mask(document.getElementsByClassName("mask-zip"));

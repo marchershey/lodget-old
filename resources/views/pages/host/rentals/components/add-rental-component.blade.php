@@ -42,7 +42,7 @@
                     <x-inputs.select wiremodel="address_state" wiretarget="submit" label="State" :options="['AL' => 'AL', 'AK' => 'AK', 'AR' => 'AR', 'AZ' => 'AZ', 'CA' => 'CA', 'CO' => 'CO', 'CT' => 'CT', 'DC' => 'DC', 'DE' => 'DE', 'FL' => 'FL', 'GA' => 'GA', 'HI' => 'HI', 'IA' => 'IA', 'ID' => 'ID', 'IL' => 'IL', 'IN' => 'IN', 'KS' => 'KS', 'KY' => 'KY', 'LA' => 'LA', 'MA' => 'MA', 'MD' => 'MD', 'ME' => 'ME', 'MI' => 'MI', 'MN' => 'MN', 'MO' => 'MO', 'MS' => 'MS', 'MT' => 'MT', 'NC' => 'NC', 'NE' => 'NE', 'NH' => 'NH', 'NJ' => 'NJ', 'NM' => 'NM', 'NV' => 'NV', 'NY' => 'NY', 'ND' => 'ND', 'OH' => 'OH', 'OK' => 'OK', 'OR' => 'OR', 'PA' => 'PA', 'RI' => 'RI', 'SC' => 'SC', 'SD' => 'SD', 'TN' => 'TN', 'TX' => 'TX', 'UT' => 'UT', 'VT' => 'VT', 'VA' => 'VA', 'WA' => 'WA', 'WI' => 'WI', 'WV' => 'WV', 'WY' => 'WY']" />
                 </div>
                 <div class="col-span-3">
-                    <x-inputs.text wiremodel="address_zip" wiretarget="submit" label="Zip" type="tel" />
+                    <x-inputs.text wiremodel="address_zip" wiretarget="submit" label="Zip" type="tel" class="mask-zip" />
                 </div>
             </div>
         </div>

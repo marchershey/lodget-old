@@ -49,7 +49,7 @@ Route::name('host.')->middleware('auth')->prefix('/host')->group(function () {
     // Rentals
     Route::name('rentals.')->prefix('/rentals')->group(function () {
         Route::get('/', App\Http\Controllers\Host\Rentals\HostRentalsIndexController::class)->name('index');
-        Route::get('/{id}', App\Http\Controllers\Host\Rentals\HostRentalsSingleController::class)->name('single');
+        Route::get('/{slug}', App\Http\Controllers\Host\Rentals\HostRentalsSingleController::class)->name('single');
     });
 
     // 

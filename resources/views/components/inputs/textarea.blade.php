@@ -1,7 +1,9 @@
 @if ($label)
-    <span class="input-label">{{ $label }}</span>
+    <span class="input-label @error($wiremodel) !text-red-500 @enderror">{{ $label }}</span>
 @endif
-<textarea wire:model="{{ $wiremodel }}" wire:target="{{ $wiretarget }}" wire:loading.attr="disabled" class="input-textarea" name="{{ $label }}" id="{{ $wiremodel }}" rows="{{ $rows }}"></textarea>
-@if ($desc)
-    <span class="input-desc">{{ $desc }}</span>
+<textarea wire:model.lazy="{{ $wiremodel }}" wire:target="{{ $wiretarget }}" wire:loading.attr="disabled" class="input-textarea @error($wiremodel) !ring-red-500 @enderror" name="{{ $label }}" id="{{ $wiremodel }}" rows="{{ $rows }}"></textarea>
+@if ($desc || $errors->first($wiremodel))
+    <span class="input-desc @error($wiremodel) !text-red-500 @enderror">
+        {{ empty($errors->first($wiremodel)) ? $desc : $errors->first($wiremodel) }}
+    </span>
 @endif

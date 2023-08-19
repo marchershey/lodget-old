@@ -16,14 +16,21 @@ return new class extends Migration
 
             // Overview
             $table->string('name');
-            $table->text('description');
+            $table->text('summary');
             $table->string('type');
+            $table->integer('capacity');
 
             // Location
             $table->string('address_street');
             $table->string('address_city');
             $table->string('address_state');
             $table->string('address_zip');
+
+            $table->integer('base_rate');
+            $table->integer('minimum_nights');
+
+            // Options
+            $table->string('slug');
 
             // Backend data
             $table->timestamps();

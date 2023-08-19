@@ -127,6 +127,9 @@
     .label-green {
         @apply border-green-700 bg-green-600 text-white;
     }
+    .label-red {
+        @apply border-red-600 bg-red-500 text-white;
+    }
 
     /* Typography */
     .link {

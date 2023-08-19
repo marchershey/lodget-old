@@ -1,4 +1,4 @@
-<span class="input-label">{{ $label }}</span>
+<span class="input-label @error($wiremodel) !text-red-500 @enderror">{{ $label }}</span>
 <div class="input-counter-container" x-data="{
     value: @entangle($wiremodel),
     step: {{ $step }},
@@ -17,7 +17,7 @@
         </svg>
     </button>
     {{-- Input field --}}
-    <div class="w-8 text-center">
+    <div class="w-8 text-center @error($wiremodel) !text-red-500 @enderror">
         <span wire:loading.class="opacity-30" wire:target="{{ $wiretarget }}" x-text="value" class="h-[36px]">
     </div>
     {{-- Addition button --}}
@@ -29,6 +29,8 @@
         </svg>
     </button>
 </div>
-@if ($desc)
-    <span class="input-desc">{{ $desc }}</span>
+@if ($desc || $errors->first($wiremodel))
+    <span class="input-desc @error($wiremodel) !text-red-500 @enderror">
+        {{ empty($errors->first($wiremodel)) ? $desc : $errors->first($wiremodel) }}
+    </span>
 @endif
