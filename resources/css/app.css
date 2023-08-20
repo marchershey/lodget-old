@@ -74,7 +74,7 @@
 @layer components {
     /* Menus */
     .menu-item {
-        @apply px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap;
+        @apply px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-primary whitespace-nowrap;
     }
     .menu-item-active {
         @apply !text-primary !border-primary;
@@ -138,7 +138,7 @@
     }
 
     /* Form elements */
-    .form {
+    /* .form {
         @apply flex flex-col space-y-6;
     }
     .form-section {
@@ -152,7 +152,7 @@
     }
     .form-section-desc {
         @apply text-muted text-sm;
-    }
+    } */
     .input-label {
         @apply block text-sm font-medium leading-6;
     }
@@ -193,6 +193,9 @@
     /* Buttons */
     .button {
         @apply inline-flex items-center justify-center w-auto px-4 py-1.5 text-sm font-medium leading-6 focus-visible:outline-none;
+    }
+    .button svg {
+        @apply -ml-1 mr-3 h-5 w-5;
     }
     .button:disabled {
         @apply opacity-50 cursor-not-allowed;

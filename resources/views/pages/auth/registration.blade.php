@@ -1,9 +1,7 @@
 <x-layouts.minimal>
     {{-- header / logo --}}
-    <div class="flex flex-col items-center space-y-3">
-        <div>
-            <span class="font-bold tracking-widest uppercase text-primary">{{ config('app.name') }}</span>
-        </div>
+    <div class="flex flex-col items-center space-y-10">
+        <x-logo dark />
         <div>
             <h1 class="text-2xl font-semibold">Create an account</h1>
         </div>

@@ -13,17 +13,19 @@ class Textarea extends Component
     public $label;
     public $desc;
     public $rows;
+    public $max;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $wiremodel, string $wiretarget, string $label, string $desc = "", int $rows = 4)
+    public function __construct(string $wiremodel, string $wiretarget, string $label, string $desc = "", int $rows = 4, int $max = 0)
     {
         $this->wiremodel = $wiremodel;
         $this->wiretarget = $wiretarget;
         $this->label = $label;
         $this->desc = $desc;
         $this->rows = $rows;
+        $this->max = $max;
     }
 
     /**

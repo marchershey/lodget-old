@@ -9,10 +9,10 @@
 
         <div class="grid grid-cols-12 gap-5">
             <div class="col-span-full">
-                <x-inputs.text wiremodel="name" wiretarget="submit" desc="Give your rental a name that will be visible to guests." label="Name" />
+                <x-inputs.text wiremodel="name" wiretarget="submit" desc="Give your rental a name that will be visible to guests." max="60" label="Name" />
             </div>
             <div class="col-span-full">
-                <x-inputs.textarea wiremodel="summary" wiretarget="submit" label="Summary" desc="Write a quick summary of your rental property. You'll be able to give a detail description later on." />
+                <x-inputs.textarea wiremodel="summary" wiretarget="submit" label="Summary" desc="Write a quick summary of your rental property. You'll be able to give a detail description later on." max="255" />
             </div>
             <div class="col-span-full">
                 <x-inputs.select wiremodel="type" wiretarget="submit" label="Type" desc="What kind of property type is your rental?" :options="['House' => 'House', 'Apartment' => 'Apartment', '' => '----------------', 'Bed & Breakfast' => 'Bed & Breakfast', 'Boat' => 'Boat', 'Bungalow' => 'Bungalow', 'Cabin' => 'Cabin', 'Camping' => 'Camping', 'Chalet' => 'Chalet', 'Condominium' => 'Condominium', 'Farm House' => 'Farm House', 'Hospital' => 'Hospital', 'Hostel' => 'Hostel', 'Hotel' => 'Hotel', 'Inn' => 'Inn', 'Mobile Home' => 'Mobile Home', 'Motel' => 'Motel', 'Resort' => 'Resort', 'Room' => 'Room', 'Student housing' => 'Student housing', 'Villa' => 'Villa']" />

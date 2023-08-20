@@ -2,9 +2,9 @@
     <div wire:init="load" class="h-full">
         @if ($rental)
             <div x-data x-tabs default-index="0" class="page-container">
-
                 {{-- Page Heading --}}
                 <div class="page-heading">
+
                     {{-- Page Title --}}
                     <h1 class="page-title">
                         {{ $rental->name ?? '' }}
@@ -29,29 +29,13 @@
 
                     {{-- General --}}
                     <div x-tabs:panel class="page-content">
-                        hello
+                        <livewire:host.rentals.components.single-overview-component rental="{{ $rental->id }}" />
                     </div>
 
-                    {{-- Rentals --}}
-                    <div x-tabs:panel x-cloak class="page-content">
-                        {{-- Rental Policies --}}
-                        <livewire:host.settings.components.rentals.rental-policies-component />
-                        <livewire:host.settings.components.rentals.rental-fees-component />
-                    </div>
-
-                    {{-- Messaging --}}
-                    <div x-tabs:panel x-cloak>
-                        Messaging
-                    </div>
-
-                    {{-- Billing --}}
-                    <div x-tabs:panel x-cloak>
-                        Billing
-                    </div>
-
-                    {{-- Guests --}}
-                    <div x-tabs:panel x-cloak>
-                        Guests
+                    {{-- Photos --}}
+                    <div x-tabs:panel class="page-content">
+                        <livewire:host.rentals.components.single-overview-component rental="{{ $rental->id }}" />
+                        {{-- <livewire:host.rentals.components.single-photos-component rentalId="{{ $rental->id }}" /> --}}
                     </div>
                 </div>
             </div>
