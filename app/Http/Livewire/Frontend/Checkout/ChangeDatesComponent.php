@@ -85,7 +85,7 @@ class ChangeDatesComponent extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled), 'checkin' => $this->reservation->checkin, 'checkout' => $this->reservation->checkout]);
+        $this->dispatch('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled), 'checkin' => $this->reservation->checkin, 'checkout' => $this->reservation->checkout]);
     }
 
     public function updateDates($selectedDates)

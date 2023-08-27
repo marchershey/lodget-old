@@ -173,12 +173,12 @@ class CheckoutComponent extends Component
                     $this->updateDefaultPaymentMethod($this->payment_methods[0]['id']);
                 } else {
                     unset($this->default_payment_method);
-                    $this->dispatchBrowserEvent('close');
+                    $this->dispatch('close');
                 }
             }
         } else {
             unset($this->default_payment_method);
-            $this->dispatchBrowserEvent('close');
+            $this->dispatch('close');
         }
     }
 
@@ -323,7 +323,7 @@ class CheckoutComponent extends Component
             // Display a very generic error to the user, and maybe send
             // yourself an email
             toast()->danger('There was an error. Please go back and try again. (2)')->push();
-            $this->dispatchBrowserEvent('log', ['message' => $e->getError()]);
+            $this->dispatch('log', $e->getError());
             return;
         } catch (\Exception $e) {
             // Something else happened, completely unrelated to Stripe

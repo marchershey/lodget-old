@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>{{ config('app.name') }}</title>
-    @toastScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <livewire:styles />
+    @toastScripts
+    @livewireStyles
 </head>
 
 <body class="relative h-full bg-gray-50">
@@ -22,10 +22,10 @@
 
     <script>
         window.addEventListener('log', event => {
-            console.log(event.detail.message);
+            console.log(event.detail[0]);
         })
     </script>
-    @livewireScripts
+    @livewireScriptConfig
 </body>
 
 </html>

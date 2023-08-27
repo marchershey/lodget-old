@@ -36,11 +36,13 @@ import interaction from "@fullcalendar/interaction";
 window.interaction = interaction;
 
 // Alpinejs & Tall Toasts
-import Alpine from "alpinejs";
+import {
+    Livewire,
+    Alpine,
+} from "../../vendor/livewire/livewire/dist/livewire.esm";
 import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
-Alpine.data("ToastComponent", ToastComponent);
-window.Alpine = Alpine;
-Alpine.start();
+Alpine.plugin(ToastComponent);
+Livewire.start();
 
 // Splidejs
 import Splide from "@splidejs/splide";

@@ -28,7 +28,6 @@
         "@fullcalendar/interaction": "^6.1.8",
         "@splidejs/splide": "^4.1.4",
         "@tailwindcss/aspect-ratio": "^0.4.2",
-        "alpinejs": "^3.13.0",
         "hotel-datepicker": "^4.6.1"
     }
 }

@@ -22580,8 +22580,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function (fac
     window.Alpine.data("ToastComponent", function ($wire) {
       return {
         duration: $wire.duration,
-        wireToasts: $wire.entangle("toasts"),
-        prod: $wire.entangle("prod"),
+        wireToasts: $wire.$entangle("toasts"),
+        prod: $wire.$entangle("prod"),
         wireToastsIndex: 0,
         toasts: [],
         pendingToasts: [],

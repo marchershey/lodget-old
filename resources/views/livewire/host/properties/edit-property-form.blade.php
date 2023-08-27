@@ -244,7 +244,7 @@
         <h3 class="panel-heading">Photos</h3>
         <div class="panel-body">
             <div class="flex items-center whitespace-nowrap">
-                <label x-show="!isUploading" for="file-upload">
+                <label for="file-upload">
                     <input wire:model="stagedPhotos" id="photo-upload" type="file" accept="image/png, image/jpeg" class="sr-only" multiple>
                     <button type="button" onclick="document.getElementById('photo-upload').click()" class="button">
                         <span>Select Photos</span>

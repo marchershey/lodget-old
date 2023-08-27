@@ -65,8 +65,8 @@
                         </label>
                     </div>
                     <div class="flex flex-col mt-5 space-y-5 sm:mt-6">
-                        <button wire:click="checkout()" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Request Reservation</button>
-                        <button wire:click="clearDates()" class="w-full bg-gray-100 rounded-md text-muted">Clear Dates</button>
+                        <button wire:click="go" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Request Reservation</button>
+                        <button wire:click="clearDates" class="w-full bg-gray-100 rounded-md text-muted">Clear Dates</button>
                     </div>
                 </div>
             </div>
@@ -77,9 +77,9 @@
 @push('scripts')
     <script>
         window.addEventListener('calendar-init', async event => {
-            console.log(event.detail.checkins);
-            console.log(event.detail.disabled);
-            console.log(event.detail.checkouts);
+            console.log(event.detail[0].checkins);
+            console.log(event.detail[0].disabled);
+            console.log(event.detail[0].checkouts);
             window.datepicker = new HotelDatepicker(document.getElementById('datepicker'), {
                 inline: true,
                 selectForward: false,

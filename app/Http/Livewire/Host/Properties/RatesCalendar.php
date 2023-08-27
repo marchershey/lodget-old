@@ -88,7 +88,7 @@ class RatesCalendar extends Component
         }
 
         // update calendar
-        $this->dispatchBrowserEvent('update');
+        $this->dispatch('update');
 
         toast()->success('The new rates have been successfully saved!')->push();
     }

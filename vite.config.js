@@ -13,11 +13,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             laravel({
                 input: ["resources/css/app.css", "resources/js/app.js"],
-                refresh: [
-                    "app/Http/Controllers/**",
-                    "resources/views/**",
-                    "routes/**",
-                ],
+                refresh: ["app/Http/**", "resources/views/**", "routes/**"],
                 usePolling: true,
             }),
         ],

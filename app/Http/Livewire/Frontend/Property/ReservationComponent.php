@@ -6,16 +6,13 @@ use App\Models\Property;
 use App\Models\PropertyRate;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
-use Usernotnull\Toast\Concerns\WireToast;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class ReservationComponent extends Component
 {
-    use WireToast;
 
     // states
     public $showButton = false;
@@ -85,7 +82,7 @@ class ReservationComponent extends Component
             $disabled[] = $match;
         }
 
-        $this->dispatchBrowserEvent('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
+        $this->dispatch('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
 
         $this->showButton = true;
     }
@@ -132,8 +129,10 @@ class ReservationComponent extends Component
         }
     }
 
-    public function checkout()
+    public function go()
     {
+        toast()->danger('test')->push();
+
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {

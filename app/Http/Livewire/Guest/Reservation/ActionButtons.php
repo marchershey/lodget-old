@@ -55,7 +55,7 @@ class ActionButtons extends Component
                     }
                 } catch (\Stripe\Exception\CardException $e) {
                     // Since it's a decline, \Stripe\Exception\CardException will be caught
-                    $this->dispatchBrowserEvent('log', ['message' => $e->getError()]);
+                    $this->disapt('log', ['message' => $e->getError()]);
                     toast()->danger($e->getError()->message)->push();
                     return;
                 } catch (\Stripe\Exception\RateLimitException $e) {
