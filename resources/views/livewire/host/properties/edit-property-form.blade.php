@@ -13,22 +13,22 @@
                 {{-- Name --}}
                 <div>
                     <label for="name" class="input-label @error('name') text-red-500 @enderror">Property Name</label>
-                    <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.lazy="name">
+                    <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.live.blur="name">
                 </div>
 
                 {{-- Address --}}
                 <div class="grid grid-cols-2 gap-y-3 gap-x-5">
                     <div class="col-span-2">
                         <label for="street" class="input-label @error('street') text-red-500 @enderror">Street Address</label>
-                        <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.lazy="street">
+                        <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.live.blur="street">
                     </div>
                     <div class="col-span-2">
                         <label for="city" class="input-label @error('city') text-red-500 @enderror">City</label>
-                        <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.lazy="city">
+                        <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.live.blur="city">
                     </div>
                     <div>
                         <label for="state" class="input-label @error('state') text-red-500 @enderror">State</label>
-                        <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model="state">
+                        <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model.live="state">
                             <option value=""></option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -85,7 +85,7 @@
                     </div>
                     <div>
                         <label for="zip" class="input-label @error('zip') text-red-500 @enderror">Zip</label>
-                        <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.lazy="zip">
+                        <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.live.blur="zip">
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="panel-body">
             <div class="space-y-2">
                 <label for="type" class="input-label @error('type') text-red-500 @enderror">Property Type</label>
-                <select id="type" class="input @error('type') bg-red-50 border-red-500 @enderror" wire:model="type">
+                <select id="type" class="input @error('type') bg-red-50 border-red-500 @enderror" wire:model.live="type">
                     <option value=""></option>
                     <option value="House">House</option>
                     <option value="Apartment">Apartment</option>
@@ -116,7 +116,7 @@
             </div>
             <div class="grid grid-cols-2 gap-5 xl:grid-cols-4">
                 <div x-data="{
-                    value: @entangle('guests'),
+                    value: @entangle('guests').live,
                     step: 1,
                     min: 0,
                     max: 99,
@@ -146,7 +146,7 @@
                     </label>
                 </div>
                 <div x-data="{
-                    value: $wire.entangle('beds'),
+                    value: $wire.$entangle('beds', true),
                     step: 1,
                     min: 0,
                     max: 99,
@@ -176,7 +176,7 @@
                     </label>
                 </div>
                 <div x-data="{
-                    value: $wire.entangle('bedrooms'),
+                    value: $wire.$entangle('bedrooms', true),
                     step: 1,
                     min: 0,
                     max: 99,
@@ -206,7 +206,7 @@
                     </label>
                 </div>
                 <div x-data="{
-                    value: $wire.entangle('bathrooms'),
+                    value: $wire.$entangle('bathrooms', true),
                     step: 0.5,
                     min: 0,
                     max: 99,
@@ -245,7 +245,7 @@
         <div class="panel-body">
             <div class="flex items-center whitespace-nowrap">
                 <label for="file-upload">
-                    <input wire:model="stagedPhotos" id="photo-upload" type="file" accept="image/png, image/jpeg" class="sr-only" multiple>
+                    <input wire:model.live="stagedPhotos" id="photo-upload" type="file" accept="image/png, image/jpeg" class="sr-only" multiple>
                     <button type="button" onclick="document.getElementById('photo-upload').click()" class="button">
                         <span>Select Photos</span>
                     </button>
@@ -321,9 +321,9 @@
     <div class="panel">
         <h3 class="panel-heading">Amenities</h3>
         <div class="panel-body">
-            <form wire:submit.prevent="addAmenity" class="grid grid-cols-2 gap-5">
+            <form wire:submit="addAmenity" class="grid grid-cols-2 gap-5">
                 <div class="w-full">
-                    <input wire:model="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
+                    <input wire:model.live="amenity" type="text" class="mt-0 input" placeholder="Type amenities name here...">
                 </div>
                 <button type="submit" class="w-auto button whitespace-nowrap button-light">Add Amenities</button>
             </form>
@@ -347,7 +347,7 @@
     <div class="panel">
         <h3 class="panel-heading">Rates & Fees</h3>
         <div class="panel-body">
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Nightly Rate</span>
                     <span class="text-sm text-gray-500" id="availability-description">Amount to charge per night</span>
@@ -356,27 +356,27 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm"> $ </span>
                     </div>
-                    <input wire:model="default_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
+                    <input wire:model.live="default_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm"> USD </span>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Tax Rate</span>
                     <span class="text-sm text-gray-500" id="availability-description">The percentage to charge for tax</span>
                 </span>
                 <div class="relative">
-                    <input wire:model="default_tax" type="text" name="tax" id="tax" class="pr-6 mt-0 text-right input" placeholder="0">
+                    <input wire:model.live="default_tax" type="text" name="tax" id="tax" class="pr-6 mt-0 text-right input" placeholder="0">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm" id="tax-icon"> % </span>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Security Deposit</span>
                     <span class="text-sm text-gray-500" id="availability-description">Amount to charge for security deposit</span>
@@ -385,14 +385,14 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm"> $ </span>
                     </div>
-                    <input wire:model="deposit" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
+                    <input wire:model.live="deposit" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <span class="text-gray-500 sm:text-sm"> USD </span>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Rates Calendar</span>
                     <span class="text-sm text-gray-500" id="availability-description">Edit the rates on specific days</span>
@@ -400,7 +400,7 @@
                 <livewire:host.properties.rates-calendar :property="$property" />
             </div>
             <hr>
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Additonal Fees</span>
                     <span class="text-sm text-gray-500" id="availability-description">Add any additional fees to charge the guest</span>
@@ -419,7 +419,7 @@
                         <div class="grid grid-cols-4 mb-2 gap-x-5" wire:key="fees-{{ $key }}">
                             <div>
                                 <label for="fees-{{ $key }}-name" class="input-label">Name</label>
-                                <input wire:model="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input" placeholder="Fee name">
+                                <input wire:model.live="fees.{{ $key }}.name" type="text" id="fees-{{ $key }}-name" class="input" placeholder="Fee name">
                             </div>
                             <div>
                                 <label for="fees-{{ $key }}-amount" class="input-label">Amount</label>
@@ -428,13 +428,13 @@
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <span class="text-gray-500 sm:text-sm"> $ </span>
                                         </div>
-                                        <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
+                                        <input wire:model.live="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pl-6 input" placeholder="0.00">
                                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                             <span class="text-gray-500 sm:text-sm"> USD </span>
                                         </div>
                                     @else
                                         <div class="relative mt-1">
-                                            <input wire:model="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pr-6 input" placeholder="0">
+                                            <input wire:model.live="fees.{{ $key }}.amount" type="text" name="fees-{{ $key }}-amount" id="fees-{{ $key }}-amount" class="pr-6 input" placeholder="0">
                                             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                                 <span class="text-gray-500 sm:text-sm"> % </span>
                                             </div>
@@ -446,12 +446,12 @@
                                 <label for="fees-{{ $key }}-type" class="input-label">Type</label>
                                 <div class="flex mt-4 space-x-4">
                                     <div class="flex items-center">
-                                        <input wire:model="fees.{{ $key }}.type" value="fixed" id="fees-{{ $key }}-type-fixed" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
+                                        <input wire:model.live="fees.{{ $key }}.type" value="fixed" id="fees-{{ $key }}-type-fixed" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
                                         <label for="fees-{{ $key }}-type-fixed" class="block ml-3 text-sm font-medium text-gray-700"> Fixed </label>
                                     </div>
 
                                     <div class="flex items-center">
-                                        <input wire:model="fees.{{ $key }}.type" value="percentage" id="fees-{{ $key }}-type-percentage" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
+                                        <input wire:model.live="fees.{{ $key }}.type" value="percentage" id="fees-{{ $key }}-type-percentage" name="fees-{{ $key }}-type" type="radio" class="w-4 h-4 border-gray-300 text-primary focus:ring-primary">
                                         <label for="fees-{{ $key }}-type-percentage" class="block ml-3 text-sm font-medium text-gray-700"> Percentage </label>
                                     </div>
                                 </div>
@@ -476,11 +476,11 @@
         <div class="panel-body">
             <div>
                 <label for="headline" class="input-label @error('headline') text-red-500 @enderror">Headline</label>
-                <input type="text" id="headline" class="input @error('headline') bg-red-50 border-red-500 @enderror" wire:model.lazy="headline">
+                <input type="text" id="headline" class="input @error('headline') bg-red-50 border-red-500 @enderror" wire:model.live.blur="headline">
             </div>
             <div>
                 <label for="description" class="input-label @error('description') text-red-500 @enderror">Description</label>
-                <textarea rows="6" id="description" class="input @error('description') bg-red-50 border-red-500 @enderror" wire:model.lazy="description"></textarea>
+                <textarea rows="6" id="description" class="input @error('description') bg-red-50 border-red-500 @enderror" wire:model.live.blur="description"></textarea>
             </div>
         </div>
     </div>
@@ -489,7 +489,7 @@
     <div class="panel">
         <h3 class="panel-heading">Options</h3>
         <div class="panel-body">
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Active</span>
                     <span class="text-sm text-gray-500" id="availability-description">Choose whether this property is visible to guests or not.</span>
@@ -499,16 +499,16 @@
                 </button>
             </div>
             <hr>
-            <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+            <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                 <span class="flex flex-col flex-grow w-full">
                     <span class="text-sm font-medium text-gray-900" id="availability-label">Property Slug</span>
                     <span class="text-sm text-gray-500" id="availability-description">Change the property's URL slug</span>
                 </span>
-                <input wire:model="slug" type="text" class="input">
+                <input wire:model.live="slug" type="text" class="input">
             </div>
             <hr>
             <div x-data="{
-                value: $wire.entangle('min_nights'),
+                value: $wire.$entangle('min_nights', true),
                 step: 1,
                 min: 1,
                 max: 99,
@@ -517,7 +517,7 @@
                 addDisabled() { return this.value >= this.max },
                 subtractDisabled() { return this.value <= this.min }
             }">
-                <div class="flex items-center justify-between" x-data="{ active: @entangle('active') }">
+                <div class="flex items-center justify-between" x-data="{ active: @entangle('active').live }">
                     <span class="flex flex-col flex-grow w-full">
                         <span class="text-sm font-medium text-gray-900" id="availability-label">Minimum Nights</span>
                         <span class="text-sm text-gray-500" id="availability-description">Require guests to stay a certain number of nights</span>

@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Checkout;
+namespace App\Livewire\Frontend\Property;
 
+use App\Models\Property;
+use App\Models\PropertyRate;
+use Illuminate\Validation\Validator;
+use Livewire\Component;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
-use Illuminate\Validation\Validator;
-use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class ChangeDatesComponent extends Component
+class ReservationComponent extends Component
 {
+
     use WireToast;
 
     // states
@@ -19,7 +22,6 @@ class ChangeDatesComponent extends Component
     public $datesSelected = false;
 
     // properties
-    public $reservation;
     public $property;
     public $dates;
     public $checkin;
@@ -35,19 +37,17 @@ class ChangeDatesComponent extends Component
 
     public function render()
     {
-        return view('livewire.frontend.checkout.change-dates-component');
+        return view('livewire.frontend.property.reservation-component');
     }
 
-    public function mount($reservation)
+    public function mount(Property $property)
     {
-        $this->reservation = $reservation;
-        $this->property = $reservation->property;
+        $this->property = $property;
     }
 
     public function load()
     {
-        $this->guests = $this->reservation->guests;
-
+        // get reserved dates
         $reservations = Reservation::where('property_id', $this->property->id)
             ->where('status', 'pending')
             ->orWhere('status', 'approved')
@@ -76,16 +76,49 @@ class ChangeDatesComponent extends Component
         $matches = Arr::flatten(array_intersect($checkins, $checkouts));
 
         foreach ($matches as $match) {
-            toast()->debug($match)->push();
             if (($key = array_search($match, $checkins)) !== false) {
                 unset($checkins[$key]);
             }
             if (($key = array_search($match, $checkouts)) !== false) {
                 unset($checkouts[$key]);
             }
+            $disabled[] = $match;
         }
 
-        $this->dispatch('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled), 'checkin' => $this->reservation->checkin, 'checkout' => $this->reservation->checkout]);
+        $this->dispatch('calendar-init', ['checkins' => Arr::flatten($checkins), 'checkouts' => Arr::flatten($checkouts), 'disabled' => Arr::flatten($disabled)]);
+
+        $this->showButton = true;
+    }
+
+    public function getDefaultRate()
+    {
+        return number_format(substr($this->property->default_rate, 0, -2));
+    }
+
+    public function getRates()
+    {
+        $rates = [];
+
+        foreach (PropertyRate::where('date', '>', Carbon::now()->format('Y-m-d'))->where('property_id', $this->property->id)->get() as $rate) {
+            $rates[] = [
+                'date' => $rate->date,
+                'amount' => number_format(substr($rate->amount, 0, -2)),
+            ];
+        }
+
+        return $rates;
+    }
+
+    public function updated($field, $value)
+    {
+        $this->withValidator(function (Validator $validator) {
+            $validator->after(function ($validator) {
+                if (count($validator->errors()) > 0) {
+                    $error = $validator->errors()->first();
+                    toast()->danger($error, 'Error')->push();
+                }
+            });
+        })->validateOnly($field);
     }
 
     public function updateDates($selectedDates)
@@ -99,8 +132,9 @@ class ChangeDatesComponent extends Component
         }
     }
 
-    public function updateReservation()
+    public function go()
     {
+
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
                 if (count($validator->errors()) > 0) {
@@ -110,7 +144,11 @@ class ChangeDatesComponent extends Component
             });
         })->validate();
 
-        $reservation = $this->reservation;
+        return;
+
+        $reservation = new Reservation();
+        $reservation->slug = \App\Helpers\ReservationSlugHelper::generate();
+        $reservation->property_id = $this->property->id;
         $reservation->checkin = $this->checkin;
         $reservation->checkout = $this->checkout;
         $reservation->nights = Carbon::parse($this->checkin)->diffInDays($this->checkout);

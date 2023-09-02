@@ -10,6 +10,15 @@ document.documentElement.style.setProperty("--vh", `${vh}px`);
  * Plugins and Packages
  */
 
+// Alpinejs & Tall Toasts
+import {
+    Livewire,
+    Alpine,
+} from "../../vendor/livewire/livewire/dist/livewire.esm";
+import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
+Alpine.plugin(ToastComponent);
+Livewire.start();
+
 // Fetcha (requirement for hotel datepicker)
 import fecha from "fecha";
 window.fecha = fecha;
@@ -34,15 +43,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 window.dayGridPlugin = dayGridPlugin;
 import interaction from "@fullcalendar/interaction";
 window.interaction = interaction;
-
-// Alpinejs & Tall Toasts
-import {
-    Livewire,
-    Alpine,
-} from "../../vendor/livewire/livewire/dist/livewire.esm";
-import ToastComponent from "../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts";
-Alpine.plugin(ToastComponent);
-Livewire.start();
 
 // Splidejs
 import Splide from "@splidejs/splide";

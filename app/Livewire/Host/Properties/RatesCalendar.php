@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Host\Properties;
+namespace App\Livewire\Host\Properties;
 
 use App\Models\PropertyRate;
 use Carbon\Carbon;

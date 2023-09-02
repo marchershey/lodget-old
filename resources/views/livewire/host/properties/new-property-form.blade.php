@@ -8,21 +8,21 @@
                 {{-- Name --}}
                 <div>
                     <label for="name" class="input-label @error('name') text-red-500 @enderror">Property Name</label>
-                    <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.lazy="name">
+                    <input type="text" id="name" class="input capitalize @error('name') bg-red-50 border-red-500 @enderror" wire:model.live.blur="name">
                 </div>
 
                 {{-- Address --}}
                 <div>
                     <label for="street" class="input-label @error('street') text-red-500 @enderror">Street Address</label>
-                    <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.lazy="street">
+                    <input type="text" id="street" class="input capitalize @error('street') bg-red-50 border-red-500 @enderror" wire:model.live.blur="street">
                 </div>
                 <div>
                     <label for="city" class="input-label @error('city') text-red-500 @enderror">City</label>
-                    <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.lazy="city">
+                    <input type="text" id="city" class="input capitalize @error('city') bg-red-50 border-red-500 @enderror" wire:model.live.blur="city">
                 </div>
                 <div>
                     <label for="state" class="input-label @error('state') text-red-500 @enderror">State</label>
-                    <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model="state">
+                    <select id="state" class="truncate input @error('state') bg-red-50 border-red-500 @enderror" wire:model.live="state">
                         <option value=""></option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <label for="zip" class="input-label @error('zip') text-red-500 @enderror">Zip</label>
-                    <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.lazy="zip">
+                    <input type="text" id="zip" class="input @error('zip') bg-red-50 border-red-500 @enderror" wire:model.live.blur="zip">
                 </div>
             </div>
 
@@ -88,7 +88,7 @@
                 <h3 class="panel-heading">Property Details</h3>
                 <div class="space-y-2">
                     <label for="type" class="input-label @error('type') text-red-500 @enderror">Property Type</label>
-                    <select id="type" class="input @error('type') bg-red-50 border-red-500 @enderror" wire:model="type">
+                    <select id="type" class="input @error('type') bg-red-50 border-red-500 @enderror" wire:model.live="type">
                         <option value=""></option>
                         <option value="House">House</option>
                         <option value="Apartment">Apartment</option>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="grid grid-cols-2 gap-5">
                     <div x-data="{
-                        value: $wire.entangle('guests'),
+                        value: $wire.$entangle('guests', true),
                         step: 1,
                         min: 0,
                         max: 99,
@@ -136,7 +136,7 @@
                         </label>
                     </div>
                     <div x-data="{
-                        value: $wire.entangle('beds'),
+                        value: $wire.$entangle('beds', true),
                         step: 1,
                         min: 0,
                         max: 99,
@@ -166,7 +166,7 @@
                         </label>
                     </div>
                     <div x-data="{
-                        value: $wire.entangle('bedrooms'),
+                        value: $wire.$entangle('bedrooms', true),
                         step: 1,
                         min: 0,
                         max: 99,
@@ -196,7 +196,7 @@
                         </label>
                     </div>
                     <div x-data="{
-                        value: $wire.entangle('bathrooms'),
+                        value: $wire.$entangle('bathrooms', true),
                         step: 0.5,
                         min: 0,
                         max: 99,

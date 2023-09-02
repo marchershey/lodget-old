@@ -38,7 +38,7 @@
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                         <span class="text-gray-500 sm:text-sm"> $ </span>
                                     </div>
-                                    <input wire:model="new_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00" x-bind:disabled="!newRateActive">
+                                    <input wire:model.live="new_rate" type="text" name="rate" id="rate" class="pl-6 mt-0 input" placeholder="0.00" x-bind:disabled="!newRateActive">
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <span class="text-gray-500 sm:text-sm"> USD </span>
                                     </div>
@@ -74,9 +74,9 @@
                 newRateActive: false,
                 calendar: null,
                 defaultRate: {{ substr($property->default_rate, 0, -2) }},
-                startDate: @entangle('start_date'),
-                endDate: @entangle('end_date'),
-                // events: @entangle('events'),
+                startDate: @entangle('start_date').live,
+                endDate: @entangle('end_date').live,
+                // events: @entangle('events').live,
                 async init() {
                     this.setupCalendar()
                     this.loading = false

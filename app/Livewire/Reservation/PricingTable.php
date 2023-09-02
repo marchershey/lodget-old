@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reservation;
+namespace App\Livewire\Reservation;
 
 use Livewire\Component;
 

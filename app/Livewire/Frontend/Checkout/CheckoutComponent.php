@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Checkout;
+namespace App\Livewire\Frontend\Checkout;
 
 use App\Models\Payment;
 use App\Models\PaymentFee;

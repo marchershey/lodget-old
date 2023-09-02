@@ -42,7 +42,7 @@
                 </div>
                 <div class="mt-5">
                     <label for="street" class="input-label @error('cancel_reason') text-red-500 @enderror">Reason (optional)</label>
-                    <input type="text" id="street" class="input @error('cancel_reason') bg-red-50 border-red-500 @enderror" wire:model.lazy="cancel_reason">
+                    <input type="text" id="street" class="input @error('cancel_reason') bg-red-50 border-red-500 @enderror" wire:model.live.blur="cancel_reason">
                 </div>
                 <div class="mt-2">
                     @error('cancel_reason')

@@ -186,27 +186,27 @@
                                                     <div class="grid grid-cols-2 gap-x-3">
                                                         <label class="label col-span-full">Full Name</label>
                                                         <div>
-                                                            {{-- <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" wire:loading.attr="disabled" wire:target="initNewPaymentMethod"> --}}
-                                                            <input wire:model.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" :disabled="newPaymentMethodLoading">
+                                                            {{-- <input wire:model.live.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" wire:loading.attr="disabled" wire:target="initNewPaymentMethod"> --}}
+                                                            <input wire:model.live.debounce.500ms="first_name" type="text" class="capitalize input" placeholder="First name" :disabled="newPaymentMethodLoading">
                                                         </div>
                                                         <div>
-                                                            <input wire:model.debounce.500ms="last_name" type="text" class="capitalize input" placeholder="Last name" :disabled="newPaymentMethodLoading">
+                                                            <input wire:model.live.debounce.500ms="last_name" type="text" class="capitalize input" placeholder="Last name" :disabled="newPaymentMethodLoading">
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <label class="label">Address</label>
                                                         <div class="grid grid-cols-12 gap-x-3 gap-y-1">
                                                             <div class="col-span-9">
-                                                                <input wire:model.debounce.500ms="address" type="text" class="capitalize input @error('address') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Street address" :disabled="newPaymentMethodLoading">
+                                                                <input wire:model.live.debounce.500ms="address" type="text" class="capitalize input @error('address') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Street address" :disabled="newPaymentMethodLoading">
                                                             </div>
                                                             <div class="col-span-3">
-                                                                <input wire:model.debounce.500ms="unit" type="text" class="capitalize input @error('unit') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Unit" :disabled="newPaymentMethodLoading">
+                                                                <input wire:model.live.debounce.500ms="unit" type="text" class="capitalize input @error('unit') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Unit" :disabled="newPaymentMethodLoading">
                                                             </div>
                                                             <div class="col-span-12 sm:col-span-5">
-                                                                <input wire:model.debounce.500ms="city" type="text" class="capitalize input @error('city') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="City" :disabled="newPaymentMethodLoading">
+                                                                <input wire:model.live.debounce.500ms="city" type="text" class="capitalize input @error('city') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="City" :disabled="newPaymentMethodLoading">
                                                             </div>
                                                             <div class="col-span-8 sm:col-span-4">
-                                                                <select wire:model.debounce.500ms="state" class="input @error('state') bg-red-100 border-red-500 text-red-800 @enderror" :disabled="newPaymentMethodLoading">
+                                                                <select wire:model.live.debounce.500ms="state" class="input @error('state') bg-red-100 border-red-500 text-red-800 @enderror" :disabled="newPaymentMethodLoading">
                                                                     <option value="" selected hidden>State...</option>
                                                                     <option value="AL">Alabama</option>
                                                                     <option value="AK">Alaska</option>
@@ -262,7 +262,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-span-4 sm:col-span-3">
-                                                                <input wire:model.debounce.500ms="zip" type="text" class="input @error('zip') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Zip" :disabled="newPaymentMethodLoading">
+                                                                <input wire:model.live.debounce.500ms="zip" type="text" class="input @error('zip') bg-red-100 border-red-500 text-red-800 @enderror" placeholder="Zip" :disabled="newPaymentMethodLoading">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -274,7 +274,7 @@
                                                     </div>
 
                                                     @if ($default_payment_method)
-                                                        <div x-data="{ value: @entangle('setDefaultPaymentMethod') }" class="flex items-center justify-between cursor-pointer">
+                                                        <div x-data="{ value: @entangle('setDefaultPaymentMethod').live }" class="flex items-center justify-between cursor-pointer">
                                                             <span @click="$refs.toggle.click(); $refs.toggle.focus()" class="flex flex-col flex-grow">
                                                                 <span class="label" id="availability-label">Set as default payment method</span>
                                                             </span>
@@ -314,7 +314,7 @@
             <div class="flex flex-col space-y-5 bg-transparent border-none panel">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-7">
-                        <input wire:model="agree" id="agree" type="checkbox" class="w-5 h-5 border-gray-300 rounded text-primary focus:ring-primary">
+                        <input wire:model.live="agree" id="agree" type="checkbox" class="w-5 h-5 border-gray-300 rounded text-primary focus:ring-primary">
                     </div>
                     <div class="ml-3">
                         <label for="agree" class="block text-sm text-muted @error('agree') !text-red-500 @enderror">By checking this box, you agree to allow {{ config('app.name') }} to place a @money($pricing['total']) hold on your card for up to 7 days. Once your reservation has been approved, the hold will be captured and your funds will be transfered out of your account. If your reservation request is neither approved or cancelled within 7 days, the funds will be released back to you.</label>

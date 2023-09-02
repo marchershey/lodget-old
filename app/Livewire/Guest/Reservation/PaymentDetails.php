@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Guest\Reservation;
+namespace App\Livewire\Guest\Reservation;
 
 use App\Helpers\Currency;
 use Livewire\Component;

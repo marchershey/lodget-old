@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Guest\Dashboard;
+namespace App\Livewire\Guest\Dashboard;
 
 use App\Models\Reservation;
 use Livewire\Component;
