@@ -10,9 +10,12 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class ReservationComponent extends Component
 {
+
+    use WireToast;
 
     // states
     public $showButton = false;
@@ -131,7 +134,9 @@ class ReservationComponent extends Component
 
     public function go()
     {
-        toast()->danger('test')->push();
+        toast()->danger('Watch out!')->push();
+
+        return;
 
         $this->withValidator(function (Validator $validator) {
             $validator->after(function ($validator) {
