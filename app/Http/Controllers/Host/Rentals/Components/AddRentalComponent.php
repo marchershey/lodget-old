@@ -14,7 +14,8 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class AddRentalComponent extends Component
 {
-    use WireToast;
+    // use WireToast;
+
     // Overview
     public $name;
     public $summary;
@@ -142,6 +143,6 @@ class AddRentalComponent extends Component
     {
         $this->reset();
         $this->resetErrorBag();
-        $this->dispatchBrowserEvent('close-slideover');
+        $this->dispatch('close-slideover');
     }
 }

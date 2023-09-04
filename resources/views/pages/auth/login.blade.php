@@ -9,20 +9,20 @@
     </div>
 
     {{-- form --}}
-    <form class="space-y-6" wire:submit.prevent="submitAuthentication">
+    <form class="space-y-6" wire:submit="submitAuthentication">
         <div>
             <label for="email" class="input-label">Email address</label>
-            <input wire:model="email" id="email" name="email" type="email" autocomplete="email" required class="input-text">
+            <input wire:model.live="email" id="email" name="email" type="email" autocomplete="email" required class="input-text">
         </div>
 
         <div>
             <label for="password" class="input-label">Password</label>
-            <input wire:model='password' id="password" name="password" type="password" autocomplete="current-password" required class="input-text">
+            <input wire:model.live='password' id="password" name="password" type="password" autocomplete="current-password" required class="input-text">
         </div>
 
         <div class="flex items-center justify-between">
             <div class="flex items-center">
-                <input wire:model='remember' id="remember-me" name="remember-me" type="checkbox" class="input-checkbox">
+                <input wire:model.live='remember' id="remember-me" name="remember-me" type="checkbox" class="input-checkbox">
                 <label for="remember-me" class="input-checkbox-label">Stay signed in</label>
             </div>
 

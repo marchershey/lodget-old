@@ -1,4 +1,4 @@
-<div x-data="{ text: @entangle($wiremodel), count() { return this.text.length } }">
+<div x-data="{ text: @entangle($wiremodel).live, count() { return this.text.length } }">
     <div class="flex items-end justify-between">
         @if ($label)
             <span class="input-label @error($wiremodel) !text-red-500 @enderror">{{ $label }}</span>

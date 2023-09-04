@@ -13,7 +13,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class RegistrationController extends Component
 {
-    use WireToast;
+    // use WireToast;
 
     public $first_name = "Marc";
     public $last_name = "Hershey";

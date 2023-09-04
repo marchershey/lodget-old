@@ -1,5 +1,5 @@
 <div x-data="{
-    value: @entangle($wiremodel),
+    value: @entangle($wiremodel).live,
     step: {{ $step }},
     min: {{ $min }},
     max: {{ $max }},

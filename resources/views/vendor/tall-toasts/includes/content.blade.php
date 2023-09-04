@@ -1,7 +1,7 @@
 <div class="p-3 mx-4 my-4 mb-5 text-gray-800 bg-white border border-gray-300 rounded-lg shadow-2xl sm:mx-6" x-bind:class="{
     'bg-blue-50': toast.type === 'info',
-    '': toast.type === 'success',
-    '': toast.type === 'warning',
+    'bg-green-50': toast.type === 'success',
+    'bg-yellow-50': toast.type === 'warning',
     'bg-red-50': toast.type === 'danger'
 }">
     <div class="flex items-center space-x-3">

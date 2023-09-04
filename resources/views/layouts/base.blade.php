@@ -7,7 +7,7 @@
     <title>{{ config('app.name') }}</title>
     @toastScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <livewire:styles />
+    @livewireStyles
 </head>
 
 <body class="h-full overflow-hidden font-inter">
@@ -34,14 +34,14 @@
         </div>
     </div>
 
-    @stack('scripts')
-
     <script>
         window.addEventListener('log', event => {
-            console.log(event.detail.message);
+            console.log(event.detail);
         })
     </script>
-    @livewireScripts
+
+    @stack('scripts')
+    @livewireScriptConfig
 </body>
 
 </html>

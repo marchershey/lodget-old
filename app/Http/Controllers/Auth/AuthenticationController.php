@@ -12,7 +12,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class AuthenticationController extends Component
 {
-    use WireToast;
+    // use WireToast;
 
     public $email;
     public $password;
