@@ -13,7 +13,7 @@
         "doctrine/dbal": "^3.6.6",
         "guzzlehttp/guzzle": "^7.8.0",
         "laravel/cashier": "^14.12.4",
-        "laravel/framework": "^v10.20.0",
+        "laravel/framework": "^v10.27.0",
         "laravel/sanctum": "^v3.2.6",
         "laravel/tinker": "^v2.8.2",
         "livewire/livewire": "^v3.0.1"
