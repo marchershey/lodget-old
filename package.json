@@ -28,6 +28,6 @@
         "@fullcalendar/interaction": "^6.1.8",
         "@splidejs/splide": "^4.1.4",
         "@tailwindcss/aspect-ratio": "^0.4.2",
-        "hotel-datepicker": "^4.6.1"
+        "hotel-datepicker": "^4.6.2"
     }
 }
